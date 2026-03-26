@@ -1,0 +1,97 @@
+# ============================================================
+# Polygon Free-Tier OHLCV Pipeline — 1-Minute Config
+# ============================================================
+# Use this config for 1-minute bar data (fine-grained variant)
+# WARNING: ~5× more API calls, storage, and compute time than 5-min
+
+polygon:
+  base_url:          "https://api.polygon.io"
+  timespan:          "minute"      # Polygon aggregation type
+  multiplier:        1             # 1-minute bars
+  adjusted:          true          # Split-adjusted prices
+  limit:             50000         # Max bars per request
+  requests_per_min:  5             # Free-tier hard cap: 5 req/min (rate limit enforced)
+  retry_attempts:    3
+  retry_backoff_s:   20            # Exponential backoff for 429 errors
+  timeout_s:         30
+
+universe:
+  min_adtv_usd:      1_000_000
+  min_price:         5.0
+  max_price:         50_000.0
+  min_history_days:  60
+  min_bar_coverage:  0.90
+  adtv_window:       20
+
+  default_tickers:
+    - AAPL
+    - MSFT
+    - NVDA
+    - AMZN
+    - META
+    - AMD
+    - TSLA
+    - MSTR
+    - PLTR
+    - SMCI
+    - JPM
+    - BAC
+    - GS
+    - MS
+    - C
+    - XOM
+    - CVX
+    - OXY
+    - SLB
+    - HAL
+    - LLY
+    - MRNA
+    - BIIB
+    - REGN
+    - VRTX
+    - CRM
+    - NOW
+    - SNOW
+    - NET
+    - CRWD
+    - HD
+    - MCD
+    - SBUX
+    - NKE
+    - CAT
+    - DE
+    - LMT
+    - RTX
+    - GE
+    - QCOM
+    - AVGO
+    - MU
+    - LRCX
+    - AMAT
+
+cleaning:
+  # 1-minute data has more intraday extremes — thresholds kept same (robust to outliers)
+  max_daily_return:        0.10
+  max_intraday_range:      0.10
+  max_volume_spike_mult:   10.0
+  volume_spike_window:     20
+  max_overnight_gap:       0.40
+  min_volume:              0
+  forward_fill_limit:      0
+  enforce_ohlc_order:      true
+
+storage:
+  raw_dir:           "polygon_pipeline/data/raw_1min/"
+  clean_dir:         "polygon_pipeline/data/clean_1min/"
+  cache_dir:         "polygon_pipeline/data/cache/"
+  report_dir:        "polygon_pipeline/reports/"
+  compression:       "snappy"
+  partition_cols:    ["year"]
+
+dates:
+  start_date:        "2024-03-22"
+  calendar:          "NYSE"
+
+logging:
+  level:             "INFO"
+  file:              "polygon_pipeline/reports/pipeline_1min.log"

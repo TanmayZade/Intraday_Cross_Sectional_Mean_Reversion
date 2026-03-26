@@ -1,0 +1,1 @@
+python -m polygon_pipeline.pipeline.orchestrator run --config polygon_pipeline/configs/config.yaml && python run_features.py && python run_alpha.py 

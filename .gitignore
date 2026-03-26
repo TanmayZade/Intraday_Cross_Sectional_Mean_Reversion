@@ -1,0 +1,101 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+.settings/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Data and cache directories
+data/cache/
+data/clean/
+data/features/
+data/alpha/
+polygon_pipeline/data/cache/
+logs/
+*.log
+
+# Large data files
+*.csv
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.parquet
+*.feather
+*.xlsx
+*.xls
+*.json
+!reports/*.csv
+
+# Reports (keep some, ignore large testing reports)
+reports/bar_returns_*.csv
+reports/equity_curve_*.csv
+reports/equity_plot_*.html
+reports/metrics_*.json
+
+# Media files
+*.mp4
+*.mov
+*.m3u8
+
+# OS files
+.DS_Store
+Thumbs.db
+*.mp4_in=*
+
+# Temporary files
+*.tmp
+*.temp
+*._*
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Any large binary files
+*.so
+*.o
+*.a
