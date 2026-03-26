@@ -1,0 +1,85 @@
+2026-03-24 22:00:09  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:09  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 22:00:09  INFO        Feature store : data/features/
+2026-03-24 22:00:09  INFO        Alpha output  : data/alpha/
+2026-03-24 22:00:09  INFO        Rebalance freq: every 4 bars (~60 min) | Txn cost: 1.0 bps
+2026-03-24 22:00:09  INFO        Date range    : all → latest
+2026-03-24 22:00:09  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:09  INFO      [1/6] Loading features ...
+2026-03-24 22:00:09  INFO      FeatureStore initialized at: data\features
+2026-03-24 22:00:09  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 22:00:16  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 22:00:16  INFO        Loaded 15 features
+2026-03-24 22:00:16  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 22:00:16  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 22:00:18  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 22:00:18  INFO      [3/6] Computing IC summary ...
+D:\Herbs magic\Int_Cross_Section_MR\NEW_APPROACH\alpha\signal.py:205: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  self._fwd_ret = self.close.pct_change(1).shift(-1)
+2026-03-24 22:00:18  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+D:\Herbs magic\Int_Cross_Section_MR\NEW_APPROACH\alpha\signal.py:98: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  corr, _ = spearmanr(sig_row[valid], ret_row[valid])
+2026-03-24 22:00:33  INFO      
+2026-03-24 22:00:33  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 22:00:33  INFO        ------------------------------------------------------------------------------
+2026-03-24 22:00:33  INFO        A1_bar_reversal            +0.06980  0.27803  +0.251  +9.671  0.609    ✓
+2026-03-24 22:00:33  INFO        B1_vwap_deviation          +0.05296  0.29482  +0.180  +6.919  0.569    ✓
+2026-03-24 22:00:33  INFO        B3_open_gap                +0.05243  0.30444  +0.172  +6.635  0.562    ✓
+2026-03-24 22:00:33  INFO        B2_price_position          +0.03294  0.25374  +0.130  +5.001  0.555    ✓
+2026-03-24 22:00:33  INFO        C2_flow_imbalance          +0.02469  0.21260  +0.116  +4.473  0.555    ✓
+2026-03-24 22:00:33  INFO        E1_residual_return         +0.02699  0.29706  +0.091  +3.500  0.534    ✓
+2026-03-24 22:00:33  INFO        A2_short_rev               +0.02555  0.30475  +0.084  +3.230  0.540    ✓
+2026-03-24 22:00:33  INFO        A3_medium_rev              +0.02399  0.29175  +0.082  +3.167  0.544    ✓
+2026-03-24 22:00:33  INFO        E2_sector_residual         +0.02043  0.31453  +0.065  +2.502  0.532    ✓
+2026-03-24 22:00:33  INFO        D1_vol_burst               +0.01287  0.24807  +0.052  +1.998  0.528    ✓
+2026-03-24 22:00:33  INFO        C3_turnover_shock          +0.00952  0.27223  +0.035  +1.348  0.522    ✓
+2026-03-24 22:00:33  INFO        C1_volume_shock            +0.00920  0.27151  +0.034  +1.306  0.522    ✓
+2026-03-24 22:00:33  INFO        A4_overnight_gap           +0.00730  0.31691  +0.023  +0.887  0.503    ✗
+2026-03-24 22:00:33  INFO        D2_vol_zscore              -0.00986  0.21341  -0.046  -1.779  0.478    ✓
+2026-03-24 22:00:33  INFO      
+2026-03-24 22:00:33  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 22:00:33  INFO        13 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 22:00:33  INFO        Computing IC decay for best feature: A1_bar_reversal
+D:\Herbs magic\Int_Cross_Section_MR\NEW_APPROACH\alpha\signal.py:122: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  ret_1bar = close.pct_change(1)
+2026-03-24 22:03:36  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 22:03:36  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 22:03:36  INFO      Computing composite alpha ...
+D:\Herbs magic\Int_Cross_Section_MR\NEW_APPROACH\alpha\signal.py:98: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  corr, _ = spearmanr(sig_row[valid], ret_row[valid])
+2026-03-24 22:03:51  INFO      IC weights computed. Active features per bar (avg): 6.5
+2026-03-24 22:03:51  INFO      Composite alpha: shape=(1485, 44)  valid=98.9%  mean=-0.0014  std=0.9325
+2026-03-24 22:03:51  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 22:03:51  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 22:03:51  INFO        Downsampling alpha: every 4 bars (was 1485 bars)
+2026-03-24 22:03:51  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(372, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-24 22:03:51  INFO      Building portfolio weights ...
+2026-03-24 22:03:51  INFO        [1/6] Volatility scaling ...
+D:\Herbs magic\Int_Cross_Section_MR\NEW_APPROACH\alpha\portfolio.py:191: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  ret = self.close.pct_change(1)
+2026-03-24 22:03:51  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-24 22:03:51  INFO        [3/6] Dollar neutralisation ...
+2026-03-24 22:03:51  INFO        [4/6] Position limits (max=10%) ...
+2026-03-24 22:03:51  INFO        [5/6] Normalise to unit gross ...
+2026-03-24 22:03:51  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-24 22:03:51  INFO      Portfolio built -- avg 43.4 positions | avg gross=1.973x | avg |net|=0.0000
+2026-03-24 22:03:51  INFO        Forward-filled weights to original frequency: (1485, 44)
+2026-03-24 22:03:51  INFO        Weights saved: (1485, 44)
+2026-03-24 22:03:51  INFO      [6/6] Computing portfolio statistics ...
+d:\Herbs magic\Int_Cross_Section_MR\NEW_APPROACH\run_alpha.py:215: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  fwd_ret = close.pct_change(1).shift(-1)
+2026-03-24 22:03:51  INFO      
+2026-03-24 22:03:51  INFO        Portfolio Statistics:
+2026-03-24 22:03:51  INFO        Annual Return                   -0.26% (gross)
+2026-03-24 22:03:51  INFO          → Net after costs             -78.34% (7808.1 bps cost)
+2026-03-24 22:03:51  INFO        Annual Vol                      1.27%
+2026-03-24 22:03:51  INFO        Gross Sharpe Ratio              -0.204
+2026-03-24 22:03:51  INFO        Rebalance Turnover              7808×
+2026-03-24 22:03:51  INFO        Annual Cost (realized)          78.08%
+2026-03-24 22:03:51  INFO        Avg Positions                   43
+2026-03-24 22:03:51  INFO        Avg Gross Leverage              1.973×
+2026-03-24 22:03:51  INFO        Avg Net Leverage                0.0000
+2026-03-24 22:03:51  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:03:51  INFO        Phase 2 complete in 222.9s
+2026-03-24 22:03:51  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 22:03:51  INFO      ────────────────────────────────────────────────────────────

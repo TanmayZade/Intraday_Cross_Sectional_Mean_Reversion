@@ -54,10 +54,10 @@ data/features/
 data/alpha/
 polygon_pipeline/data/cache/
 logs/
-*.log
+
 
 # Large data files
-*.csv
+
 *.h5
 *.hdf5
 *.pkl

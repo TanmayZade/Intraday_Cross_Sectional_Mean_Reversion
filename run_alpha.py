@@ -17,12 +17,13 @@ Usage
 
 Output files
 ------------
-    data/alpha/composite_alpha.parquet   — alpha signal [timestamp × ticker]
-    data/alpha/weights.parquet           — position weights [timestamp × ticker]
-    reports/ic_summary.csv               — IC per feature (your signal quality report)
-    reports/ic_decay.csv                 — IC decay curve for best feature
-    reports/portfolio_stats.csv          — gross Sharpe, turnover, leverage
-    reports/alpha_pipeline.log           — full execution log
+    data/alpha/composite_alpha.parquet      — alpha signal [timestamp × ticker]
+    data/alpha/weights.parquet              — position weights [timestamp × ticker]
+    reports/ic_summary.csv                  — IC per feature (your signal quality report)
+    reports/ic_decay.csv                    — IC decay curve for best feature
+    reports/portfolio_stats.csv             — gross Sharpe, turnover, leverage
+    reports/comprehensive_metrics.csv       — detailed performance metrics (CAGR, Sharpe, Sortino, etc.)
+    reports/alpha_pipeline.log              — full execution log with all metrics
 """
 
 from __future__ import annotations
@@ -222,10 +223,21 @@ def run(
     stats['annual_cost'] = (ann_to_rebal * txn_cost_bps / 10000)
     stats['net_return_ann'] = stats['gross_return_ann'] - stats['annual_cost']
 
+    # Compute comprehensive metrics
+    comprehensive_stats = _compute_comprehensive_metrics(
+        weights, fwd_ret, close, stats, rebalance_freq
+    )
+    
+    # Save basic stats
     pd.Series(stats).to_frame("value").to_csv(
         Path(report_dir) / "portfolio_stats.csv"
     )
+    
+    # Save comprehensive metrics
+    _save_comprehensive_metrics(comprehensive_stats, report_dir)
+    
     _print_portfolio_stats(stats)
+    _print_comprehensive_metrics(comprehensive_stats)
 
     elapsed = time.perf_counter() - t0
     log.info(SEP)
@@ -292,6 +304,174 @@ def _save_panel(df: pd.DataFrame, path: Path) -> None:
     pq.write_table(table, path, compression="snappy")
 
 
+def _compute_comprehensive_metrics(
+    weights: pd.DataFrame,
+    returns: pd.DataFrame,
+    close: pd.DataFrame,
+    basic_stats: dict,
+    rebalance_freq: int = 1,
+) -> dict:
+    """
+    Compute comprehensive performance metrics for reporting.
+    
+    Includes: Returns, Risk, Win Rate, Accuracy, CAGR, Drawdown, etc.
+    """
+    # Bar-level portfolio returns
+    port_ret = (weights.shift(1) * returns).sum(axis=1).dropna()
+    
+    # Basic return metrics
+    total_ret = (1 + port_ret).prod() - 1
+    bars_per_year = 252 * 6.5 * 60  # minutes per year
+    years = len(port_ret) / bars_per_year
+    cagr = (1 + total_ret) ** (1 / years) - 1 if years > 0 else 0
+    
+    # Risk metrics
+    annual_vol = port_ret.std() * np.sqrt(bars_per_year)
+    sharpe = basic_stats.get('gross_sharpe', 0)
+    
+    # Drawdown metrics
+    cum_ret = (1 + port_ret).cumprod()
+    running_max = cum_ret.expanding().max()
+    drawdown = (cum_ret - running_max) / running_max
+    max_dd = drawdown.min() if len(drawdown) > 0 else 0
+    
+    # Win/Loss metrics
+    positive_rets = (port_ret > 0).sum()
+    negative_rets = (port_ret < 0).sum()
+    total_periods = len(port_ret)
+    win_rate = positive_rets / total_periods if total_periods > 0 else 0
+    
+    # Win/Loss ratio
+    avg_win = port_ret[port_ret > 0].mean() if positive_rets > 0 else 0
+    avg_loss = port_ret[port_ret < 0].mean() if negative_rets > 0 else 0
+    win_loss_ratio = abs(avg_win / avg_loss) if avg_loss != 0 else 0
+    
+    # Best/Worst trades
+    best_trade = port_ret.max()
+    worst_trade = port_ret.min()
+    
+    # Cumulative & average metrics
+    cum_return = port_ret.sum()
+    avg_return = port_ret.mean()
+    
+    # Sortino ratio (downside deviation)
+    downside = port_ret[port_ret < 0]
+    downside_vol = downside.std() * np.sqrt(bars_per_year) if len(downside) > 0 else annual_vol
+    sortino = (basic_stats.get('gross_return_ann', 0) / downside_vol) if downside_vol > 0 else 0
+    
+    # Positions & turnover
+    avg_positions = basic_stats.get('avg_positions', 0)
+    avg_gross_lev = basic_stats.get('avg_gross_lev', 0)
+    annual_turnover = basic_stats.get('annual_turnover', 0)
+    
+    # Holding period (bars between weight changes)
+    weight_changes = (weights.abs().diff().sum(axis=1) > 1e-6).sum()
+    avg_holding_period = len(weights) / weight_changes if weight_changes > 0 else len(weights)
+    
+    return {
+        # Return metrics
+        'total_return': total_ret,
+        'cumulative_return': cum_return,
+        'average_return': avg_return,
+        'annual_return': basic_stats.get('gross_return_ann', 0),
+        'cagr': cagr,
+        'best_trade': best_trade,
+        'worst_trade': worst_trade,
+        
+        # Risk metrics
+        'volatility_annual': annual_vol,
+        'max_drawdown': max_dd,
+        'sharpe_ratio': sharpe,
+        'sortino_ratio': sortino,
+        
+        # Win rate & accuracy
+        'win_rate': win_rate,
+        'loss_rate': 1 - win_rate,
+        'win_loss_ratio': win_loss_ratio,
+        'avg_win': avg_win,
+        'avg_loss': avg_loss,
+        'positive_periods': positive_rets,
+        'negative_periods': negative_rets,
+        'total_periods': total_periods,
+        
+        # Position metrics
+        'avg_positions': avg_positions,
+        'avg_gross_leverage': avg_gross_lev,
+        'annual_turnover': annual_turnover,
+        'avg_holding_period_bars': avg_holding_period,
+        
+        # Costs
+        'transaction_cost_bps': basic_stats.get('txn_cost_bps', 1.0),
+        'annual_cost': basic_stats.get('annual_cost', 0),
+        'net_return_annual': basic_stats.get('net_return_ann', 0),
+    }
+
+
+def _save_comprehensive_metrics(metrics: dict, report_dir: str) -> None:
+    """Save comprehensive metrics to CSV and log them."""
+    report_path = Path(report_dir)
+    report_path.mkdir(parents=True, exist_ok=True)
+    
+    # Save to CSV
+    df_metrics = pd.Series(metrics).to_frame("value")
+    csv_path = report_path / "comprehensive_metrics.csv"
+    df_metrics.to_csv(csv_path)
+    log.info("  Comprehensive metrics saved → %s", csv_path)
+
+
+def _print_comprehensive_metrics(metrics: dict) -> None:
+    """Print comprehensive metrics in formatted table."""
+    log.info("")
+    log.info("  COMPREHENSIVE PERFORMANCE METRICS")
+    log.info("  " + "=" * 60)
+    
+    sections = {
+        "RETURN METRICS": [
+            ("Total Return", "total_return", ".2%"),
+            ("CAGR", "cagr", ".2%"),
+            ("Cumulative Return", "cumulative_return", ".4f"),
+            ("Best Trade", "best_trade", ".2%"),
+            ("Worst Trade", "worst_trade", ".2%"),
+            ("Avg Return/Bar", "average_return", ".4f"),
+        ],
+        "RISK METRICS": [
+            ("Sharpe Ratio", "sharpe_ratio", ".3f"),
+            ("Sortino Ratio", "sortino_ratio", ".3f"),
+            ("Max Drawdown", "max_drawdown", ".2%"),
+            ("Annual Volatility", "volatility_annual", ".2%"),
+            ("Win Rate", "win_rate", ".2%"),
+            ("Win/Loss Ratio", "win_loss_ratio", ".3f"),
+        ],
+        "POSITION METRICS": [
+            ("Avg Positions", "avg_positions", ".1f"),
+            ("Avg Gross Leverage", "avg_gross_leverage", ".2f"),
+            ("Avg Holding Period(bars)", "avg_holding_period_bars", ".1f"),
+            ("Annual Turnover", "annual_turnover", ".2%"),
+        ],
+        "COSTS": [
+            ("Transaction Cost (bps)", "transaction_cost_bps", ".1f"),
+            ("Annual Cost", "annual_cost", ".2%"),
+            ("Net Return Annual", "net_return_annual", ".2%"),
+        ],
+    }
+    
+    for section_name, fields in sections.items():
+        log.info("\n  %s", section_name)
+        log.info("  " + "-" * 60)
+        for label, key, fmt_str in fields:
+            value = metrics.get(key, 0)
+            if fmt_str.endswith('%'):
+                log.info("  %-30s: %7.2f%%", label, value * 100)
+            elif fmt_str.endswith('f'):
+                decimal_places = int(fmt_str[1])
+                log.info(f"  %-30s: {value:7.{decimal_places}f}", label)
+            else:
+                log.info("  %-30s: %s", label, value)
+    
+    log.info("  " + "=" * 60)
+    log.info("")
+
+
 def _parse() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Phase 2: Alpha Signal Construction + Portfolio Construction",
@@ -335,9 +515,12 @@ def _parse() -> argparse.Namespace:
 
 if __name__ == "__main__":
     args = _parse()
+    
+    # Setup logging with report_dir
+    log_file = Path(args.report_dir) / "alpha_pipeline.log"
     setup_logging(
         args.log_level,
-        log_file="reports/alpha_pipeline.log",
+        log_file=str(log_file),
     )
     run(
         clean_dir      = args.clean_dir,

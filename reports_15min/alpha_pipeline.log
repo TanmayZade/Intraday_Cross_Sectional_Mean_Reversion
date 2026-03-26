@@ -1,0 +1,108 @@
+2026-03-26 19:48:12  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:48:12  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-26 19:48:12  INFO        Feature store : data/features_15min/
+2026-03-26 19:48:12  INFO        Alpha output  : data/alpha_15min/
+2026-03-26 19:48:12  INFO        Rebalance freq: every 1 bars (~15 min) | Txn cost: 1.0 bps
+2026-03-26 19:48:12  INFO        Date range    : 2026-02-26 → 2026-03-26
+2026-03-26 19:48:12  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:48:12  INFO      [1/6] Loading features ...
+2026-03-26 19:48:12  INFO      FeatureStore initialized at: data\features_15min
+2026-03-26 19:48:12  INFO      Loading 15 features from data\features_15min (tickers=all, dates=2026-02-26→2026-03-26)
+2026-03-26 19:48:14  INFO      ✓ Loaded 15 features from data\features_15min
+2026-03-26 19:48:14  INFO        Loaded 15 features
+2026-03-26 19:48:14  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-26 19:48:14  INFO      Read 40180 rows | 44 tickers | 2026-02-26 → 2026-03-20
+2026-03-26 19:48:14  INFO        Close panel: (1088, 44)  (aligned to feature index)
+2026-03-26 19:48:14  INFO      [3/6] Computing IC summary ...
+2026-03-26 19:48:14  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-26 19:48:14  INFO      
+2026-03-26 19:48:14  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-26 19:48:14  INFO        ------------------------------------------------------------------------------
+2026-03-26 19:48:14  INFO        B2_price_position          +0.04589  0.23096  +0.199  +1.405  0.580    ✓
+2026-03-26 19:48:14  INFO        A4_overnight_gap           +0.04794  0.32307  +0.148  +1.049  0.520    ✓
+2026-03-26 19:48:14  INFO        A1_bar_reversal            +0.04506  0.31234  +0.144  +1.020  0.640    ✓
+2026-03-26 19:48:14  INFO        A3_medium_rev              +0.03591  0.29263  +0.123  +0.868  0.580    ✗
+2026-03-26 19:48:14  INFO        B3_open_gap                +0.01007  0.32711  +0.031  +0.218  0.520    ✗
+2026-03-26 19:48:14  INFO        A2_short_rev               +0.00667  0.29774  +0.022  +0.158  0.540    ✗
+2026-03-26 19:48:14  INFO        C2_flow_imbalance          +0.00587  0.29320  +0.020  +0.142  0.460    ✗
+2026-03-26 19:48:14  INFO        E1_residual_return         +0.00411  0.24435  +0.017  +0.119  0.500    ✗
+2026-03-26 19:48:14  INFO        C1_volume_shock            +0.00252  0.23451  +0.011  +0.076  0.500    ✗
+2026-03-26 19:48:14  INFO        B1_vwap_deviation          +0.00204  0.31352  +0.007  +0.046  0.580    ✗
+2026-03-26 19:48:14  INFO        E2_sector_residual         -0.00258  0.32435  -0.008  -0.056  0.500    ✗
+2026-03-26 19:48:14  INFO        D1_vol_burst               -0.01686  0.25452  -0.066  -0.469  0.500    ✗
+2026-03-26 19:48:14  INFO        C3_turnover_shock          -0.01841  0.25474  -0.072  -0.511  0.500    ✗
+2026-03-26 19:48:14  INFO        D2_vol_zscore              -0.03163  0.27493  -0.115  -0.813  0.360    ✗
+2026-03-26 19:48:14  INFO      
+2026-03-26 19:48:14  INFO        IC summary saved → reports_15min//ic_summary.csv
+2026-03-26 19:48:14  INFO        3 / 15 features pass IC t-stat threshold (1.0)
+2026-03-26 19:48:14  INFO        Computing IC decay for best feature: B2_price_position
+2026-03-26 19:48:19  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-26 19:48:19  INFO      [4/6] Building composite alpha signal ...
+2026-03-26 19:48:19  INFO      Computing composite alpha ...
+2026-03-26 19:48:20  INFO      IC weights computed. Active features per bar (avg): 1.9
+2026-03-26 19:48:20  INFO      Composite alpha: shape=(51, 41)  valid=66.7%  mean=-0.0042  std=0.9664
+2026-03-26 19:48:20  INFO        Composite alpha saved: (51, 41)
+2026-03-26 19:48:20  INFO      [5/6] Constructing portfolio weights ...
+2026-03-26 19:48:20  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(51, 41) | close=(1088, 44) | adtv=$1,000,000
+2026-03-26 19:48:20  INFO      Building portfolio weights ...
+2026-03-26 19:48:20  INFO        [1/6] Volatility scaling ...
+2026-03-26 19:48:20  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-26 19:48:20  INFO        [3/6] Dollar neutralisation ...
+2026-03-26 19:48:20  INFO        [4/6] Position limits (max=10%) ...
+2026-03-26 19:48:20  INFO        [5/6] Normalise to unit gross ...
+2026-03-26 19:48:20  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-26 19:48:20  INFO      Portfolio built -- avg 29.2 positions | avg gross=1.333x | avg |net|=0.0000
+2026-03-26 19:48:20  INFO        Weights saved: (51, 44)
+2026-03-26 19:48:20  INFO      [6/6] Computing portfolio statistics ...
+2026-03-26 19:48:20  INFO        Comprehensive metrics saved → reports_15min\comprehensive_metrics.csv
+2026-03-26 19:48:20  INFO      
+2026-03-26 19:48:20  INFO        Portfolio Statistics:
+2026-03-26 19:48:20  INFO        Annual Return                   -1.99% (gross)
+2026-03-26 19:48:20  INFO          → Net after costs             -32.13% (3014.0 bps cost)
+2026-03-26 19:48:20  INFO        Annual Vol                      0.85%
+2026-03-26 19:48:20  INFO        Gross Sharpe Ratio              -2.336
+2026-03-26 19:48:20  INFO        Rebalance Turnover              3014×
+2026-03-26 19:48:20  INFO        Annual Cost (realized)          30.14%
+2026-03-26 19:48:20  INFO        Avg Positions                   29
+2026-03-26 19:48:20  INFO        Avg Gross Leverage              1.333×
+2026-03-26 19:48:20  INFO        Avg Net Leverage                0.0000
+2026-03-26 19:48:20  INFO      
+2026-03-26 19:48:20  INFO        COMPREHENSIVE PERFORMANCE METRICS
+2026-03-26 19:48:20  INFO        ============================================================
+2026-03-26 19:48:20  INFO      
+  RETURN METRICS
+2026-03-26 19:48:20  INFO        ------------------------------------------------------------
+2026-03-26 19:48:20  INFO        Total Return                  :   -0.33%
+2026-03-26 19:48:20  INFO        CAGR                          :  -25.83%
+2026-03-26 19:48:20  INFO        Cumulative Return             : -0.0033
+2026-03-26 19:48:20  INFO        Best Trade                    :    0.19%
+2026-03-26 19:48:20  INFO        Worst Trade                   :   -0.12%
+2026-03-26 19:48:20  INFO        Avg Return/Bar                : -0.0000
+2026-03-26 19:48:20  INFO      
+  RISK METRICS
+2026-03-26 19:48:20  INFO        ------------------------------------------------------------
+2026-03-26 19:48:20  INFO        Sharpe Ratio                  :  -2.336
+2026-03-26 19:48:20  INFO        Sortino Ratio                 :  -0.166
+2026-03-26 19:48:20  INFO        Max Drawdown                  :   -0.42%
+2026-03-26 19:48:20  INFO        Annual Volatility             :    3.30%
+2026-03-26 19:48:20  INFO        Win Rate                      :    1.56%
+2026-03-26 19:48:20  INFO        Win/Loss Ratio                :   0.589
+2026-03-26 19:48:20  INFO      
+  POSITION METRICS
+2026-03-26 19:48:20  INFO        ------------------------------------------------------------
+2026-03-26 19:48:20  INFO        Avg Positions                 :    29.2
+2026-03-26 19:48:20  INFO        Avg Gross Leverage            :    1.33
+2026-03-26 19:48:20  INFO        Avg Holding Period(bars)      :     8.5
+2026-03-26 19:48:20  INFO        Annual Turnover               : 301403.49%
+2026-03-26 19:48:20  INFO      
+  COSTS
+2026-03-26 19:48:20  INFO        ------------------------------------------------------------
+2026-03-26 19:48:20  INFO        Transaction Cost (bps)        :     1.0
+2026-03-26 19:48:20  INFO        Annual Cost                   :   30.14%
+2026-03-26 19:48:20  INFO        Net Return Annual             :  -32.13%
+2026-03-26 19:48:20  INFO        ============================================================
+2026-03-26 19:48:20  INFO      
+2026-03-26 19:48:20  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:48:20  INFO        Phase 2 complete in 8.0s
+2026-03-26 19:48:20  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-26 19:48:20  INFO      ────────────────────────────────────────────────────────────

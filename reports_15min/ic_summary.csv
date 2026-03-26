@@ -1,0 +1,15 @@
+feature,IC_mean,IC_std,ICIR,t_stat,pct_positive,n_bars,weight,active
+B2_price_position,0.04589,0.23096,0.199,1.405,0.58,50,0.3304,True
+A4_overnight_gap,0.04794,0.32307,0.148,1.049,0.52,50,0.3452,True
+A1_bar_reversal,0.04506,0.31234,0.144,1.02,0.64,50,0.3244,True
+A3_medium_rev,0.03591,0.29263,0.123,0.868,0.58,50,0.0,False
+B3_open_gap,0.01007,0.32711,0.031,0.218,0.52,50,0.0,False
+A2_short_rev,0.00667,0.29774,0.022,0.158,0.54,50,0.0,False
+C2_flow_imbalance,0.00587,0.2932,0.02,0.142,0.46,50,0.0,False
+E1_residual_return,0.00411,0.24435,0.017,0.119,0.5,50,0.0,False
+C1_volume_shock,0.00252,0.23451,0.011,0.076,0.5,50,0.0,False
+B1_vwap_deviation,0.00204,0.31352,0.007,0.046,0.58,50,0.0,False
+E2_sector_residual,-0.00258,0.32435,-0.008,-0.056,0.5,50,0.0,False
+D1_vol_burst,-0.01686,0.25452,-0.066,-0.469,0.5,50,0.0,False
+C3_turnover_shock,-0.01841,0.25474,-0.072,-0.511,0.5,50,0.0,False
+D2_vol_zscore,-0.03163,0.27493,-0.115,-0.813,0.36,50,0.0,False

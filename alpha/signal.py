@@ -47,6 +47,7 @@ Usage
 from __future__ import annotations
 
 import logging
+import warnings
 from typing import Optional
 
 import numpy as np
@@ -54,6 +55,9 @@ import pandas as pd
 from scipy.stats import spearmanr
 
 from features.core import cs_zscore, cs_rank, rolling_mean, rolling_std
+
+# Suppress scipy ConstantInputWarning when computing correlation of constant signals
+warnings.filterwarnings("ignore", message="An input array is constant")
 
 log = logging.getLogger(__name__)
 
@@ -118,6 +122,12 @@ def compute_ic_decay(
 
     Returns DataFrame: index=lead, columns=[IC_mean, IC_std, ICIR, t_stat]
     """
+    # Align signal and close to common index and columns
+    common_idx = signal.index.intersection(close.index)
+    common_cols = signal.columns.intersection(close.columns)
+    signal = signal.reindex(index=common_idx, columns=common_cols)
+    close = close.reindex(index=common_idx, columns=common_cols)
+    
     rows = []
     ret_1bar = close.pct_change(1)
 
@@ -188,14 +198,19 @@ class AlphaModel:
         min_ic_tstat: float = 1.0,
         decay_window: int   = 300,
     ):
-        # Align features and close to common index
+        # Align features and close to common index AND columns (tickers)
         all_indices = [close.index] + [df.index for df in features.values()]
         common_index = all_indices[0]
         for idx in all_indices[1:]:
             common_index = common_index.intersection(idx)
         
-        self.close = close.reindex(common_index)
-        self.features = {name: df.reindex(common_index) for name, df in features.items()}
+        all_columns = [close.columns] + [df.columns for df in features.values()]
+        common_columns = all_columns[0]
+        for cols in all_columns[1:]:
+            common_columns = common_columns.intersection(cols)
+        
+        self.close = close.reindex(index=common_index, columns=common_columns)
+        self.features = {name: df.reindex(index=common_index, columns=common_columns) for name, df in features.items()}
         
         self.ic_window    = ic_window
         self.min_ic_tstat = min_ic_tstat

@@ -1,0 +1,251 @@
+2026-03-25 19:28:55  INFO      ───────────────────────────────────────────────────────
+2026-03-25 19:28:55  INFO      Polygon OHLCV Pipeline
+2026-03-25 19:28:55  INFO        Tickers    : 44  (AAPL … AMAT)
+2026-03-25 19:28:55  INFO        Date range : 2024-03-22 → 2026-03-25
+2026-03-25 19:28:55  INFO        Timespan   : minute (multiplier=5)
+2026-03-25 19:28:55  INFO        Adjusted   : True
+2026-03-25 19:28:55  INFO      ───────────────────────────────────────────────────────
+2026-03-25 19:28:55  INFO      [1/5] Fetching from Polygon.io ...
+2026-03-25 19:29:31  WARNING   429 rate limit hit on AAPL (attempt 1) — waiting 20s
+2026-03-25 19:29:51  WARNING   429 rate limit hit on AAPL (attempt 2) — waiting 40s
+2026-03-25 19:30:37  INFO      AAPL: fetched 92041 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:30:55  WARNING   429 rate limit hit on MSFT (attempt 1) — waiting 20s
+2026-03-25 19:32:32  INFO      MSFT: fetched 84256 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:34:32  INFO      NVDA: fetched 91894 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:35:49  ERROR     AMZN: request error (attempt 1/3): HTTPSConnectionPool(host='api.polygon.io', port=443): Max retries exceeded with url: /v2/aggs/ticker/AMZN/range/5/minute/2024-11-17/2025-02-04?adjusted=true&sort=asc&limit=50000&apiKey=hO7LJArRmMbPva1s0KW6r7CXbrfe0ROQ (Caused by ReadTimeoutError("HTTPSConnectionPool(host='api.polygon.io', port=443): Read timed out. (read timeout=30)"))
+2026-03-25 19:36:31  WARNING   429 rate limit hit on AMZN (attempt 1) — waiting 20s
+2026-03-25 19:36:51  WARNING   429 rate limit hit on AMZN (attempt 2) — waiting 40s
+2026-03-25 19:37:41  INFO      AMZN: fetched 92070 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:37:55  WARNING   429 rate limit hit on META (attempt 1) — waiting 20s
+2026-03-25 19:39:23  INFO      META: fetched 82524 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:41:20  INFO      AMD: fetched 93543 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:42:55  WARNING   429 rate limit hit on TSLA (attempt 1) — waiting 20s
+2026-03-25 19:43:32  INFO      TSLA: fetched 93743 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:45:32  INFO      MSTR: fetched 86132 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:47:32  INFO      PLTR: fetched 94443 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:49:32  INFO      SMCI: fetched 88346 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:49:32  INFO      Progress: 10/44 tickers  (1237s elapsed, ~4205s remaining)
+2026-03-25 19:51:32  INFO      JPM: fetched 58347 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:53:32  INFO      BAC: fetched 68560 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:55:33  INFO      GS: fetched 48035 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:57:32  INFO      MS: fetched 47528 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 19:59:32  INFO      C: fetched 58477 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:01:32  INFO      XOM: fetched 62739 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:03:32  INFO      CVX: fetched 57111 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:04:55  WARNING   429 rate limit hit on OXY (attempt 1) — waiting 20s
+2026-03-25 20:05:44  INFO      OXY: fetched 75618 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:07:43  WARNING   429 rate limit hit on SLB (attempt 1) — waiting 20s
+2026-03-25 20:08:04  INFO      SLB: fetched 55244 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:08:55  WARNING   429 rate limit hit on HAL (attempt 1) — waiting 20s
+2026-03-25 20:10:09  INFO      HAL: fetched 54141 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:10:09  INFO      Progress: 20/44 tickers  (2474s elapsed, ~2969s remaining)
+2026-03-25 20:12:08  INFO      LLY: fetched 54822 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:14:08  INFO      MRNA: fetched 68997 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:16:08  INFO      BIIB: fetched 42008 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:18:13  INFO      REGN: fetched 40792 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:20:08  INFO      VRTX: fetched 41850 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:22:08  INFO      CRM: fetched 58034 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:24:08  INFO      NOW: fetched 49644 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:26:08  INFO      SNOW: fetched 62926 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:28:12  INFO      NET: fetched 51564 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:30:09  INFO      CRWD: fetched 61031 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:30:09  INFO      Progress: 30/44 tickers  (3674s elapsed, ~1715s remaining)
+2026-03-25 20:32:08  INFO      HD: fetched 47925 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:34:24  INFO      MCD: fetched 47548 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:35:55  WARNING   429 rate limit hit on SBUX (attempt 1) — waiting 20s
+2026-03-25 20:36:22  INFO      SBUX: fetched 59024 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:38:25  INFO      NKE: fetched 72428 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:40:20  INFO      CAT: fetched 47154 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:42:20  INFO      DE: fetched 42384 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:44:20  INFO      LMT: fetched 45980 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:46:20  INFO      RTX: fetched 47830 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:48:27  INFO      GE: fetched 51846 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:50:20  INFO      QCOM: fetched 63461 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:50:20  INFO      Progress: 40/44 tickers  (4885s elapsed, ~489s remaining)
+2026-03-25 20:52:20  INFO      AVGO: fetched 83036 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:52:54  ERROR     MU: request error (attempt 1/3): Expecting ',' delimiter: line 1 column 300988 (char 300987)
+2026-03-25 20:53:55  WARNING   429 rate limit hit on MU (attempt 1) — waiting 20s
+2026-03-25 20:54:44  INFO      MU: fetched 89878 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:56:50  INFO      LRCX: fetched 57017 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:58:50  INFO      AMAT: fetched 57268 bars  (2024-03-22 → 2026-03-25)
+2026-03-25 20:58:51  INFO      Universe fetch complete: 44 tickers, 2829239 total bars
+2026-03-25 20:58:51  INFO      [2/5] Cleaning ...
+2026-03-25 20:58:51  INFO      Cleaning 44 tickers ...
+2026-03-25 20:58:51  INFO      AAPL    raw=92041 → clean=92041 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=6197  stale=341
+2026-03-25 20:58:52  INFO      AMAT    raw=57268 → clean=57265 (100%)  ohlc=0  zero=0  vol=0  ret=2  range=1  gaps=0  spikes=5566  stale=340
+2026-03-25 20:58:52  INFO      AMD     raw=93543 → clean=93536 (100%)  ohlc=0  zero=0  vol=0  ret=2  range=5  gaps=0  spikes=5919  stale=222
+2026-03-25 20:58:52  INFO      AMZN    raw=92070 → clean=92067 (100%)  ohlc=0  zero=0  vol=0  ret=2  range=1  gaps=0  spikes=5988  stale=338
+2026-03-25 20:58:52  INFO      AVGO    raw=83036 → clean=83033 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=2  gaps=0  spikes=5789  stale=231
+2026-03-25 20:58:52  INFO      BAC     raw=68560 → clean=68560 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=6687  stale=1109
+2026-03-25 20:58:52  INFO      BIIB    raw=42008 → clean=42007 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=852  stale=217
+2026-03-25 20:58:53  INFO      C       raw=58477 → clean=58477 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=5674  stale=462
+2026-03-25 20:58:53  INFO      CAT     raw=47154 → clean=47154 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=2832  stale=301
+2026-03-25 20:58:53  INFO      CRM     raw=58034 → clean=58028 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=5  gaps=0  spikes=5341  stale=346
+2026-03-25 20:58:53  INFO      CRWD    raw=61031 → clean=61026 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=4  gaps=0  spikes=5377  stale=259
+2026-03-25 20:58:53  INFO      CVX     raw=57111 → clean=57111 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=5538  stale=383
+2026-03-25 20:58:53  INFO      DE      raw=42384 → clean=42384 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=910  stale=172
+2026-03-25 20:58:53  INFO      GE      raw=51846 → clean=51846 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=4931  stale=265
+2026-03-25 20:58:53  INFO      GS      raw=48035 → clean=48035 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3194  stale=282
+2026-03-25 20:58:54  INFO      HAL     raw=54141 → clean=54140 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=0  gaps=0  spikes=5371  stale=718
+2026-03-25 20:58:54  INFO      HD      raw=47925 → clean=47925 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3508  stale=295
+2026-03-25 20:58:54  INFO      JPM     raw=58347 → clean=58347 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=5589  stale=343
+2026-03-25 20:58:54  INFO      LLY     raw=54822 → clean=54813 (100%)  ohlc=0  zero=0  vol=0  ret=2  range=7  gaps=0  spikes=5016  stale=297
+2026-03-25 20:58:54  INFO      LMT     raw=45980 → clean=45979 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=2275  stale=138
+2026-03-25 20:58:54  INFO      LRCX    raw=57017 → clean=57016 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=4705  stale=387
+2026-03-25 20:58:54  INFO      MCD     raw=47548 → clean=47548 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3374  stale=323
+2026-03-25 20:58:54  INFO      META    raw=82524 → clean=82521 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=2  gaps=0  spikes=5924  stale=213
+2026-03-25 20:58:55  INFO      MRNA    raw=68997 → clean=68981 (100%)  ohlc=0  zero=0  vol=0  ret=4  range=12  gaps=0  spikes=5973  stale=561
+2026-03-25 20:58:55  INFO      MS      raw=47528 → clean=47528 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3303  stale=402
+2026-03-25 20:58:55  INFO      MSFT    raw=84256 → clean=84255 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=6110  stale=298
+2026-03-25 20:58:55  INFO      MSTR    raw=86132 → clean=86124 (100%)  ohlc=0  zero=0  vol=0  ret=3  range=5  gaps=0  spikes=5191  stale=126
+2026-03-25 20:58:55  INFO      MU      raw=89878 → clean=89870 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=7  gaps=0  spikes=6027  stale=331
+2026-03-25 20:58:55  INFO      NET     raw=51564 → clean=51555 (100%)  ohlc=0  zero=0  vol=0  ret=3  range=6  gaps=0  spikes=4419  stale=248
+2026-03-25 20:58:55  INFO      NKE     raw=72428 → clean=72425 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=3  gaps=0  spikes=6215  stale=687
+2026-03-25 20:58:56  INFO      NOW     raw=49644 → clean=49640 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=4  gaps=0  spikes=2272  stale=308
+2026-03-25 20:58:56  INFO      NVDA    raw=91894 → clean=91889 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=4  gaps=0  spikes=5068  stale=141
+2026-03-25 20:58:56  INFO      OXY     raw=75618 → clean=75618 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=6206  stale=1029
+2026-03-25 20:58:56  INFO      PLTR    raw=94443 → clean=94434 (100%)  ohlc=0  zero=0  vol=0  ret=4  range=5  gaps=0  spikes=5643  stale=683
+2026-03-25 20:58:56  INFO      QCOM    raw=63461 → clean=63460 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=5912  stale=334
+2026-03-25 20:58:56  INFO      REGN    raw=40792 → clean=40791 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=699  stale=129
+2026-03-25 20:58:56  INFO      RTX     raw=47830 → clean=47830 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3634  stale=260
+2026-03-25 20:58:57  INFO      SBUX    raw=59024 → clean=59020 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=4  gaps=0  spikes=5768  stale=476
+2026-03-25 20:58:57  INFO      SLB     raw=55244 → clean=55243 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=0  gaps=0  spikes=5617  stale=519
+2026-03-25 20:58:57  INFO      SMCI    raw=88346 → clean=88311 (100%)  ohlc=0  zero=0  vol=0  ret=9  range=26  gaps=0  spikes=5868  stale=497
+2026-03-25 20:58:57  INFO      SNOW    raw=62926 → clean=62915 (100%)  ohlc=0  zero=0  vol=0  ret=3  range=8  gaps=0  spikes=5546  stale=410
+2026-03-25 20:58:57  INFO      TSLA    raw=93743 → clean=93739 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=3  gaps=0  spikes=5318  stale=77
+2026-03-25 20:58:57  INFO      VRTX    raw=41850 → clean=41849 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=745  stale=196
+2026-03-25 20:58:57  INFO      XOM     raw=62739 → clean=62739 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=6207  stale=406
+2026-03-25 20:58:58  INFO      Panel cleaning complete: 2829239 → 2829075 bars (100.0% retained)
+2026-03-25 20:58:58  INFO      [3/5] Building universe membership ...
+2026-03-25 20:59:50  INFO      Universe built: 501 dates | avg 39 stocks | min 0 | max 44
+2026-03-25 21:00:09  INFO      Universe mask: 317819 bars excluded (11.2% of total)
+2026-03-25 21:00:09  INFO      [4/5] Writing Parquet store ...
+2026-03-25 21:00:13  INFO      Wrote 3 partition files → data\clean
+2026-03-25 21:00:13  INFO      [5/5] Generating quality report ...
+2026-03-25 21:01:22  INFO      Quality report saved to reports | 44 tickers | 100.0% bars retained | 224398 flagged (not removed) | 32 tickers below 80% coverage
+2026-03-25 21:01:22  INFO      ───────────────────────────────────────────────────────
+2026-03-25 21:01:22  INFO      Pipeline complete in 5547.1s
+2026-03-25 21:01:22  INFO        Tickers    : 44
+2026-03-25 21:01:22  INFO        Clean bars : 2829075  (100.0% retained)
+2026-03-25 21:01:22  INFO        Output     : data/clean/
+2026-03-25 21:01:22  INFO        Report     : reports/
+2026-03-25 21:01:22  INFO      ───────────────────────────────────────────────────────
+2026-03-26 18:52:42  INFO      ───────────────────────────────────────────────────────
+2026-03-26 18:52:42  INFO      Polygon OHLCV Pipeline
+2026-03-26 18:52:42  INFO        Tickers    : 44  (AAPL … AMAT)
+2026-03-26 18:52:42  INFO        Date range : 2026-02-26 → 2026-03-26
+2026-03-26 18:52:42  INFO        Timespan   : minute (multiplier=15)
+2026-03-26 18:52:42  INFO        Adjusted   : True
+2026-03-26 18:52:42  INFO      ───────────────────────────────────────────────────────
+2026-03-26 18:52:42  INFO      [1/5] Fetching from Polygon.io ...
+2026-03-26 18:52:43  INFO      AAPL: fetched 1264 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:52:44  INFO      MSFT: fetched 1280 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:52:44  INFO      NVDA: fetched 1280 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:52:45  INFO      AMZN: fetched 1279 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:52:45  INFO      META: fetched 1275 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:52:54  WARNING   429 rate limit hit on AMD (attempt 1) — waiting 20s
+2026-03-26 18:53:15  INFO      AMD: fetched 1278 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:53:18  INFO      TSLA: fetched 1280 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:53:30  INFO      MSTR: fetched 1280 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:53:42  INFO      PLTR: fetched 1278 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:53:54  INFO      SMCI: fetched 1277 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:53:54  INFO      Progress: 10/44 tickers  (73s elapsed, ~247s remaining)
+2026-03-26 18:54:06  INFO      JPM: fetched 1163 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:54:18  INFO      BAC: fetched 1164 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:54:30  INFO      GS: fetched 1006 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:54:42  INFO      MS: fetched 833 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:54:54  INFO      C: fetched 983 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:55:06  INFO      XOM: fetched 1243 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:55:18  INFO      CVX: fetched 1195 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:55:30  INFO      OXY: fetched 1270 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:55:42  INFO      SLB: fetched 1046 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:55:54  INFO      HAL: fetched 1051 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:55:54  INFO      Progress: 20/44 tickers  (193s elapsed, ~231s remaining)
+2026-03-26 18:56:06  INFO      LLY: fetched 1006 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:56:18  INFO      MRNA: fetched 1110 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:56:30  INFO      BIIB: fetched 577 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:56:42  INFO      REGN: fetched 599 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:56:54  INFO      VRTX: fetched 669 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:57:06  INFO      CRM: fetched 1140 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:57:18  INFO      NOW: fetched 1267 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:57:30  INFO      SNOW: fetched 967 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:57:42  INFO      NET: fetched 863 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:57:54  INFO      CRWD: fetched 1159 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:57:54  INFO      Progress: 30/44 tickers  (313s elapsed, ~146s remaining)
+2026-03-26 18:58:06  INFO      HD: fetched 900 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:58:18  INFO      MCD: fetched 841 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:58:30  INFO      SBUX: fetched 880 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:58:42  INFO      NKE: fetched 1223 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:58:54  INFO      CAT: fetched 968 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:59:06  INFO      DE: fetched 695 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:59:18  INFO      LMT: fetched 986 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:59:30  INFO      RTX: fetched 970 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:59:42  INFO      GE: fetched 1001 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:59:54  INFO      QCOM: fetched 1046 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 18:59:54  INFO      Progress: 40/44 tickers  (433s elapsed, ~43s remaining)
+2026-03-26 19:00:07  INFO      AVGO: fetched 1280 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 19:00:19  INFO      MU: fetched 1280 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 19:00:31  INFO      LRCX: fetched 1107 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 19:00:43  INFO      AMAT: fetched 1022 bars  (2026-02-26 → 2026-03-26)
+2026-03-26 19:00:43  INFO      Universe fetch complete: 44 tickers, 47281 total bars
+2026-03-26 19:00:43  INFO      [2/5] Cleaning ...
+2026-03-26 19:00:43  INFO      Cleaning 44 tickers ...
+2026-03-26 19:00:43  INFO      AAPL    raw=1264 → clean=1264 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=225  stale=1
+2026-03-26 19:00:43  INFO      AMAT    raw=1022 → clean=1022 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=218  stale=0
+2026-03-26 19:00:43  INFO      AMD     raw=1278 → clean=1278 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=206  stale=0
+2026-03-26 19:00:43  INFO      AMZN    raw=1279 → clean=1279 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=222  stale=0
+2026-03-26 19:00:43  INFO      AVGO    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=210  stale=0
+2026-03-26 19:00:43  INFO      BAC     raw=1164 → clean=1164 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=240  stale=5
+2026-03-26 19:00:43  INFO      BIIB    raw= 577 → clean= 577 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=13  stale=0
+2026-03-26 19:00:43  INFO      C       raw= 983 → clean= 983 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=215  stale=1
+2026-03-26 19:00:43  INFO      CAT     raw= 968 → clean= 968 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=219  stale=0
+2026-03-26 19:00:43  INFO      CRM     raw=1140 → clean=1140 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=226  stale=3
+2026-03-26 19:00:43  INFO      CRWD    raw=1159 → clean=1158 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=219  stale=2
+2026-03-26 19:00:43  INFO      CVX     raw=1195 → clean=1195 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=226  stale=2
+2026-03-26 19:00:43  INFO      DE      raw= 695 → clean= 695 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=53  stale=1
+2026-03-26 19:00:43  INFO      GE      raw=1001 → clean=1001 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=222  stale=0
+2026-03-26 19:00:43  INFO      GS      raw=1006 → clean=1006 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=208  stale=1
+2026-03-26 19:00:43  INFO      HAL     raw=1051 → clean=1051 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=231  stale=10
+2026-03-26 19:00:43  INFO      HD      raw= 900 → clean= 900 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=204  stale=1
+2026-03-26 19:00:43  INFO      JPM     raw=1163 → clean=1163 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=242  stale=1
+2026-03-26 19:00:43  INFO      LLY     raw=1006 → clean=1006 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=214  stale=1
+2026-03-26 19:00:43  INFO      LMT     raw= 986 → clean= 986 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=212  stale=1
+2026-03-26 19:00:43  INFO      LRCX    raw=1107 → clean=1107 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=227  stale=3
+2026-03-26 19:00:43  INFO      MCD     raw= 841 → clean= 841 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=173  stale=3
+2026-03-26 19:00:43  INFO      META    raw=1275 → clean=1275 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=203  stale=1
+2026-03-26 19:00:43  INFO      MRNA    raw=1110 → clean=1109 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=0  gaps=0  spikes=212  stale=8
+2026-03-26 19:00:43  INFO      MS      raw= 833 → clean= 833 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=166  stale=2
+2026-03-26 19:00:43  INFO      MSFT    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=209  stale=0
+2026-03-26 19:00:43  INFO      MSTR    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=182  stale=1
+2026-03-26 19:00:43  INFO      MU      raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=158  stale=0
+2026-03-26 19:00:43  INFO      NET     raw= 863 → clean= 863 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=177  stale=1
+2026-03-26 19:00:43  INFO      NKE     raw=1223 → clean=1223 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=219  stale=1
+2026-03-26 19:00:43  INFO      NOW     raw=1267 → clean=1267 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=225  stale=1
+2026-03-26 19:00:43  INFO      NVDA    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=188  stale=0
+2026-03-26 19:00:43  INFO      OXY     raw=1270 → clean=1270 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=195  stale=1
+2026-03-26 19:00:43  INFO      PLTR    raw=1278 → clean=1278 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=205  stale=0
+2026-03-26 19:00:43  INFO      QCOM    raw=1046 → clean=1046 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=235  stale=1
+2026-03-26 19:00:43  INFO      REGN    raw= 599 → clean= 599 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3  stale=1
+2026-03-26 19:00:43  INFO      RTX     raw= 970 → clean= 970 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=192  stale=1
+2026-03-26 19:00:43  INFO      SBUX    raw= 880 → clean= 880 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=184  stale=0
+2026-03-26 19:00:43  INFO      SLB     raw=1046 → clean=1046 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=233  stale=2
+2026-03-26 19:00:43  INFO      SMCI    raw=1277 → clean=1275 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=2  gaps=0  spikes=203  stale=2
+2026-03-26 19:00:43  INFO      SNOW    raw= 967 → clean= 967 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=213  stale=3
+2026-03-26 19:00:43  INFO      TSLA    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=201  stale=0
+2026-03-26 19:00:43  INFO      VRTX    raw= 669 → clean= 668 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=25  stale=0
+2026-03-26 19:00:43  INFO      XOM     raw=1243 → clean=1243 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=231  stale=1
+2026-03-26 19:00:43  INFO      Panel cleaning complete: 47281 → 47276 bars (100.0% retained)
+2026-03-26 19:00:43  INFO      [3/5] Building universe membership ...
+2026-03-26 19:00:44  INFO      Universe built: 20 dates | avg 0 stocks | min 0 | max 0
+2026-03-26 19:00:44  INFO      Universe mask: 47276 bars excluded (100.0% of total)
+2026-03-26 19:00:44  INFO      [4/5] Writing Parquet store ...
+2026-03-26 19:00:44  INFO      Wrote 1 partition files → data\clean_15min
+2026-03-26 19:00:44  INFO      [5/5] Generating quality report ...
+2026-03-26 19:00:45  INFO      Quality report saved to reports | 44 tickers | 100.0% bars retained | 8547 flagged (not removed) | 18 tickers below 80% coverage
+2026-03-26 19:00:45  INFO      ───────────────────────────────────────────────────────
+2026-03-26 19:00:45  INFO      Pipeline complete in 483.4s
+2026-03-26 19:00:45  INFO        Tickers    : 44
+2026-03-26 19:00:45  INFO        Clean bars : 47276  (100.0% retained)
+2026-03-26 19:00:45  INFO        Output     : data/clean_15min/
+2026-03-26 19:00:45  INFO        Report     : reports/
+2026-03-26 19:00:45  INFO      ───────────────────────────────────────────────────────

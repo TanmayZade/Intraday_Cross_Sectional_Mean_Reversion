@@ -23,11 +23,15 @@ Usage
 from __future__ import annotations
 
 import logging
+import warnings
 from typing import Optional
 
 import numpy as np
 import pandas as pd
 from scipy import stats
+
+# Suppress scipy ConstantInputWarning when computing correlation of constant signals
+warnings.filterwarnings("ignore", message="An input array is constant")
 
 log = logging.getLogger(__name__)
 
@@ -137,7 +141,7 @@ class FeatureDiagnostics:
             summary = self.ic_summary(feature_name, forward_bars=lead)
             if summary:
                 rows.append(summary)
-        return pd.DataFrame(rows).set_index("forward_bars")
+        return pd.DataFrame(rows).set_index("forward_bars") if rows else pd.DataFrame()
 
     # ── Signal Statistics ─────────────────────────────────────────────────────
 
@@ -167,7 +171,7 @@ class FeatureDiagnostics:
                 "pct_null":    round(float(np.isnan(feat.values).mean()), 4),
                 "turnover_bpb":round(float(turnover), 4),  # bar-per-bar turnover
             })
-        return pd.DataFrame(rows).set_index("feature")
+        return pd.DataFrame(rows).set_index("feature") if rows else pd.DataFrame()
 
     # ── Feature Correlation ───────────────────────────────────────────────────
 

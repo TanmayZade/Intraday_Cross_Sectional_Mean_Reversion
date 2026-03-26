@@ -216,6 +216,7 @@ def run_direct_15min(
     beta_window      = 390,
     halflife         = 13,
     save_report      = False,
+    skip_diagnostics = False,
 ):
     """
     Direct 15-min bar pipeline (skips 1-min → 15-min resampling).
@@ -280,8 +281,11 @@ def run_direct_15min(
     log.info("  Saved: %.1f MB total", total_mb)
 
     # ── Step 4: Diagnostics ───────────────────────────────────────────────────
-    log.info("[4/4] Running signal quality diagnostics ...")
-    _run_diagnostics(features, close, report_dir, save_report)
+    if not skip_diagnostics:
+        log.info("[4/4] Running signal quality diagnostics ...")
+        _run_diagnostics(features, close, report_dir, save_report)
+    else:
+        log.info("[4/4] Skipping diagnostics (--skip-diagnostics)")
 
     elapsed = time.perf_counter() - t0
     log.info(SEP)
@@ -332,6 +336,8 @@ def _parse():
     p.add_argument("--beta-window",      type=int, default=5850)
     p.add_argument("--halflife",         type=int, default=195)
     p.add_argument("--diagnostics-only", action="store_true")
+    p.add_argument("--skip-diagnostics", action="store_true",
+                   help="Skip feature diagnostics (speeds up pipeline)")
     p.add_argument("--save-report",      action="store_true")
     p.add_argument("--log-level",        default="INFO",
                    choices=["DEBUG","INFO","WARNING","ERROR"])
@@ -357,6 +363,7 @@ if __name__ == "__main__":
             beta_window      = args.beta_window,
             halflife         = args.halflife,
             save_report      = args.save_report,
+            skip_diagnostics = args.skip_diagnostics,
         )
     else:
         run(

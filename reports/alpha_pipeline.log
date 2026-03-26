@@ -1,0 +1,1242 @@
+2026-03-24 18:09:29  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:09:29  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 18:09:29  INFO        Feature store : data/features/
+2026-03-24 18:09:29  INFO        Alpha output  : data/alpha/
+2026-03-24 18:09:29  INFO        Date range    : all → latest
+2026-03-24 18:09:29  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:09:29  INFO      [1/6] Loading features ...
+2026-03-24 18:09:29  INFO      FeatureStore initialized at: data\features
+2026-03-24 18:09:29  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 18:09:35  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 18:09:35  INFO        Loaded 15 features
+2026-03-24 18:09:35  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 18:09:35  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 18:09:36  INFO      Resampler initialised: 1-min → 15min  (min 50% bar coverage required)
+2026-03-24 18:09:36  INFO      Resampling 44 tickers × 31862 1-min bars → 15min ...
+2026-03-24 18:09:36  INFO      Dropped 18428 pre/post-market bars
+2026-03-24 18:09:37  INFO      Resample complete: 31862 → 0 bars  (31862.0× compression, 0.0 bars/day)
+2026-03-24 18:09:37  INFO        Close panel: (0, 44)
+2026-03-24 18:09:37  INFO      [3/6] Computing IC summary ...
+2026-03-24 18:09:37  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 18:14:40  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:14:40  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 18:14:40  INFO        Feature store : data/features/
+2026-03-24 18:14:40  INFO        Alpha output  : data/alpha/
+2026-03-24 18:14:40  INFO        Date range    : all → latest
+2026-03-24 18:14:40  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:14:40  INFO      [1/6] Loading features ...
+2026-03-24 18:14:40  INFO      FeatureStore initialized at: data\features
+2026-03-24 18:14:40  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 18:14:45  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 18:14:45  INFO        Loaded 15 features
+2026-03-24 18:14:45  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 18:14:45  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 18:14:47  INFO        Close panel: (31862, 44)
+2026-03-24 18:14:47  INFO      [3/6] Computing IC summary ...
+2026-03-24 18:14:47  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 18:19:01  INFO      
+2026-03-24 18:19:01  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 18:19:01  INFO        ------------------------------------------------------------------------------
+2026-03-24 18:19:01  INFO        C2_flow_imbalance          +0.06559  0.23809  +0.275  +49.174  0.607    ✓
+2026-03-24 18:19:01  INFO        C3_turnover_shock          +0.00514  0.23165  +0.022  +3.942  0.509    ✓
+2026-03-24 18:19:01  INFO        C1_volume_shock            +0.00268  0.23125  +0.012  +2.060  0.504    ✓
+2026-03-24 18:19:01  INFO        A4_overnight_gap           +0.00762  0.32926  +0.023  +1.034  0.514    ✓
+2026-03-24 18:19:01  INFO        A3_medium_rev              +0.00076  0.26134  +0.003  +0.520  0.499    ✗
+2026-03-24 18:19:01  INFO        A1_bar_reversal            +0.00032  0.24319  +0.001  +0.238  0.502    ✗
+2026-03-24 18:19:01  INFO        A2_short_rev               +0.00007  0.25964  +0.000  +0.048  0.501    ✗
+2026-03-24 18:19:01  INFO        E1_residual_return         -0.00200  0.25997  -0.008  -1.374  0.496    ✓
+2026-03-24 18:19:01  INFO        D2_vol_zscore              -0.00244  0.22690  -0.011  -1.922  0.492    ✓
+2026-03-24 18:19:01  INFO        B3_open_gap                -0.00700  0.28987  -0.024  -4.277  0.490    ✓
+2026-03-24 18:19:01  INFO        D1_vol_burst               -0.00625  0.22541  -0.028  -4.946  0.486    ✓
+2026-03-24 18:19:01  INFO        B1_vwap_deviation          -0.02815  0.27588  -0.102  -18.187  0.463    ✓
+2026-03-24 18:19:01  INFO        B2_price_position          -0.15933  0.25520  -0.624  -111.432  0.259    ✓
+2026-03-24 18:19:01  INFO        E2_sector_residual         -0.50177  0.24158  -2.077  -370.702  0.036    ✓
+2026-03-24 18:19:01  INFO      
+2026-03-24 18:19:01  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 18:19:01  INFO        11 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 18:19:01  INFO        Computing IC decay for best feature: C2_flow_imbalance
+2026-03-24 18:21:20  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 18:21:20  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 18:21:20  INFO      Computing composite alpha ...
+2026-03-24 18:25:16  INFO      IC weights computed. Active features per bar (avg): 6.0
+2026-03-24 18:25:16  INFO      Composite alpha: shape=(31862, 44)  valid=100.0%  mean=-0.0007  std=0.9390
+2026-03-24 18:25:17  INFO        Composite alpha saved: (31862, 44)
+2026-03-24 18:25:17  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 18:25:17  INFO      PortfolioBuilder: gross_lev=2.0x | max_weight=10% | turnover_thr=0.30σ | target_vol=15%
+2026-03-24 18:25:17  INFO      Building portfolio weights ...
+2026-03-24 18:25:17  INFO        Step 1: Volatility scaling ...
+2026-03-24 18:25:17  INFO        Step 2: Dollar neutralisation ...
+2026-03-24 18:25:17  INFO        Step 3: Applying position limits (max=10%) ...
+2026-03-24 18:25:17  INFO        Step 4: Liquidity filter (min ADTV $1000k) ...
+2026-03-24 18:25:17  INFO        Step 5: Turnover control (threshold=0.30σ) ...
+2026-03-24 18:26:06  INFO      Portfolio built: avg 40 positions  (20 long / 20 short)  avg gross=2.00x
+2026-03-24 18:26:06  INFO        Weights saved: (31862, 44)
+2026-03-24 18:26:06  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 18:26:07  INFO      
+2026-03-24 18:26:07  INFO        Portfolio Statistics (gross, pre-cost):
+2026-03-24 18:26:07  INFO        Gross Annual Return             -102.79%
+2026-03-24 18:26:07  INFO        Gross Annual Vol                11.41%
+2026-03-24 18:26:07  INFO        Gross Sharpe Ratio              -9.011
+2026-03-24 18:26:07  INFO        Annual Turnover (×NAV)          4587×
+2026-03-24 18:26:07  INFO        Avg Positions                   40
+2026-03-24 18:26:07  INFO        Avg Gross Leverage              1.999×
+2026-03-24 18:26:07  INFO        Avg Net Leverage                0.1982
+2026-03-24 18:26:07  INFO      
+2026-03-24 18:26:07  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:26:07  INFO        Phase 2 complete in 686.3s
+2026-03-24 18:26:07  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 18:26:07  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:50:17  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:50:17  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 18:50:17  INFO        Feature store : data/features/
+2026-03-24 18:50:17  INFO        Alpha output  : data/alpha/
+2026-03-24 18:50:17  INFO        Date range    : all → latest
+2026-03-24 18:50:17  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:50:17  INFO      [1/6] Loading features ...
+2026-03-24 18:50:17  INFO      FeatureStore initialized at: data\features
+2026-03-24 18:50:17  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 18:50:24  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 18:50:24  INFO        Loaded 15 features
+2026-03-24 18:50:24  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 18:55:40  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:55:40  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 18:55:40  INFO        Feature store : data/features/
+2026-03-24 18:55:40  INFO        Alpha output  : data/alpha/
+2026-03-24 18:55:40  INFO        Date range    : all → latest
+2026-03-24 18:55:40  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:55:40  INFO      [1/6] Loading features ...
+2026-03-24 18:55:40  INFO      FeatureStore initialized at: data\features
+2026-03-24 18:55:40  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 18:55:45  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 18:55:45  INFO        Loaded 15 features
+2026-03-24 18:55:45  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 18:55:45  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 18:55:47  INFO      Resampler initialised: 1-min → 15min  (min 50% bar coverage required)
+2026-03-24 18:55:47  INFO      Resampling 44 tickers × 31862 1-min bars → 15min ...
+2026-03-24 18:55:47  INFO      Resample complete: 31862 → 0 bars  (31862.0× compression, 0.0 bars/day)
+2026-03-24 18:55:47  INFO        Close panel: (0, 44)  (aligned to feature index)
+2026-03-24 18:55:47  INFO      [3/6] Computing IC summary ...
+2026-03-24 18:55:47  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 18:57:59  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:57:59  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 18:57:59  INFO        Feature store : data/features/
+2026-03-24 18:57:59  INFO        Alpha output  : data/alpha/
+2026-03-24 18:57:59  INFO        Date range    : all → latest
+2026-03-24 18:57:59  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:57:59  INFO      [1/6] Loading features ...
+2026-03-24 18:57:59  INFO      FeatureStore initialized at: data\features
+2026-03-24 18:57:59  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 18:58:04  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 18:58:04  INFO        Loaded 15 features
+2026-03-24 18:58:04  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 18:58:04  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 18:58:06  INFO      Resampler initialised: 1-min → 15min  (min 50% bar coverage required)
+2026-03-24 18:58:06  INFO      Resampling 44 tickers × 31862 1-min bars → 15min ...
+2026-03-24 18:58:06  INFO      Resample complete: 31862 → 0 bars  (31862.0× compression, 0.0 bars/day)
+2026-03-24 18:58:06  INFO        Close panel: (0, 44)  (aligned to feature index)
+2026-03-24 18:58:06  INFO      [3/6] Computing IC summary ...
+2026-03-24 18:58:06  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 18:58:06  INFO        (no IC data)
+2026-03-24 18:58:06  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 18:58:06  INFO        0 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 18:58:06  ERROR     NO features pass the IC t-stat threshold of 1.0.
+  This means your signal quality is below viable threshold.
+  Do not proceed to portfolio construction.
+  Action: review reports/ic_summary.csv and check:
+    1. Is the feature store populated? (run python run_features.py)
+    2. Is the date range long enough? (need 60+ bars of history)
+    3. Try lowering --min-ic-tstat to 0.5 to see if any signal exists.
+2026-03-24 18:59:40  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:59:40  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 18:59:40  INFO        Feature store : data/features/
+2026-03-24 18:59:40  INFO        Alpha output  : data/alpha/
+2026-03-24 18:59:40  INFO        Date range    : all → latest
+2026-03-24 18:59:40  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 18:59:40  INFO      [1/6] Loading features ...
+2026-03-24 18:59:40  INFO      FeatureStore initialized at: data\features
+2026-03-24 18:59:40  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 18:59:45  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 18:59:45  INFO        Loaded 15 features
+2026-03-24 18:59:45  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 18:59:45  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 18:59:46  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 18:59:46  INFO      [3/6] Computing IC summary ...
+2026-03-24 18:59:47  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 18:59:59  INFO      
+2026-03-24 18:59:59  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 18:59:59  INFO        ------------------------------------------------------------------------------
+2026-03-24 18:59:59  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 18:59:59  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 18:59:59  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 18:59:59  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 18:59:59  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 18:59:59  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 18:59:59  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 18:59:59  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 18:59:59  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 18:59:59  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 18:59:59  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 18:59:59  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 18:59:59  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 18:59:59  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 18:59:59  INFO      
+2026-03-24 18:59:59  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 18:59:59  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 18:59:59  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 19:02:18  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 19:02:18  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 19:02:18  INFO      Computing composite alpha ...
+2026-03-24 19:02:30  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 19:02:30  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 19:02:30  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 19:02:30  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 19:02:30  INFO      PortfolioBuilder: gross_lev=2.0x | max_weight=10% | turnover_thr=0.30σ | target_vol=15%
+2026-03-24 19:02:30  INFO      Building portfolio weights ...
+2026-03-24 19:02:30  INFO        Step 1: Volatility scaling ...
+2026-03-24 19:02:30  INFO        Step 2: Dollar neutralisation ...
+2026-03-24 19:02:30  INFO        Step 3: Applying position limits (max=10%) ...
+2026-03-24 19:02:30  INFO        Step 4: Liquidity filter (min ADTV $1000k) ...
+2026-03-24 19:02:31  INFO        Step 5: Turnover control (threshold=0.30σ) ...
+2026-03-24 19:03:21  INFO      Portfolio built: avg 36 positions  (18 long / 18 short)  avg gross=1.96x
+2026-03-24 19:03:21  INFO        Weights saved: (31858, 44)
+2026-03-24 19:03:21  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 19:03:22  INFO      
+2026-03-24 19:03:22  INFO        Portfolio Statistics (gross, pre-cost):
+2026-03-24 19:03:22  INFO        Gross Annual Return             30.69%
+2026-03-24 19:03:22  INFO        Gross Annual Vol                17.20%
+2026-03-24 19:03:22  INFO        Gross Sharpe Ratio              1.785
+2026-03-24 19:03:22  INFO        Annual Turnover (×NAV)          757×
+2026-03-24 19:03:22  INFO        Avg Positions                   36
+2026-03-24 19:03:22  INFO        Avg Gross Leverage              1.964×
+2026-03-24 19:03:22  INFO        Avg Net Leverage                0.2090
+2026-03-24 19:03:22  INFO      
+2026-03-24 19:03:22  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:03:22  INFO        Phase 2 complete in 222.0s
+2026-03-24 19:03:22  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 19:03:22  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:13:15  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:13:15  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 19:13:15  INFO        Feature store : data/features/
+2026-03-24 19:13:15  INFO        Alpha output  : data/alpha/
+2026-03-24 19:13:15  INFO        Date range    : all → latest
+2026-03-24 19:13:15  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:13:15  INFO      [1/6] Loading features ...
+2026-03-24 19:13:15  INFO      FeatureStore initialized at: data\features
+2026-03-24 19:13:15  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 19:13:21  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 19:13:21  INFO        Loaded 15 features
+2026-03-24 19:13:21  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 19:13:21  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 19:13:22  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 19:13:22  INFO      [3/6] Computing IC summary ...
+2026-03-24 19:13:22  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 19:13:35  INFO      
+2026-03-24 19:13:35  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 19:13:35  INFO        ------------------------------------------------------------------------------
+2026-03-24 19:13:35  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 19:13:35  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 19:13:35  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 19:13:35  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 19:13:35  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 19:13:35  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 19:13:35  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 19:13:35  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 19:13:35  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 19:13:35  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 19:13:35  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 19:13:35  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 19:13:35  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 19:13:35  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 19:13:35  INFO      
+2026-03-24 19:13:35  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 19:13:35  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 19:13:35  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 19:15:56  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 19:15:56  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 19:15:56  INFO      Computing composite alpha ...
+2026-03-24 19:16:08  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 19:16:08  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 19:16:08  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 19:16:08  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 19:16:08  INFO      PortfolioBuilder: gross_lev=2.0x | max_weight=10% | turnover_thr=0.30σ | target_vol=15%
+2026-03-24 19:16:08  INFO      Building portfolio weights ...
+2026-03-24 19:16:08  INFO        Step 1: Volatility scaling ...
+2026-03-24 19:16:08  INFO        Step 2: Dollar neutralisation ...
+2026-03-24 19:16:08  INFO        Step 3: Applying position limits (max=10%) ...
+2026-03-24 19:16:08  INFO        Step 4: Liquidity filter (min ADTV $1000k) ...
+2026-03-24 19:16:08  INFO        Step 5: Turnover control (threshold=0.30σ) ...
+2026-03-24 19:17:40  INFO      Portfolio built: avg 1 positions  (1 long / 1 short)  avg gross=0.09x
+2026-03-24 19:17:40  INFO        Weights saved: (31858, 44)
+2026-03-24 19:17:40  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 19:17:40  INFO      
+2026-03-24 19:17:40  INFO        Portfolio Statistics (gross, pre-cost):
+2026-03-24 19:17:40  INFO        Gross Annual Return             7.68%
+2026-03-24 19:17:40  INFO        Gross Annual Vol                3.37%
+2026-03-24 19:17:40  INFO        Gross Sharpe Ratio              2.282
+2026-03-24 19:17:40  INFO        Annual Turnover (×NAV)          656×
+2026-03-24 19:17:40  INFO        Avg Positions                   1
+2026-03-24 19:17:40  INFO        Avg Gross Leverage              0.092×
+2026-03-24 19:17:40  INFO        Avg Net Leverage                0.0390
+2026-03-24 19:17:40  INFO      
+2026-03-24 19:17:40  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:17:40  INFO        Phase 2 complete in 265.5s
+2026-03-24 19:17:40  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 19:17:40  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:18:51  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:18:51  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 19:18:51  INFO        Feature store : data/features/
+2026-03-24 19:18:51  INFO        Alpha output  : data/alpha/
+2026-03-24 19:18:51  INFO        Date range    : all → latest
+2026-03-24 19:18:51  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:18:51  INFO      [1/6] Loading features ...
+2026-03-24 19:18:51  INFO      FeatureStore initialized at: data\features
+2026-03-24 19:18:51  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 19:18:56  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 19:18:56  INFO        Loaded 15 features
+2026-03-24 19:18:56  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 19:18:56  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 19:18:58  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 19:18:58  INFO      [3/6] Computing IC summary ...
+2026-03-24 19:18:58  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 19:19:10  INFO      
+2026-03-24 19:19:10  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 19:19:10  INFO        ------------------------------------------------------------------------------
+2026-03-24 19:19:10  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 19:19:10  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 19:19:10  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 19:19:10  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 19:19:10  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 19:19:10  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 19:19:10  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 19:19:10  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 19:19:10  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 19:19:10  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 19:19:10  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 19:19:10  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 19:19:10  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 19:19:10  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 19:19:10  INFO      
+2026-03-24 19:19:10  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 19:19:10  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 19:19:10  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 19:21:28  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 19:21:28  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 19:21:28  INFO      Computing composite alpha ...
+2026-03-24 19:21:40  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 19:21:40  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 19:21:40  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 19:21:40  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 19:21:40  INFO      PortfolioBuilder: gross_lev=2.0x | max_weight=10% | turnover_thr=0.60σ | target_vol=15%
+2026-03-24 19:21:40  INFO      Building portfolio weights ...
+2026-03-24 19:21:40  INFO        Step 1: Volatility scaling ...
+2026-03-24 19:21:40  INFO        Step 2: Dollar neutralisation ...
+2026-03-24 19:21:40  INFO        Step 3: Applying position limits (max=10%) ...
+2026-03-24 19:21:40  INFO        Step 4: Liquidity filter (min ADTV $1000k) ...
+2026-03-24 19:21:40  INFO        Step 5: Turnover control (threshold=0.60σ) ...
+2026-03-24 19:23:13  INFO      Portfolio built: avg 1 positions  (1 long / 1 short)  avg gross=0.09x
+2026-03-24 19:23:14  INFO        Weights saved: (31858, 44)
+2026-03-24 19:23:14  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 19:23:14  INFO      
+2026-03-24 19:23:14  INFO        Portfolio Statistics (gross, pre-cost):
+2026-03-24 19:23:14  INFO        Gross Annual Return             7.68%
+2026-03-24 19:23:14  INFO        Gross Annual Vol                3.37%
+2026-03-24 19:23:14  INFO        Gross Sharpe Ratio              2.282
+2026-03-24 19:23:14  INFO        Annual Turnover (×NAV)          656×
+2026-03-24 19:23:14  INFO        Avg Positions                   1
+2026-03-24 19:23:14  INFO        Avg Gross Leverage              0.092×
+2026-03-24 19:23:14  INFO        Avg Net Leverage                0.0390
+2026-03-24 19:23:14  INFO      
+2026-03-24 19:23:14  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:23:14  INFO        Phase 2 complete in 263.2s
+2026-03-24 19:23:14  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 19:23:14  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:36:57  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:36:57  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 19:36:57  INFO        Feature store : data/features/
+2026-03-24 19:36:57  INFO        Alpha output  : data/alpha/
+2026-03-24 19:36:57  INFO        Date range    : all → latest
+2026-03-24 19:36:57  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:36:57  INFO      [1/6] Loading features ...
+2026-03-24 19:36:57  INFO      FeatureStore initialized at: data\features
+2026-03-24 19:36:57  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 19:37:03  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 19:37:03  INFO        Loaded 15 features
+2026-03-24 19:37:03  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 19:37:03  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 19:37:04  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 19:37:04  INFO      [3/6] Computing IC summary ...
+2026-03-24 19:37:04  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 19:37:17  INFO      
+2026-03-24 19:37:17  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 19:37:17  INFO        ------------------------------------------------------------------------------
+2026-03-24 19:37:17  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 19:37:17  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 19:37:17  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 19:37:17  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 19:37:17  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 19:37:17  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 19:37:17  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 19:37:17  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 19:37:17  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 19:37:17  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 19:37:17  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 19:37:17  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 19:37:17  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 19:37:17  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 19:37:17  INFO      
+2026-03-24 19:37:17  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 19:37:17  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 19:37:17  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 19:39:57  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 19:39:57  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 19:39:57  INFO      Computing composite alpha ...
+2026-03-24 19:40:09  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 19:40:09  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 19:40:09  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 19:40:09  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 19:49:14  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:49:14  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 19:49:14  INFO        Feature store : data/features/
+2026-03-24 19:49:14  INFO        Alpha output  : data/alpha/
+2026-03-24 19:49:14  INFO        Date range    : all → latest
+2026-03-24 19:49:14  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:49:14  INFO      [1/6] Loading features ...
+2026-03-24 19:49:14  INFO      FeatureStore initialized at: data\features
+2026-03-24 19:49:14  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 19:49:20  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 19:49:20  INFO        Loaded 15 features
+2026-03-24 19:49:20  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 19:49:20  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 19:49:22  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 19:49:22  INFO      [3/6] Computing IC summary ...
+2026-03-24 19:49:22  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 19:49:34  INFO      
+2026-03-24 19:49:34  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 19:49:34  INFO        ------------------------------------------------------------------------------
+2026-03-24 19:49:34  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 19:49:34  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 19:49:34  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 19:49:34  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 19:49:34  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 19:49:34  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 19:49:34  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 19:49:34  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 19:49:34  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 19:49:34  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 19:49:34  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 19:49:34  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 19:49:34  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 19:49:34  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 19:49:34  INFO      
+2026-03-24 19:49:34  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 19:49:34  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 19:49:34  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 19:51:58  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 19:51:58  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 19:51:58  INFO      Computing composite alpha ...
+2026-03-24 19:52:11  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 19:52:11  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 19:52:11  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 19:52:11  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 19:52:11  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED
+2026-03-24 19:52:11  INFO      Building portfolio weights …
+2026-03-24 19:52:11  INFO        [1/6] Volatility scaling …
+2026-03-24 19:52:11  INFO        [3/6] Dollar neutralisation …
+2026-03-24 19:52:11  INFO        [4/6] Position limits (max=10%) …
+2026-03-24 19:52:11  INFO        [5/6] Normalise to unit gross …
+2026-03-24 19:52:11  INFO        [6/6] Scale to 2.0x gross leverage …
+2026-03-24 19:52:11  INFO      Portfolio built — avg 2.0 positions | avg gross=0.092x | avg |net|=0.0000
+2026-03-24 19:53:50  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:53:50  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 19:53:50  INFO        Feature store : data/features/
+2026-03-24 19:53:50  INFO        Alpha output  : data/alpha/
+2026-03-24 19:53:50  INFO        Date range    : all → latest
+2026-03-24 19:53:50  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 19:53:50  INFO      [1/6] Loading features ...
+2026-03-24 19:53:50  INFO      FeatureStore initialized at: data\features
+2026-03-24 19:53:50  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 19:53:55  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 19:53:55  INFO        Loaded 15 features
+2026-03-24 19:53:55  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 19:53:55  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 19:53:57  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 19:53:57  INFO      [3/6] Computing IC summary ...
+2026-03-24 19:53:57  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 19:54:10  INFO      
+2026-03-24 19:54:10  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 19:54:10  INFO        ------------------------------------------------------------------------------
+2026-03-24 19:54:10  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 19:54:10  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 19:54:10  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 19:54:10  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 19:54:10  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 19:54:10  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 19:54:10  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 19:54:10  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 19:54:10  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 19:54:10  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 19:54:10  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 19:54:10  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 19:54:10  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 19:54:10  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 19:54:10  INFO      
+2026-03-24 19:54:10  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 19:54:10  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 19:54:10  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 19:56:37  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 19:56:37  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 19:56:37  INFO      Computing composite alpha ...
+2026-03-24 19:56:49  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 19:56:49  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 19:56:49  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 19:56:49  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 19:56:49  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED
+2026-03-24 19:56:49  INFO      Building portfolio weights …
+2026-03-24 19:56:49  INFO        [1/6] Volatility scaling …
+2026-03-24 19:56:49  INFO        [3/6] Dollar neutralisation …
+2026-03-24 19:56:49  INFO        [4/6] Position limits (max=10%) …
+2026-03-24 19:56:49  INFO        [5/6] Normalise to unit gross …
+2026-03-24 19:56:50  INFO        [6/6] Scale to 2.0x gross leverage …
+2026-03-24 19:56:50  INFO      Portfolio built — avg 2.0 positions | avg gross=0.092x | avg |net|=0.0000
+2026-03-24 21:42:18  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 21:42:18  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 21:42:18  INFO        Feature store : data/features/
+2026-03-24 21:42:18  INFO        Alpha output  : data/alpha/
+2026-03-24 21:42:18  INFO        Date range    : all → latest
+2026-03-24 21:42:18  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 21:42:18  INFO      [1/6] Loading features ...
+2026-03-24 21:42:18  INFO      FeatureStore initialized at: data\features
+2026-03-24 21:42:18  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 21:42:24  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 21:42:24  INFO        Loaded 15 features
+2026-03-24 21:42:24  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 21:42:24  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 21:42:26  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 21:42:26  INFO      [3/6] Computing IC summary ...
+2026-03-24 21:42:26  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 21:42:38  INFO      
+2026-03-24 21:42:38  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 21:42:38  INFO        ------------------------------------------------------------------------------
+2026-03-24 21:42:38  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 21:42:38  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 21:42:38  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 21:42:38  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 21:42:38  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 21:42:38  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 21:42:38  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 21:42:38  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 21:42:38  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 21:42:38  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 21:42:38  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 21:42:38  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 21:42:38  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 21:42:38  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 21:42:38  INFO      
+2026-03-24 21:42:38  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 21:42:38  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 21:42:38  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 21:44:57  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 21:44:57  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 21:44:57  INFO      Computing composite alpha ...
+2026-03-24 21:45:09  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 21:45:09  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 21:45:10  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 21:45:10  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 21:45:10  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(1485, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-24 21:45:10  INFO      Building portfolio weights ...
+2026-03-24 21:45:10  INFO        [1/6] Volatility scaling ...
+2026-03-24 21:45:10  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-24 21:45:10  INFO        [3/6] Dollar neutralisation ...
+2026-03-24 21:45:10  INFO        [4/6] Position limits (max=10%) ...
+2026-03-24 21:45:10  INFO        [5/6] Normalise to unit gross ...
+2026-03-24 21:45:10  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-24 21:45:10  INFO      Portfolio built -- avg 43.4 positions | avg gross=1.973x | avg |net|=0.0000
+2026-03-24 21:45:10  INFO        Weights saved: (1485, 44)
+2026-03-24 21:45:10  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 21:51:31  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 21:51:31  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 21:51:31  INFO        Feature store : data/features/
+2026-03-24 21:51:31  INFO        Alpha output  : data/alpha/
+2026-03-24 21:51:31  INFO        Date range    : all → latest
+2026-03-24 21:51:31  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 21:51:31  INFO      [1/6] Loading features ...
+2026-03-24 21:51:31  INFO      FeatureStore initialized at: data\features
+2026-03-24 21:51:31  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 21:51:37  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 21:51:37  INFO        Loaded 15 features
+2026-03-24 21:51:37  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 21:51:37  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 21:51:39  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 21:51:39  INFO      [3/6] Computing IC summary ...
+2026-03-24 21:51:39  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 21:51:51  INFO      
+2026-03-24 21:51:51  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 21:51:51  INFO        ------------------------------------------------------------------------------
+2026-03-24 21:51:51  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 21:51:51  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 21:51:51  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 21:51:51  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 21:51:51  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 21:51:51  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 21:51:51  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 21:51:51  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 21:51:51  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 21:51:51  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 21:51:51  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 21:51:51  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 21:51:51  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 21:51:51  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 21:51:51  INFO      
+2026-03-24 21:51:51  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 21:51:51  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 21:51:51  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 21:54:12  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 21:54:12  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 21:54:12  INFO      Computing composite alpha ...
+2026-03-24 21:54:24  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 21:54:24  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 21:54:24  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 21:54:24  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 21:54:24  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(1485, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-24 21:54:24  INFO      Building portfolio weights ...
+2026-03-24 21:54:24  INFO        [1/6] Volatility scaling ...
+2026-03-24 21:54:25  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-24 21:54:25  INFO        [3/6] Dollar neutralisation ...
+2026-03-24 21:54:25  INFO        [4/6] Position limits (max=10%) ...
+2026-03-24 21:54:25  INFO        [5/6] Normalise to unit gross ...
+2026-03-24 21:54:25  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-24 21:54:25  INFO      Portfolio built -- avg 43.4 positions | avg gross=1.973x | avg |net|=0.0000
+2026-03-24 21:54:25  INFO        Weights saved: (1485, 44)
+2026-03-24 21:54:25  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 21:54:25  INFO      
+2026-03-24 21:54:25  INFO        Portfolio Statistics (gross, pre-cost):
+2026-03-24 21:54:25  INFO        Gross Annual Return             -0.35%
+2026-03-24 21:54:25  INFO        Gross Annual Vol                1.15%
+2026-03-24 21:54:25  INFO        Gross Sharpe Ratio              -0.304
+2026-03-24 21:54:25  INFO        Annual Turnover (×NAV)          6474×
+2026-03-24 21:54:25  INFO        Avg Positions                   43
+2026-03-24 21:54:25  INFO        Avg Gross Leverage              1.973×
+2026-03-24 21:54:25  INFO        Avg Net Leverage                0.0000
+2026-03-24 21:54:25  INFO      
+2026-03-24 21:54:25  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 21:54:25  INFO        Phase 2 complete in 173.6s
+2026-03-24 21:54:25  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 21:54:25  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:09  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:09  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 22:00:09  INFO        Feature store : data/features/
+2026-03-24 22:00:09  INFO        Alpha output  : data/alpha/
+2026-03-24 22:00:09  INFO        Rebalance freq: every 4 bars (~60 min) | Txn cost: 1.0 bps
+2026-03-24 22:00:09  INFO        Date range    : all → latest
+2026-03-24 22:00:09  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:09  INFO      [1/6] Loading features ...
+2026-03-24 22:00:09  INFO      FeatureStore initialized at: data\features
+2026-03-24 22:00:09  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 22:00:16  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 22:00:16  INFO        Loaded 15 features
+2026-03-24 22:00:16  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 22:00:16  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 22:00:18  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 22:00:18  INFO      [3/6] Computing IC summary ...
+2026-03-24 22:00:18  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 22:00:30  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:30  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 22:00:30  INFO        Feature store : data/features/
+2026-03-24 22:00:30  INFO        Alpha output  : data/alpha/
+2026-03-24 22:00:30  INFO        Rebalance freq: every 4 bars (~60 min) | Txn cost: 1.0 bps
+2026-03-24 22:00:30  INFO        Date range    : all → latest
+2026-03-24 22:00:30  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:30  INFO      [1/6] Loading features ...
+2026-03-24 22:00:30  INFO      FeatureStore initialized at: data\features
+2026-03-24 22:00:30  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 22:00:33  INFO      
+2026-03-24 22:00:33  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 22:00:33  INFO        ------------------------------------------------------------------------------
+2026-03-24 22:00:33  INFO        A1_bar_reversal            +0.06980  0.27803  +0.251  +9.671  0.609    ✓
+2026-03-24 22:00:33  INFO        B1_vwap_deviation          +0.05296  0.29482  +0.180  +6.919  0.569    ✓
+2026-03-24 22:00:33  INFO        B3_open_gap                +0.05243  0.30444  +0.172  +6.635  0.562    ✓
+2026-03-24 22:00:33  INFO        B2_price_position          +0.03294  0.25374  +0.130  +5.001  0.555    ✓
+2026-03-24 22:00:33  INFO        C2_flow_imbalance          +0.02469  0.21260  +0.116  +4.473  0.555    ✓
+2026-03-24 22:00:33  INFO        E1_residual_return         +0.02699  0.29706  +0.091  +3.500  0.534    ✓
+2026-03-24 22:00:33  INFO        A2_short_rev               +0.02555  0.30475  +0.084  +3.230  0.540    ✓
+2026-03-24 22:00:33  INFO        A3_medium_rev              +0.02399  0.29175  +0.082  +3.167  0.544    ✓
+2026-03-24 22:00:33  INFO        E2_sector_residual         +0.02043  0.31453  +0.065  +2.502  0.532    ✓
+2026-03-24 22:00:33  INFO        D1_vol_burst               +0.01287  0.24807  +0.052  +1.998  0.528    ✓
+2026-03-24 22:00:33  INFO        C3_turnover_shock          +0.00952  0.27223  +0.035  +1.348  0.522    ✓
+2026-03-24 22:00:33  INFO        C1_volume_shock            +0.00920  0.27151  +0.034  +1.306  0.522    ✓
+2026-03-24 22:00:33  INFO        A4_overnight_gap           +0.00730  0.31691  +0.023  +0.887  0.503    ✗
+2026-03-24 22:00:33  INFO        D2_vol_zscore              -0.00986  0.21341  -0.046  -1.779  0.478    ✓
+2026-03-24 22:00:33  INFO      
+2026-03-24 22:00:33  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 22:00:33  INFO        13 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 22:00:33  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 22:00:37  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 22:00:37  INFO        Loaded 15 features
+2026-03-24 22:00:37  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 22:00:38  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 22:00:40  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 22:00:40  INFO      [3/6] Computing IC summary ...
+2026-03-24 22:00:40  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 22:00:54  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:54  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 22:00:54  INFO        Feature store : data/features/
+2026-03-24 22:00:54  INFO        Alpha output  : data/alpha/
+2026-03-24 22:00:54  INFO        Rebalance freq: every 4 bars (~60 min) | Txn cost: 1.0 bps
+2026-03-24 22:00:54  INFO        Date range    : all → latest
+2026-03-24 22:00:54  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:00:54  INFO      [1/6] Loading features ...
+2026-03-24 22:00:54  INFO      FeatureStore initialized at: data\features
+2026-03-24 22:00:54  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 22:00:57  INFO      
+2026-03-24 22:00:57  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 22:00:57  INFO        ------------------------------------------------------------------------------
+2026-03-24 22:00:57  INFO        A1_bar_reversal            +0.06980  0.27803  +0.251  +9.671  0.609    ✓
+2026-03-24 22:00:57  INFO        B1_vwap_deviation          +0.05296  0.29482  +0.180  +6.919  0.569    ✓
+2026-03-24 22:00:57  INFO        B3_open_gap                +0.05243  0.30444  +0.172  +6.635  0.562    ✓
+2026-03-24 22:00:57  INFO        B2_price_position          +0.03294  0.25374  +0.130  +5.001  0.555    ✓
+2026-03-24 22:00:57  INFO        C2_flow_imbalance          +0.02469  0.21260  +0.116  +4.473  0.555    ✓
+2026-03-24 22:00:57  INFO        E1_residual_return         +0.02699  0.29706  +0.091  +3.500  0.534    ✓
+2026-03-24 22:00:57  INFO        A2_short_rev               +0.02555  0.30475  +0.084  +3.230  0.540    ✓
+2026-03-24 22:00:57  INFO        A3_medium_rev              +0.02399  0.29175  +0.082  +3.167  0.544    ✓
+2026-03-24 22:00:57  INFO        E2_sector_residual         +0.02043  0.31453  +0.065  +2.502  0.532    ✓
+2026-03-24 22:00:57  INFO        D1_vol_burst               +0.01287  0.24807  +0.052  +1.998  0.528    ✓
+2026-03-24 22:00:57  INFO        C3_turnover_shock          +0.00952  0.27223  +0.035  +1.348  0.522    ✓
+2026-03-24 22:00:57  INFO        C1_volume_shock            +0.00920  0.27151  +0.034  +1.306  0.522    ✓
+2026-03-24 22:00:57  INFO        A4_overnight_gap           +0.00730  0.31691  +0.023  +0.887  0.503    ✗
+2026-03-24 22:00:57  INFO        D2_vol_zscore              -0.00986  0.21341  -0.046  -1.779  0.478    ✓
+2026-03-24 22:00:57  INFO      
+2026-03-24 22:00:57  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 22:00:57  INFO        13 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 22:00:57  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 22:01:03  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 22:01:03  INFO        Loaded 15 features
+2026-03-24 22:01:03  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 22:01:04  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 22:01:06  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 22:01:06  INFO      [3/6] Computing IC summary ...
+2026-03-24 22:01:06  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 22:01:24  INFO      
+2026-03-24 22:01:24  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 22:01:24  INFO        ------------------------------------------------------------------------------
+2026-03-24 22:01:24  INFO        A1_bar_reversal            +0.06980  0.27803  +0.251  +9.671  0.609    ✓
+2026-03-24 22:01:24  INFO        B1_vwap_deviation          +0.05296  0.29482  +0.180  +6.919  0.569    ✓
+2026-03-24 22:01:24  INFO        B3_open_gap                +0.05243  0.30444  +0.172  +6.635  0.562    ✓
+2026-03-24 22:01:24  INFO        B2_price_position          +0.03294  0.25374  +0.130  +5.001  0.555    ✓
+2026-03-24 22:01:24  INFO        C2_flow_imbalance          +0.02469  0.21260  +0.116  +4.473  0.555    ✓
+2026-03-24 22:01:24  INFO        E1_residual_return         +0.02699  0.29706  +0.091  +3.500  0.534    ✓
+2026-03-24 22:01:24  INFO        A2_short_rev               +0.02555  0.30475  +0.084  +3.230  0.540    ✓
+2026-03-24 22:01:24  INFO        A3_medium_rev              +0.02399  0.29175  +0.082  +3.167  0.544    ✓
+2026-03-24 22:01:24  INFO        E2_sector_residual         +0.02043  0.31453  +0.065  +2.502  0.532    ✓
+2026-03-24 22:01:24  INFO        D1_vol_burst               +0.01287  0.24807  +0.052  +1.998  0.528    ✓
+2026-03-24 22:01:24  INFO        C3_turnover_shock          +0.00952  0.27223  +0.035  +1.348  0.522    ✓
+2026-03-24 22:01:24  INFO        C1_volume_shock            +0.00920  0.27151  +0.034  +1.306  0.522    ✓
+2026-03-24 22:01:24  INFO        A4_overnight_gap           +0.00730  0.31691  +0.023  +0.887  0.503    ✗
+2026-03-24 22:01:24  INFO        D2_vol_zscore              -0.00986  0.21341  -0.046  -1.779  0.478    ✓
+2026-03-24 22:01:24  INFO      
+2026-03-24 22:01:24  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 22:01:24  INFO        13 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 22:01:24  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 22:03:36  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 22:03:36  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 22:03:36  INFO      Computing composite alpha ...
+2026-03-24 22:03:51  INFO      IC weights computed. Active features per bar (avg): 6.5
+2026-03-24 22:03:51  INFO      Composite alpha: shape=(1485, 44)  valid=98.9%  mean=-0.0014  std=0.9325
+2026-03-24 22:03:51  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 22:03:51  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 22:03:51  INFO        Downsampling alpha: every 4 bars (was 1485 bars)
+2026-03-24 22:03:51  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(372, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-24 22:03:51  INFO      Building portfolio weights ...
+2026-03-24 22:03:51  INFO        [1/6] Volatility scaling ...
+2026-03-24 22:03:51  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-24 22:03:51  INFO        [3/6] Dollar neutralisation ...
+2026-03-24 22:03:51  INFO        [4/6] Position limits (max=10%) ...
+2026-03-24 22:03:51  INFO        [5/6] Normalise to unit gross ...
+2026-03-24 22:03:51  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-24 22:03:51  INFO      Portfolio built -- avg 43.4 positions | avg gross=1.973x | avg |net|=0.0000
+2026-03-24 22:03:51  INFO        Forward-filled weights to original frequency: (1485, 44)
+2026-03-24 22:03:51  INFO        Weights saved: (1485, 44)
+2026-03-24 22:03:51  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 22:03:51  INFO      
+2026-03-24 22:03:51  INFO        Portfolio Statistics:
+2026-03-24 22:03:51  INFO        Annual Return                   -0.26% (gross)
+2026-03-24 22:03:51  INFO          → Net after costs             -78.34% (7808.1 bps cost)
+2026-03-24 22:03:51  INFO        Annual Vol                      1.27%
+2026-03-24 22:03:51  INFO        Gross Sharpe Ratio              -0.204
+2026-03-24 22:03:51  INFO        Rebalance Turnover              7808×
+2026-03-24 22:03:51  INFO        Annual Cost (realized)          78.08%
+2026-03-24 22:03:51  INFO        Avg Positions                   43
+2026-03-24 22:03:51  INFO        Avg Gross Leverage              1.973×
+2026-03-24 22:03:51  INFO        Avg Net Leverage                0.0000
+2026-03-24 22:03:51  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:03:51  INFO        Phase 2 complete in 222.9s
+2026-03-24 22:03:51  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 22:03:51  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:03:59  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 22:03:59  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 22:03:59  INFO      Computing composite alpha ...
+2026-03-24 22:04:13  INFO      IC weights computed. Active features per bar (avg): 6.5
+2026-03-24 22:04:13  INFO      Composite alpha: shape=(1485, 44)  valid=98.9%  mean=-0.0014  std=0.9325
+2026-03-24 22:04:13  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 22:04:13  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 22:04:13  INFO        Downsampling alpha: every 4 bars (was 1485 bars)
+2026-03-24 22:04:13  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(372, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-24 22:04:13  INFO      Building portfolio weights ...
+2026-03-24 22:04:13  INFO        [1/6] Volatility scaling ...
+2026-03-24 22:04:13  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-24 22:04:13  INFO        [3/6] Dollar neutralisation ...
+2026-03-24 22:04:13  INFO        [4/6] Position limits (max=10%) ...
+2026-03-24 22:04:13  INFO        [5/6] Normalise to unit gross ...
+2026-03-24 22:04:13  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-24 22:04:13  INFO      Portfolio built -- avg 43.4 positions | avg gross=1.973x | avg |net|=0.0000
+2026-03-24 22:04:13  INFO        Forward-filled weights to original frequency: (1485, 44)
+2026-03-24 22:04:13  INFO        Weights saved: (1485, 44)
+2026-03-24 22:04:13  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 22:04:13  INFO      
+2026-03-24 22:04:13  INFO        Portfolio Statistics:
+2026-03-24 22:04:13  INFO        Annual Return                   -0.26% (gross)
+2026-03-24 22:04:13  INFO          → Net after costs             -78.34% (7808.1 bps cost)
+2026-03-24 22:04:13  INFO        Annual Vol                      1.27%
+2026-03-24 22:04:13  INFO        Gross Sharpe Ratio              -0.204
+2026-03-24 22:04:13  INFO        Rebalance Turnover              7808×
+2026-03-24 22:04:13  INFO        Annual Cost (realized)          78.08%
+2026-03-24 22:04:13  INFO        Avg Positions                   43
+2026-03-24 22:04:13  INFO        Avg Gross Leverage              1.973×
+2026-03-24 22:04:13  INFO        Avg Net Leverage                0.0000
+2026-03-24 22:04:13  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:04:13  INFO        Phase 2 complete in 222.9s
+2026-03-24 22:04:13  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 22:04:13  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:06:04  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:06:04  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 22:06:04  INFO        Feature store : data/features/
+2026-03-24 22:06:04  INFO        Alpha output  : data/alpha/
+2026-03-24 22:06:04  INFO        Rebalance freq: every 1 bars (~15 min) | Txn cost: 1.0 bps
+2026-03-24 22:06:04  INFO        Date range    : all → latest
+2026-03-24 22:06:04  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:06:04  INFO      [1/6] Loading features ...
+2026-03-24 22:06:04  INFO      FeatureStore initialized at: data\features
+2026-03-24 22:06:04  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 22:06:10  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 22:06:10  INFO        Loaded 15 features
+2026-03-24 22:06:10  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 22:06:11  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 22:06:12  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 22:06:12  INFO      [3/6] Computing IC summary ...
+2026-03-24 22:06:13  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 22:06:25  INFO      
+2026-03-24 22:06:25  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 22:06:25  INFO        ------------------------------------------------------------------------------
+2026-03-24 22:06:25  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 22:06:25  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 22:06:25  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 22:06:25  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 22:06:25  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 22:06:25  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 22:06:25  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 22:06:25  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 22:06:25  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 22:06:25  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 22:06:25  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 22:06:25  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 22:06:25  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 22:06:25  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 22:06:25  INFO      
+2026-03-24 22:06:25  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 22:06:25  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 22:06:25  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 22:08:48  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 22:08:48  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 22:08:48  INFO      Computing composite alpha ...
+2026-03-24 22:09:00  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 22:09:00  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 22:09:00  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 22:09:00  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 22:09:00  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(1485, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-24 22:09:00  INFO      Building portfolio weights ...
+2026-03-24 22:09:00  INFO        [1/6] Volatility scaling ...
+2026-03-24 22:09:01  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-24 22:09:01  INFO        [3/6] Dollar neutralisation ...
+2026-03-24 22:09:01  INFO        [4/6] Position limits (max=10%) ...
+2026-03-24 22:09:01  INFO        [5/6] Normalise to unit gross ...
+2026-03-24 22:09:01  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-24 22:09:01  INFO      Portfolio built -- avg 43.4 positions | avg gross=1.973x | avg |net|=0.0000
+2026-03-24 22:09:01  INFO        Weights saved: (1485, 44)
+2026-03-24 22:09:01  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 22:09:01  INFO      
+2026-03-24 22:09:01  INFO        Portfolio Statistics:
+2026-03-24 22:09:01  INFO        Annual Return                   -0.35% (gross)
+2026-03-24 22:09:01  INFO          → Net after costs             -65.09% (6474.1 bps cost)
+2026-03-24 22:09:01  INFO        Annual Vol                      1.15%
+2026-03-24 22:09:01  INFO        Gross Sharpe Ratio              -0.304
+2026-03-24 22:09:01  INFO        Rebalance Turnover              6474×
+2026-03-24 22:09:01  INFO        Annual Cost (realized)          64.74%
+2026-03-24 22:09:01  INFO        Avg Positions                   43
+2026-03-24 22:09:01  INFO        Avg Gross Leverage              1.973×
+2026-03-24 22:09:01  INFO        Avg Net Leverage                0.0000
+2026-03-24 22:09:01  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:09:01  INFO        Phase 2 complete in 176.7s
+2026-03-24 22:09:01  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 22:09:01  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:10:55  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:10:55  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 22:10:55  INFO        Feature store : data/features/
+2026-03-24 22:10:55  INFO        Alpha output  : data/alpha/
+2026-03-24 22:10:55  INFO        Rebalance freq: every 4 bars (~60 min) | Txn cost: 1.0 bps
+2026-03-24 22:10:55  INFO        Date range    : all → latest
+2026-03-24 22:10:55  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:10:55  INFO      [1/6] Loading features ...
+2026-03-24 22:10:55  INFO      FeatureStore initialized at: data\features
+2026-03-24 22:10:55  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 22:11:03  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 22:11:03  INFO        Loaded 15 features
+2026-03-24 22:11:03  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 22:11:04  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 22:11:06  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 22:11:06  INFO      [3/6] Computing IC summary ...
+2026-03-24 22:11:06  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 22:11:20  INFO      
+2026-03-24 22:11:20  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 22:11:20  INFO        ------------------------------------------------------------------------------
+2026-03-24 22:11:20  INFO        A1_bar_reversal            +0.06980  0.27803  +0.251  +9.671  0.609    ✓
+2026-03-24 22:11:20  INFO        B1_vwap_deviation          +0.05296  0.29482  +0.180  +6.919  0.569    ✓
+2026-03-24 22:11:20  INFO        B3_open_gap                +0.05243  0.30444  +0.172  +6.635  0.562    ✓
+2026-03-24 22:11:20  INFO        B2_price_position          +0.03294  0.25374  +0.130  +5.001  0.555    ✓
+2026-03-24 22:11:20  INFO        C2_flow_imbalance          +0.02469  0.21260  +0.116  +4.473  0.555    ✓
+2026-03-24 22:11:20  INFO        E1_residual_return         +0.02699  0.29706  +0.091  +3.500  0.534    ✓
+2026-03-24 22:11:20  INFO        A2_short_rev               +0.02555  0.30475  +0.084  +3.230  0.540    ✓
+2026-03-24 22:11:20  INFO        A3_medium_rev              +0.02399  0.29175  +0.082  +3.167  0.544    ✓
+2026-03-24 22:11:20  INFO        E2_sector_residual         +0.02043  0.31453  +0.065  +2.502  0.532    ✓
+2026-03-24 22:11:20  INFO        D1_vol_burst               +0.01287  0.24807  +0.052  +1.998  0.528    ✓
+2026-03-24 22:11:20  INFO        C3_turnover_shock          +0.00952  0.27223  +0.035  +1.348  0.522    ✓
+2026-03-24 22:11:20  INFO        C1_volume_shock            +0.00920  0.27151  +0.034  +1.306  0.522    ✓
+2026-03-24 22:11:20  INFO        A4_overnight_gap           +0.00730  0.31691  +0.023  +0.887  0.503    ✗
+2026-03-24 22:11:20  INFO        D2_vol_zscore              -0.00986  0.21341  -0.046  -1.779  0.478    ✓
+2026-03-24 22:11:20  INFO      
+2026-03-24 22:11:20  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 22:11:20  INFO        13 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 22:11:20  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 22:12:08  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:12:08  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-24 22:12:08  INFO        Feature store : data/features/
+2026-03-24 22:12:08  INFO        Alpha output  : data/alpha/
+2026-03-24 22:12:08  INFO        Rebalance freq: every 4 bars (~60 min) | Txn cost: 1.0 bps
+2026-03-24 22:12:08  INFO        Date range    : all → latest
+2026-03-24 22:12:08  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:12:08  INFO      [1/6] Loading features ...
+2026-03-24 22:12:08  INFO      FeatureStore initialized at: data\features
+2026-03-24 22:12:08  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-24 22:12:14  INFO      ✓ Loaded 15 features from data\features
+2026-03-24 22:12:14  INFO        Loaded 15 features
+2026-03-24 22:12:14  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-24 22:12:14  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-24 22:12:16  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-24 22:12:16  INFO      [3/6] Computing IC summary ...
+2026-03-24 22:12:16  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-24 22:12:29  INFO      
+2026-03-24 22:12:29  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-24 22:12:29  INFO        ------------------------------------------------------------------------------
+2026-03-24 22:12:29  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-24 22:12:29  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-24 22:12:29  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-24 22:12:29  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-24 22:12:29  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-24 22:12:29  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-24 22:12:29  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-24 22:12:29  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-24 22:12:29  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-24 22:12:29  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-24 22:12:29  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-24 22:12:29  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-24 22:12:29  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-24 22:12:29  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-24 22:12:29  INFO      
+2026-03-24 22:12:29  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-24 22:12:29  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-24 22:12:29  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-24 22:14:11  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 22:14:11  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 22:14:11  INFO      Computing composite alpha ...
+2026-03-24 22:14:25  INFO      IC weights computed. Active features per bar (avg): 6.5
+2026-03-24 22:14:25  INFO      Composite alpha: shape=(1485, 44)  valid=98.9%  mean=-0.0014  std=0.9325
+2026-03-24 22:14:25  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 22:14:25  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 22:14:25  INFO        Downsampling alpha: every 4 bars (was 1485 bars)
+2026-03-24 22:14:25  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(372, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-24 22:14:25  INFO      Building portfolio weights ...
+2026-03-24 22:14:25  INFO        [1/6] Volatility scaling ...
+2026-03-24 22:14:26  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-24 22:14:26  INFO        [3/6] Dollar neutralisation ...
+2026-03-24 22:14:26  INFO        [4/6] Position limits (max=10%) ...
+2026-03-24 22:14:26  INFO        [5/6] Normalise to unit gross ...
+2026-03-24 22:14:26  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-24 22:14:26  INFO      Portfolio built -- avg 43.4 positions | avg gross=1.973x | avg |net|=0.0000
+2026-03-24 22:14:26  INFO        Forward-filled weights to original frequency: (1485, 44)
+2026-03-24 22:14:26  INFO        Weights saved: (1485, 44)
+2026-03-24 22:14:26  INFO      [6/6] Computing portfolio statistics ...
+2026-03-24 22:14:26  INFO      
+2026-03-24 22:14:26  INFO        Portfolio Statistics:
+2026-03-24 22:14:26  INFO        Annual Return                   -0.26% (gross)
+2026-03-24 22:14:26  INFO          → Net after costs             -78.34% (7808.1 bps cost)
+2026-03-24 22:14:26  INFO        Annual Vol                      1.27%
+2026-03-24 22:14:26  INFO        Gross Sharpe Ratio              -0.204
+2026-03-24 22:14:26  INFO        Rebalance Turnover              7808×
+2026-03-24 22:14:26  INFO        Annual Cost (realized)          78.08%
+2026-03-24 22:14:26  INFO        Avg Positions                   43
+2026-03-24 22:14:26  INFO        Avg Gross Leverage              1.973×
+2026-03-24 22:14:26  INFO        Avg Net Leverage                0.0000
+2026-03-24 22:14:26  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:14:26  INFO        Phase 2 complete in 210.3s
+2026-03-24 22:14:26  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-24 22:14:26  INFO      ────────────────────────────────────────────────────────────
+2026-03-24 22:15:00  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-24 22:15:00  INFO      [4/6] Building composite alpha signal ...
+2026-03-24 22:15:00  INFO      Computing composite alpha ...
+2026-03-24 22:15:12  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-24 22:15:12  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-24 22:15:12  INFO        Composite alpha saved: (1485, 44)
+2026-03-24 22:15:12  INFO      [5/6] Constructing portfolio weights ...
+2026-03-24 22:15:12  INFO        Downsampling alpha: every 4 bars (was 1485 bars)
+2026-03-24 22:15:12  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(372, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-24 22:15:12  INFO      Building portfolio weights ...
+2026-03-24 22:15:12  INFO        [1/6] Volatility scaling ...
+2026-03-24 22:15:12  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-24 22:15:13  INFO        [3/6] Dollar neutralisation ...
+2026-03-24 22:15:13  INFO        [4/6] Position limits (max=10%) ...
+2026-03-24 22:15:13  INFO        [5/6] Normalise to unit gross ...
+2026-03-24 22:15:13  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-24 22:15:13  INFO      Portfolio built -- avg 43.2 positions | avg gross=1.968x | avg |net|=0.0000
+2026-03-25 17:51:59  INFO      ────────────────────────────────────────────────────────────
+2026-03-25 17:51:59  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-25 17:51:59  INFO        Feature store : data/features/
+2026-03-25 17:51:59  INFO        Alpha output  : data/alpha/
+2026-03-25 17:51:59  INFO        Rebalance freq: every 4 bars (~60 min) | Txn cost: 1.0 bps
+2026-03-25 17:51:59  INFO        Date range    : all → latest
+2026-03-25 17:51:59  INFO      ────────────────────────────────────────────────────────────
+2026-03-25 17:51:59  INFO      [1/6] Loading features ...
+2026-03-25 17:51:59  INFO      FeatureStore initialized at: data\features
+2026-03-25 17:51:59  INFO      Loading 15 features from data\features (tickers=all, dates=all→latest)
+2026-03-25 17:52:06  INFO      ✓ Loaded 15 features from data\features
+2026-03-25 17:52:06  INFO        Loaded 15 features
+2026-03-25 17:52:06  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-25 17:52:06  INFO      Read 1073783 rows | 44 tickers | 2024-03-22 → 2026-03-20
+2026-03-25 17:52:08  INFO        Close panel: (31858, 44)  (aligned to feature index)
+2026-03-25 17:52:08  INFO      [3/6] Computing IC summary ...
+2026-03-25 17:52:08  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-25 17:52:21  INFO      
+2026-03-25 17:52:21  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-25 17:52:21  INFO        ------------------------------------------------------------------------------
+2026-03-25 17:52:21  INFO        A1_bar_reversal            +0.08412  0.29085  +0.289  +11.141  0.620    ✓
+2026-03-25 17:52:21  INFO        B1_vwap_deviation          +0.06203  0.31755  +0.195  +7.525  0.579    ✓
+2026-03-25 17:52:21  INFO        B3_open_gap                +0.05980  0.32967  +0.181  +6.988  0.566    ✓
+2026-03-25 17:52:21  INFO        C2_flow_imbalance          +0.04921  0.28672  +0.172  +6.612  0.560    ✓
+2026-03-25 17:52:21  INFO        B2_price_position          +0.04058  0.29333  +0.138  +5.329  0.553    ✓
+2026-03-25 17:52:21  INFO        E1_residual_return         +0.02800  0.32017  +0.087  +3.368  0.538    ✓
+2026-03-25 17:52:21  INFO        A2_short_rev               +0.02787  0.32223  +0.086  +3.332  0.545    ✓
+2026-03-25 17:52:21  INFO        A3_medium_rev              +0.02673  0.31039  +0.086  +3.318  0.537    ✓
+2026-03-25 17:52:21  INFO        D1_vol_burst               +0.02006  0.27665  +0.073  +2.793  0.524    ✓
+2026-03-25 17:52:21  INFO        E2_sector_residual         +0.02205  0.33513  +0.066  +2.534  0.531    ✓
+2026-03-25 17:52:21  INFO        C3_turnover_shock          +0.00850  0.29626  +0.029  +1.106  0.513    ✓
+2026-03-25 17:52:21  INFO        C1_volume_shock            +0.00830  0.29383  +0.028  +1.088  0.513    ✓
+2026-03-25 17:52:21  INFO        A4_overnight_gap           +0.00354  0.33619  +0.011  +0.406  0.494    ✗
+2026-03-25 17:52:21  INFO        D2_vol_zscore              -0.00372  0.30149  -0.012  -0.476  0.491    ✗
+2026-03-25 17:52:21  INFO      
+2026-03-25 17:52:21  INFO        IC summary saved → reports//ic_summary.csv
+2026-03-25 17:52:21  INFO        12 / 15 features pass IC t-stat threshold (1.0)
+2026-03-25 17:52:21  INFO        Computing IC decay for best feature: A1_bar_reversal
+2026-03-25 17:55:51  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-25 17:55:51  INFO      [4/6] Building composite alpha signal ...
+2026-03-25 17:55:51  INFO      Computing composite alpha ...
+2026-03-25 17:56:10  INFO      IC weights computed. Active features per bar (avg): 6.8
+2026-03-25 17:56:10  INFO      Composite alpha: shape=(1485, 44)  valid=98.7%  mean=-0.0010  std=0.9311
+2026-03-25 17:56:10  INFO        Composite alpha saved: (1485, 44)
+2026-03-25 17:56:10  INFO      [5/6] Constructing portfolio weights ...
+2026-03-25 17:56:10  INFO        Downsampling alpha: every 4 bars (was 1485 bars)
+2026-03-25 17:56:10  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(372, 44) | close=(31858, 44) | adtv=$1,000,000
+2026-03-25 17:56:10  INFO      Building portfolio weights ...
+2026-03-25 17:56:10  INFO        [1/6] Volatility scaling ...
+2026-03-25 17:56:10  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-25 17:56:10  INFO        [3/6] Dollar neutralisation ...
+2026-03-25 17:56:10  INFO        [4/6] Position limits (max=10%) ...
+2026-03-25 17:56:10  INFO        [5/6] Normalise to unit gross ...
+2026-03-25 17:56:10  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-25 17:56:10  INFO      Portfolio built -- avg 43.2 positions | avg gross=1.968x | avg |net|=0.0000
+2026-03-26 19:07:45  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:07:45  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-26 19:07:45  INFO        Feature store : data/features_15min/
+2026-03-26 19:07:45  INFO        Alpha output  : data/alpha_15min/
+2026-03-26 19:07:45  INFO        Rebalance freq: every 1 bars (~15 min) | Txn cost: 1.0 bps
+2026-03-26 19:07:45  INFO        Date range    : 2026-02-26 → 2026-03-26
+2026-03-26 19:07:45  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:07:45  INFO      [1/6] Loading features ...
+2026-03-26 19:07:45  INFO      FeatureStore initialized at: data\features_15min
+2026-03-26 19:07:45  INFO      Loading 15 features from data\features_15min (tickers=all, dates=2026-02-26→2026-03-26)
+2026-03-26 19:07:45  INFO      ✓ Loaded 15 features from data\features_15min
+2026-03-26 19:07:45  INFO        Loaded 15 features
+2026-03-26 19:07:45  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-26 19:07:45  INFO      Read 40180 rows | 44 tickers | 2026-02-26 → 2026-03-20
+2026-03-26 19:07:45  INFO        Close panel: (1014, 44)  (aligned to feature index)
+2026-03-26 19:07:45  INFO      [3/6] Computing IC summary ...
+2026-03-26 19:07:45  INFO      AlphaModel: 15 features | IC window=300 bars | min t-stat=1.0
+2026-03-26 19:09:23  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:09:23  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-26 19:09:23  INFO        Feature store : data/features_15min/
+2026-03-26 19:09:23  INFO        Alpha output  : data/alpha_15min/
+2026-03-26 19:09:23  INFO        Rebalance freq: every 1 bars (~15 min) | Txn cost: 1.0 bps
+2026-03-26 19:09:23  INFO        Date range    : 2026-02-26 → 2026-03-26
+2026-03-26 19:09:23  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:09:23  INFO      [1/6] Loading features ...
+2026-03-26 19:09:23  INFO      FeatureStore initialized at: data\features_15min
+2026-03-26 19:09:23  INFO      Loading 15 features from data\features_15min (tickers=all, dates=2026-02-26→2026-03-26)
+2026-03-26 19:09:23  INFO      ✓ Loaded 15 features from data\features_15min
+2026-03-26 19:09:23  INFO        Loaded 15 features
+2026-03-26 19:09:23  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-26 19:09:24  INFO      Read 40180 rows | 44 tickers | 2026-02-26 → 2026-03-20
+2026-03-26 19:09:24  INFO        Close panel: (1014, 44)  (aligned to feature index)
+2026-03-26 19:09:24  INFO      [3/6] Computing IC summary ...
+2026-03-26 19:09:24  INFO      AlphaModel: 15 features | IC window=300 bars | min t-stat=1.0
+2026-03-26 19:09:24  INFO      
+2026-03-26 19:09:24  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-26 19:09:24  INFO        ------------------------------------------------------------------------------
+2026-03-26 19:09:24  INFO        B2_price_position          +0.06586  0.23359  +0.282  +1.668  0.629    ✓
+2026-03-26 19:09:24  INFO        D2_vol_zscore              +0.06748  0.29020  +0.233  +1.376  0.571    ✓
+2026-03-26 19:09:24  INFO        A3_medium_rev              +0.06483  0.30357  +0.214  +1.263  0.629    ✓
+2026-03-26 19:09:24  INFO        A4_overnight_gap           +0.06638  0.33309  +0.199  +1.179  0.543    ✓
+2026-03-26 19:09:24  INFO        E1_residual_return         +0.03103  0.27417  +0.113  +0.669  0.571    ✗
+2026-03-26 19:09:24  INFO        C2_flow_imbalance          +0.02896  0.29857  +0.097  +0.574  0.514    ✗
+2026-03-26 19:09:24  INFO        A1_bar_reversal            +0.03176  0.33201  +0.096  +0.566  0.600    ✗
+2026-03-26 19:09:24  INFO        A2_short_rev               +0.01764  0.30558  +0.058  +0.341  0.514    ✗
+2026-03-26 19:09:24  INFO        E2_sector_residual         +0.00378  0.32218  +0.012  +0.069  0.514    ✗
+2026-03-26 19:09:24  INFO        B3_open_gap                -0.00089  0.33961  -0.003  -0.016  0.486    ✗
+2026-03-26 19:09:24  INFO        B1_vwap_deviation          -0.00235  0.34000  -0.007  -0.041  0.514    ✗
+2026-03-26 19:09:24  INFO        D1_vol_burst               -0.03803  0.27634  -0.138  -0.814  0.457    ✗
+2026-03-26 19:09:24  INFO        C1_volume_shock            -0.05874  0.26529  -0.221  -1.310  0.543    ✓
+2026-03-26 19:09:24  INFO        C3_turnover_shock          -0.05989  0.26625  -0.225  -1.331  0.514    ✓
+2026-03-26 19:09:24  INFO      
+2026-03-26 19:09:24  INFO        IC summary saved → reports_15min//ic_summary.csv
+2026-03-26 19:09:24  INFO        6 / 15 features pass IC t-stat threshold (1.0)
+2026-03-26 19:09:24  INFO        Computing IC decay for best feature: B2_price_position
+2026-03-26 19:10:13  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:10:13  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-26 19:10:13  INFO        Feature store : data/features_15min/
+2026-03-26 19:10:13  INFO        Alpha output  : data/alpha_15min/
+2026-03-26 19:10:13  INFO        Rebalance freq: every 1 bars (~15 min) | Txn cost: 1.0 bps
+2026-03-26 19:10:13  INFO        Date range    : 2026-02-26 → 2026-03-26
+2026-03-26 19:10:13  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:10:13  INFO      [1/6] Loading features ...
+2026-03-26 19:10:13  INFO      FeatureStore initialized at: data\features_15min
+2026-03-26 19:10:13  INFO      Loading 15 features from data\features_15min (tickers=all, dates=2026-02-26→2026-03-26)
+2026-03-26 19:10:14  INFO      ✓ Loaded 15 features from data\features_15min
+2026-03-26 19:10:14  INFO        Loaded 15 features
+2026-03-26 19:10:14  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-26 19:10:14  INFO      Read 40180 rows | 44 tickers | 2026-02-26 → 2026-03-20
+2026-03-26 19:10:14  INFO        Close panel: (1014, 44)  (aligned to feature index)
+2026-03-26 19:10:14  INFO      [3/6] Computing IC summary ...
+2026-03-26 19:10:14  INFO      AlphaModel: 15 features | IC window=300 bars | min t-stat=1.0
+2026-03-26 19:10:14  INFO      
+2026-03-26 19:10:14  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-26 19:10:14  INFO        ------------------------------------------------------------------------------
+2026-03-26 19:10:14  INFO        B2_price_position          +0.06586  0.23359  +0.282  +1.668  0.629    ✓
+2026-03-26 19:10:14  INFO        D2_vol_zscore              +0.06748  0.29020  +0.233  +1.376  0.571    ✓
+2026-03-26 19:10:14  INFO        A3_medium_rev              +0.06483  0.30357  +0.214  +1.263  0.629    ✓
+2026-03-26 19:10:14  INFO        A4_overnight_gap           +0.06638  0.33309  +0.199  +1.179  0.543    ✓
+2026-03-26 19:10:14  INFO        E1_residual_return         +0.03103  0.27417  +0.113  +0.669  0.571    ✗
+2026-03-26 19:10:14  INFO        C2_flow_imbalance          +0.02896  0.29857  +0.097  +0.574  0.514    ✗
+2026-03-26 19:10:14  INFO        A1_bar_reversal            +0.03176  0.33201  +0.096  +0.566  0.600    ✗
+2026-03-26 19:10:14  INFO        A2_short_rev               +0.01764  0.30558  +0.058  +0.341  0.514    ✗
+2026-03-26 19:10:14  INFO        E2_sector_residual         +0.00378  0.32218  +0.012  +0.069  0.514    ✗
+2026-03-26 19:10:14  INFO        B3_open_gap                -0.00089  0.33961  -0.003  -0.016  0.486    ✗
+2026-03-26 19:10:14  INFO        B1_vwap_deviation          -0.00235  0.34000  -0.007  -0.041  0.514    ✗
+2026-03-26 19:10:14  INFO        D1_vol_burst               -0.03803  0.27634  -0.138  -0.814  0.457    ✗
+2026-03-26 19:10:14  INFO        C1_volume_shock            -0.05874  0.26529  -0.221  -1.310  0.543    ✓
+2026-03-26 19:10:14  INFO        C3_turnover_shock          -0.05989  0.26625  -0.225  -1.331  0.514    ✓
+2026-03-26 19:10:14  INFO      
+2026-03-26 19:10:14  INFO        IC summary saved → reports_15min//ic_summary.csv
+2026-03-26 19:10:14  INFO        6 / 15 features pass IC t-stat threshold (1.0)
+2026-03-26 19:10:14  INFO        Computing IC decay for best feature: B2_price_position
+2026-03-26 19:10:19  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-26 19:10:19  INFO      [4/6] Building composite alpha signal ...
+2026-03-26 19:10:19  INFO      Computing composite alpha ...
+2026-03-26 19:10:19  INFO      IC weights computed. Active features per bar (avg): 0.0
+2026-03-26 19:10:19  INFO      Composite alpha: shape=(36, 41)  valid=0.0%  mean=nan  std=nan
+2026-03-26 19:10:19  INFO        Composite alpha saved: (36, 41)
+2026-03-26 19:10:19  INFO      [5/6] Constructing portfolio weights ...
+2026-03-26 19:10:19  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(36, 41) | close=(1014, 44) | adtv=$1,000,000
+2026-03-26 19:10:19  INFO      Building portfolio weights ...
+2026-03-26 19:10:19  INFO        [1/6] Volatility scaling ...
+2026-03-26 19:10:19  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-26 19:10:19  INFO        [3/6] Dollar neutralisation ...
+2026-03-26 19:10:19  INFO        [4/6] Position limits (max=10%) ...
+2026-03-26 19:10:19  INFO        [5/6] Normalise to unit gross ...
+2026-03-26 19:10:19  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-26 19:10:19  INFO      Portfolio built -- avg 0.0 positions | avg gross=0.000x | avg |net|=0.0000
+2026-03-26 19:43:14  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:43:14  INFO        Alpha Signal + Portfolio Construction  (Phase 2)
+2026-03-26 19:43:14  INFO        Feature store : data/features_15min/
+2026-03-26 19:43:14  INFO        Alpha output  : data/alpha_15min/
+2026-03-26 19:43:14  INFO        Rebalance freq: every 1 bars (~15 min) | Txn cost: 1.0 bps
+2026-03-26 19:43:14  INFO        Date range    : 2026-02-26 → 2026-03-26
+2026-03-26 19:43:14  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:43:14  INFO      [1/6] Loading features ...
+2026-03-26 19:43:14  INFO      FeatureStore initialized at: data\features_15min
+2026-03-26 19:43:14  INFO      Loading 15 features from data\features_15min (tickers=all, dates=2026-02-26→2026-03-26)
+2026-03-26 19:43:16  INFO      ✓ Loaded 15 features from data\features_15min
+2026-03-26 19:43:16  INFO        Loaded 15 features
+2026-03-26 19:43:16  INFO      [2/6] Loading price panels for vol scaling ...
+2026-03-26 19:43:16  INFO      Read 40180 rows | 44 tickers | 2026-02-26 → 2026-03-20
+2026-03-26 19:43:16  INFO        Close panel: (1088, 44)  (aligned to feature index)
+2026-03-26 19:43:16  INFO      [3/6] Computing IC summary ...
+2026-03-26 19:43:16  INFO      AlphaModel: 15 features | IC window=60 bars | min t-stat=1.0
+2026-03-26 19:43:17  INFO      
+2026-03-26 19:43:17  INFO        Feature                     IC_mean    IC_std     ICIR   t_stat   pct_pos  active
+2026-03-26 19:43:17  INFO        ------------------------------------------------------------------------------
+2026-03-26 19:43:17  INFO        B2_price_position          +0.04589  0.23096  +0.199  +1.405  0.580    ✓
+2026-03-26 19:43:17  INFO        A4_overnight_gap           +0.04794  0.32307  +0.148  +1.049  0.520    ✓
+2026-03-26 19:43:17  INFO        A1_bar_reversal            +0.04506  0.31234  +0.144  +1.020  0.640    ✓
+2026-03-26 19:43:17  INFO        A3_medium_rev              +0.03591  0.29263  +0.123  +0.868  0.580    ✗
+2026-03-26 19:43:17  INFO        B3_open_gap                +0.01007  0.32711  +0.031  +0.218  0.520    ✗
+2026-03-26 19:43:17  INFO        A2_short_rev               +0.00667  0.29774  +0.022  +0.158  0.540    ✗
+2026-03-26 19:43:17  INFO        C2_flow_imbalance          +0.00587  0.29320  +0.020  +0.142  0.460    ✗
+2026-03-26 19:43:17  INFO        E1_residual_return         +0.00411  0.24435  +0.017  +0.119  0.500    ✗
+2026-03-26 19:43:17  INFO        C1_volume_shock            +0.00252  0.23451  +0.011  +0.076  0.500    ✗
+2026-03-26 19:43:17  INFO        B1_vwap_deviation          +0.00204  0.31352  +0.007  +0.046  0.580    ✗
+2026-03-26 19:43:17  INFO        E2_sector_residual         -0.00258  0.32435  -0.008  -0.056  0.500    ✗
+2026-03-26 19:43:17  INFO        D1_vol_burst               -0.01686  0.25452  -0.066  -0.469  0.500    ✗
+2026-03-26 19:43:17  INFO        C3_turnover_shock          -0.01841  0.25474  -0.072  -0.511  0.500    ✗
+2026-03-26 19:43:17  INFO        D2_vol_zscore              -0.03163  0.27493  -0.115  -0.813  0.360    ✗
+2026-03-26 19:43:17  INFO      
+2026-03-26 19:43:17  INFO        IC summary saved → reports_15min//ic_summary.csv
+2026-03-26 19:43:17  INFO        3 / 15 features pass IC t-stat threshold (1.0)
+2026-03-26 19:43:17  INFO        Computing IC decay for best feature: B2_price_position
+2026-03-26 19:43:21  INFO        Signal half-life (best feature): 2.0 bars (30 min)
+2026-03-26 19:43:21  INFO      [4/6] Building composite alpha signal ...
+2026-03-26 19:43:21  INFO      Computing composite alpha ...
+2026-03-26 19:43:22  INFO      IC weights computed. Active features per bar (avg): 1.9
+2026-03-26 19:43:22  INFO      Composite alpha: shape=(51, 41)  valid=66.7%  mean=-0.0042  std=0.9664
+2026-03-26 19:43:22  INFO        Composite alpha saved: (51, 41)
+2026-03-26 19:43:22  INFO      [5/6] Constructing portfolio weights ...
+2026-03-26 19:43:22  INFO      PortfolioBuilder init — gross_lev=2.0x | max_weight=10% | min_weight=0.100% | winsor_z=3.0 | turnover_control=DISABLED | alpha=(51, 41) | close=(1088, 44) | adtv=$1,000,000
+2026-03-26 19:43:22  INFO      Building portfolio weights ...
+2026-03-26 19:43:22  INFO        [1/6] Volatility scaling ...
+2026-03-26 19:43:22  INFO        [2/6] Liquidity filter (min ADTV $1,000,000) ...
+2026-03-26 19:43:22  INFO        [3/6] Dollar neutralisation ...
+2026-03-26 19:43:22  INFO        [4/6] Position limits (max=10%) ...
+2026-03-26 19:43:22  INFO        [5/6] Normalise to unit gross ...
+2026-03-26 19:43:22  INFO        [6/6] Scale to 2.0x gross leverage ...
+2026-03-26 19:43:22  INFO      Portfolio built -- avg 29.2 positions | avg gross=1.333x | avg |net|=0.0000
+2026-03-26 19:43:22  INFO        Weights saved: (51, 44)
+2026-03-26 19:43:22  INFO      [6/6] Computing portfolio statistics ...
+2026-03-26 19:43:22  INFO      
+2026-03-26 19:43:22  INFO        Portfolio Statistics:
+2026-03-26 19:43:22  INFO        Annual Return                   -1.99% (gross)
+2026-03-26 19:43:22  INFO          → Net after costs             -32.13% (3014.0 bps cost)
+2026-03-26 19:43:22  INFO        Annual Vol                      0.85%
+2026-03-26 19:43:22  INFO        Gross Sharpe Ratio              -2.336
+2026-03-26 19:43:22  INFO        Rebalance Turnover              3014×
+2026-03-26 19:43:22  INFO        Annual Cost (realized)          30.14%
+2026-03-26 19:43:22  INFO        Avg Positions                   29
+2026-03-26 19:43:22  INFO        Avg Gross Leverage              1.333×
+2026-03-26 19:43:22  INFO        Avg Net Leverage                0.0000
+2026-03-26 19:43:22  INFO      ────────────────────────────────────────────────────────────
+2026-03-26 19:43:22  INFO        Phase 2 complete in 7.8s
+2026-03-26 19:43:22  INFO        Next: python run_backtest.py  (walk-forward validation)
+2026-03-26 19:43:22  INFO      ────────────────────────────────────────────────────────────
