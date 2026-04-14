@@ -1,251 +1,455 @@
-2026-03-25 19:28:55  INFO      ───────────────────────────────────────────────────────
-2026-03-25 19:28:55  INFO      Polygon OHLCV Pipeline
-2026-03-25 19:28:55  INFO        Tickers    : 44  (AAPL … AMAT)
-2026-03-25 19:28:55  INFO        Date range : 2024-03-22 → 2026-03-25
-2026-03-25 19:28:55  INFO        Timespan   : minute (multiplier=5)
-2026-03-25 19:28:55  INFO        Adjusted   : True
-2026-03-25 19:28:55  INFO      ───────────────────────────────────────────────────────
-2026-03-25 19:28:55  INFO      [1/5] Fetching from Polygon.io ...
-2026-03-25 19:29:31  WARNING   429 rate limit hit on AAPL (attempt 1) — waiting 20s
-2026-03-25 19:29:51  WARNING   429 rate limit hit on AAPL (attempt 2) — waiting 40s
-2026-03-25 19:30:37  INFO      AAPL: fetched 92041 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:30:55  WARNING   429 rate limit hit on MSFT (attempt 1) — waiting 20s
-2026-03-25 19:32:32  INFO      MSFT: fetched 84256 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:34:32  INFO      NVDA: fetched 91894 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:35:49  ERROR     AMZN: request error (attempt 1/3): HTTPSConnectionPool(host='api.polygon.io', port=443): Max retries exceeded with url: /v2/aggs/ticker/AMZN/range/5/minute/2024-11-17/2025-02-04?adjusted=true&sort=asc&limit=50000&apiKey=hO7LJArRmMbPva1s0KW6r7CXbrfe0ROQ (Caused by ReadTimeoutError("HTTPSConnectionPool(host='api.polygon.io', port=443): Read timed out. (read timeout=30)"))
-2026-03-25 19:36:31  WARNING   429 rate limit hit on AMZN (attempt 1) — waiting 20s
-2026-03-25 19:36:51  WARNING   429 rate limit hit on AMZN (attempt 2) — waiting 40s
-2026-03-25 19:37:41  INFO      AMZN: fetched 92070 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:37:55  WARNING   429 rate limit hit on META (attempt 1) — waiting 20s
-2026-03-25 19:39:23  INFO      META: fetched 82524 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:41:20  INFO      AMD: fetched 93543 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:42:55  WARNING   429 rate limit hit on TSLA (attempt 1) — waiting 20s
-2026-03-25 19:43:32  INFO      TSLA: fetched 93743 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:45:32  INFO      MSTR: fetched 86132 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:47:32  INFO      PLTR: fetched 94443 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:49:32  INFO      SMCI: fetched 88346 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:49:32  INFO      Progress: 10/44 tickers  (1237s elapsed, ~4205s remaining)
-2026-03-25 19:51:32  INFO      JPM: fetched 58347 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:53:32  INFO      BAC: fetched 68560 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:55:33  INFO      GS: fetched 48035 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:57:32  INFO      MS: fetched 47528 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 19:59:32  INFO      C: fetched 58477 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:01:32  INFO      XOM: fetched 62739 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:03:32  INFO      CVX: fetched 57111 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:04:55  WARNING   429 rate limit hit on OXY (attempt 1) — waiting 20s
-2026-03-25 20:05:44  INFO      OXY: fetched 75618 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:07:43  WARNING   429 rate limit hit on SLB (attempt 1) — waiting 20s
-2026-03-25 20:08:04  INFO      SLB: fetched 55244 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:08:55  WARNING   429 rate limit hit on HAL (attempt 1) — waiting 20s
-2026-03-25 20:10:09  INFO      HAL: fetched 54141 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:10:09  INFO      Progress: 20/44 tickers  (2474s elapsed, ~2969s remaining)
-2026-03-25 20:12:08  INFO      LLY: fetched 54822 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:14:08  INFO      MRNA: fetched 68997 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:16:08  INFO      BIIB: fetched 42008 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:18:13  INFO      REGN: fetched 40792 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:20:08  INFO      VRTX: fetched 41850 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:22:08  INFO      CRM: fetched 58034 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:24:08  INFO      NOW: fetched 49644 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:26:08  INFO      SNOW: fetched 62926 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:28:12  INFO      NET: fetched 51564 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:30:09  INFO      CRWD: fetched 61031 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:30:09  INFO      Progress: 30/44 tickers  (3674s elapsed, ~1715s remaining)
-2026-03-25 20:32:08  INFO      HD: fetched 47925 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:34:24  INFO      MCD: fetched 47548 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:35:55  WARNING   429 rate limit hit on SBUX (attempt 1) — waiting 20s
-2026-03-25 20:36:22  INFO      SBUX: fetched 59024 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:38:25  INFO      NKE: fetched 72428 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:40:20  INFO      CAT: fetched 47154 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:42:20  INFO      DE: fetched 42384 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:44:20  INFO      LMT: fetched 45980 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:46:20  INFO      RTX: fetched 47830 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:48:27  INFO      GE: fetched 51846 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:50:20  INFO      QCOM: fetched 63461 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:50:20  INFO      Progress: 40/44 tickers  (4885s elapsed, ~489s remaining)
-2026-03-25 20:52:20  INFO      AVGO: fetched 83036 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:52:54  ERROR     MU: request error (attempt 1/3): Expecting ',' delimiter: line 1 column 300988 (char 300987)
-2026-03-25 20:53:55  WARNING   429 rate limit hit on MU (attempt 1) — waiting 20s
-2026-03-25 20:54:44  INFO      MU: fetched 89878 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:56:50  INFO      LRCX: fetched 57017 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:58:50  INFO      AMAT: fetched 57268 bars  (2024-03-22 → 2026-03-25)
-2026-03-25 20:58:51  INFO      Universe fetch complete: 44 tickers, 2829239 total bars
-2026-03-25 20:58:51  INFO      [2/5] Cleaning ...
-2026-03-25 20:58:51  INFO      Cleaning 44 tickers ...
-2026-03-25 20:58:51  INFO      AAPL    raw=92041 → clean=92041 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=6197  stale=341
-2026-03-25 20:58:52  INFO      AMAT    raw=57268 → clean=57265 (100%)  ohlc=0  zero=0  vol=0  ret=2  range=1  gaps=0  spikes=5566  stale=340
-2026-03-25 20:58:52  INFO      AMD     raw=93543 → clean=93536 (100%)  ohlc=0  zero=0  vol=0  ret=2  range=5  gaps=0  spikes=5919  stale=222
-2026-03-25 20:58:52  INFO      AMZN    raw=92070 → clean=92067 (100%)  ohlc=0  zero=0  vol=0  ret=2  range=1  gaps=0  spikes=5988  stale=338
-2026-03-25 20:58:52  INFO      AVGO    raw=83036 → clean=83033 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=2  gaps=0  spikes=5789  stale=231
-2026-03-25 20:58:52  INFO      BAC     raw=68560 → clean=68560 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=6687  stale=1109
-2026-03-25 20:58:52  INFO      BIIB    raw=42008 → clean=42007 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=852  stale=217
-2026-03-25 20:58:53  INFO      C       raw=58477 → clean=58477 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=5674  stale=462
-2026-03-25 20:58:53  INFO      CAT     raw=47154 → clean=47154 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=2832  stale=301
-2026-03-25 20:58:53  INFO      CRM     raw=58034 → clean=58028 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=5  gaps=0  spikes=5341  stale=346
-2026-03-25 20:58:53  INFO      CRWD    raw=61031 → clean=61026 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=4  gaps=0  spikes=5377  stale=259
-2026-03-25 20:58:53  INFO      CVX     raw=57111 → clean=57111 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=5538  stale=383
-2026-03-25 20:58:53  INFO      DE      raw=42384 → clean=42384 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=910  stale=172
-2026-03-25 20:58:53  INFO      GE      raw=51846 → clean=51846 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=4931  stale=265
-2026-03-25 20:58:53  INFO      GS      raw=48035 → clean=48035 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3194  stale=282
-2026-03-25 20:58:54  INFO      HAL     raw=54141 → clean=54140 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=0  gaps=0  spikes=5371  stale=718
-2026-03-25 20:58:54  INFO      HD      raw=47925 → clean=47925 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3508  stale=295
-2026-03-25 20:58:54  INFO      JPM     raw=58347 → clean=58347 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=5589  stale=343
-2026-03-25 20:58:54  INFO      LLY     raw=54822 → clean=54813 (100%)  ohlc=0  zero=0  vol=0  ret=2  range=7  gaps=0  spikes=5016  stale=297
-2026-03-25 20:58:54  INFO      LMT     raw=45980 → clean=45979 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=2275  stale=138
-2026-03-25 20:58:54  INFO      LRCX    raw=57017 → clean=57016 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=4705  stale=387
-2026-03-25 20:58:54  INFO      MCD     raw=47548 → clean=47548 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3374  stale=323
-2026-03-25 20:58:54  INFO      META    raw=82524 → clean=82521 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=2  gaps=0  spikes=5924  stale=213
-2026-03-25 20:58:55  INFO      MRNA    raw=68997 → clean=68981 (100%)  ohlc=0  zero=0  vol=0  ret=4  range=12  gaps=0  spikes=5973  stale=561
-2026-03-25 20:58:55  INFO      MS      raw=47528 → clean=47528 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3303  stale=402
-2026-03-25 20:58:55  INFO      MSFT    raw=84256 → clean=84255 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=6110  stale=298
-2026-03-25 20:58:55  INFO      MSTR    raw=86132 → clean=86124 (100%)  ohlc=0  zero=0  vol=0  ret=3  range=5  gaps=0  spikes=5191  stale=126
-2026-03-25 20:58:55  INFO      MU      raw=89878 → clean=89870 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=7  gaps=0  spikes=6027  stale=331
-2026-03-25 20:58:55  INFO      NET     raw=51564 → clean=51555 (100%)  ohlc=0  zero=0  vol=0  ret=3  range=6  gaps=0  spikes=4419  stale=248
-2026-03-25 20:58:55  INFO      NKE     raw=72428 → clean=72425 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=3  gaps=0  spikes=6215  stale=687
-2026-03-25 20:58:56  INFO      NOW     raw=49644 → clean=49640 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=4  gaps=0  spikes=2272  stale=308
-2026-03-25 20:58:56  INFO      NVDA    raw=91894 → clean=91889 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=4  gaps=0  spikes=5068  stale=141
-2026-03-25 20:58:56  INFO      OXY     raw=75618 → clean=75618 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=6206  stale=1029
-2026-03-25 20:58:56  INFO      PLTR    raw=94443 → clean=94434 (100%)  ohlc=0  zero=0  vol=0  ret=4  range=5  gaps=0  spikes=5643  stale=683
-2026-03-25 20:58:56  INFO      QCOM    raw=63461 → clean=63460 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=5912  stale=334
-2026-03-25 20:58:56  INFO      REGN    raw=40792 → clean=40791 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=699  stale=129
-2026-03-25 20:58:56  INFO      RTX     raw=47830 → clean=47830 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3634  stale=260
-2026-03-25 20:58:57  INFO      SBUX    raw=59024 → clean=59020 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=4  gaps=0  spikes=5768  stale=476
-2026-03-25 20:58:57  INFO      SLB     raw=55244 → clean=55243 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=0  gaps=0  spikes=5617  stale=519
-2026-03-25 20:58:57  INFO      SMCI    raw=88346 → clean=88311 (100%)  ohlc=0  zero=0  vol=0  ret=9  range=26  gaps=0  spikes=5868  stale=497
-2026-03-25 20:58:57  INFO      SNOW    raw=62926 → clean=62915 (100%)  ohlc=0  zero=0  vol=0  ret=3  range=8  gaps=0  spikes=5546  stale=410
-2026-03-25 20:58:57  INFO      TSLA    raw=93743 → clean=93739 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=3  gaps=0  spikes=5318  stale=77
-2026-03-25 20:58:57  INFO      VRTX    raw=41850 → clean=41849 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=745  stale=196
-2026-03-25 20:58:57  INFO      XOM     raw=62739 → clean=62739 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=6207  stale=406
-2026-03-25 20:58:58  INFO      Panel cleaning complete: 2829239 → 2829075 bars (100.0% retained)
-2026-03-25 20:58:58  INFO      [3/5] Building universe membership ...
-2026-03-25 20:59:50  INFO      Universe built: 501 dates | avg 39 stocks | min 0 | max 44
-2026-03-25 21:00:09  INFO      Universe mask: 317819 bars excluded (11.2% of total)
-2026-03-25 21:00:09  INFO      [4/5] Writing Parquet store ...
-2026-03-25 21:00:13  INFO      Wrote 3 partition files → data\clean
-2026-03-25 21:00:13  INFO      [5/5] Generating quality report ...
-2026-03-25 21:01:22  INFO      Quality report saved to reports | 44 tickers | 100.0% bars retained | 224398 flagged (not removed) | 32 tickers below 80% coverage
-2026-03-25 21:01:22  INFO      ───────────────────────────────────────────────────────
-2026-03-25 21:01:22  INFO      Pipeline complete in 5547.1s
-2026-03-25 21:01:22  INFO        Tickers    : 44
-2026-03-25 21:01:22  INFO        Clean bars : 2829075  (100.0% retained)
-2026-03-25 21:01:22  INFO        Output     : data/clean/
-2026-03-25 21:01:22  INFO        Report     : reports/
-2026-03-25 21:01:22  INFO      ───────────────────────────────────────────────────────
-2026-03-26 18:52:42  INFO      ───────────────────────────────────────────────────────
-2026-03-26 18:52:42  INFO      Polygon OHLCV Pipeline
-2026-03-26 18:52:42  INFO        Tickers    : 44  (AAPL … AMAT)
-2026-03-26 18:52:42  INFO        Date range : 2026-02-26 → 2026-03-26
-2026-03-26 18:52:42  INFO        Timespan   : minute (multiplier=15)
-2026-03-26 18:52:42  INFO        Adjusted   : True
-2026-03-26 18:52:42  INFO      ───────────────────────────────────────────────────────
-2026-03-26 18:52:42  INFO      [1/5] Fetching from Polygon.io ...
-2026-03-26 18:52:43  INFO      AAPL: fetched 1264 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:52:44  INFO      MSFT: fetched 1280 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:52:44  INFO      NVDA: fetched 1280 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:52:45  INFO      AMZN: fetched 1279 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:52:45  INFO      META: fetched 1275 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:52:54  WARNING   429 rate limit hit on AMD (attempt 1) — waiting 20s
-2026-03-26 18:53:15  INFO      AMD: fetched 1278 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:53:18  INFO      TSLA: fetched 1280 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:53:30  INFO      MSTR: fetched 1280 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:53:42  INFO      PLTR: fetched 1278 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:53:54  INFO      SMCI: fetched 1277 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:53:54  INFO      Progress: 10/44 tickers  (73s elapsed, ~247s remaining)
-2026-03-26 18:54:06  INFO      JPM: fetched 1163 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:54:18  INFO      BAC: fetched 1164 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:54:30  INFO      GS: fetched 1006 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:54:42  INFO      MS: fetched 833 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:54:54  INFO      C: fetched 983 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:55:06  INFO      XOM: fetched 1243 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:55:18  INFO      CVX: fetched 1195 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:55:30  INFO      OXY: fetched 1270 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:55:42  INFO      SLB: fetched 1046 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:55:54  INFO      HAL: fetched 1051 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:55:54  INFO      Progress: 20/44 tickers  (193s elapsed, ~231s remaining)
-2026-03-26 18:56:06  INFO      LLY: fetched 1006 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:56:18  INFO      MRNA: fetched 1110 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:56:30  INFO      BIIB: fetched 577 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:56:42  INFO      REGN: fetched 599 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:56:54  INFO      VRTX: fetched 669 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:57:06  INFO      CRM: fetched 1140 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:57:18  INFO      NOW: fetched 1267 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:57:30  INFO      SNOW: fetched 967 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:57:42  INFO      NET: fetched 863 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:57:54  INFO      CRWD: fetched 1159 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:57:54  INFO      Progress: 30/44 tickers  (313s elapsed, ~146s remaining)
-2026-03-26 18:58:06  INFO      HD: fetched 900 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:58:18  INFO      MCD: fetched 841 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:58:30  INFO      SBUX: fetched 880 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:58:42  INFO      NKE: fetched 1223 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:58:54  INFO      CAT: fetched 968 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:59:06  INFO      DE: fetched 695 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:59:18  INFO      LMT: fetched 986 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:59:30  INFO      RTX: fetched 970 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:59:42  INFO      GE: fetched 1001 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:59:54  INFO      QCOM: fetched 1046 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 18:59:54  INFO      Progress: 40/44 tickers  (433s elapsed, ~43s remaining)
-2026-03-26 19:00:07  INFO      AVGO: fetched 1280 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 19:00:19  INFO      MU: fetched 1280 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 19:00:31  INFO      LRCX: fetched 1107 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 19:00:43  INFO      AMAT: fetched 1022 bars  (2026-02-26 → 2026-03-26)
-2026-03-26 19:00:43  INFO      Universe fetch complete: 44 tickers, 47281 total bars
-2026-03-26 19:00:43  INFO      [2/5] Cleaning ...
-2026-03-26 19:00:43  INFO      Cleaning 44 tickers ...
-2026-03-26 19:00:43  INFO      AAPL    raw=1264 → clean=1264 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=225  stale=1
-2026-03-26 19:00:43  INFO      AMAT    raw=1022 → clean=1022 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=218  stale=0
-2026-03-26 19:00:43  INFO      AMD     raw=1278 → clean=1278 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=206  stale=0
-2026-03-26 19:00:43  INFO      AMZN    raw=1279 → clean=1279 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=222  stale=0
-2026-03-26 19:00:43  INFO      AVGO    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=210  stale=0
-2026-03-26 19:00:43  INFO      BAC     raw=1164 → clean=1164 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=240  stale=5
-2026-03-26 19:00:43  INFO      BIIB    raw= 577 → clean= 577 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=13  stale=0
-2026-03-26 19:00:43  INFO      C       raw= 983 → clean= 983 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=215  stale=1
-2026-03-26 19:00:43  INFO      CAT     raw= 968 → clean= 968 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=219  stale=0
-2026-03-26 19:00:43  INFO      CRM     raw=1140 → clean=1140 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=226  stale=3
-2026-03-26 19:00:43  INFO      CRWD    raw=1159 → clean=1158 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=219  stale=2
-2026-03-26 19:00:43  INFO      CVX     raw=1195 → clean=1195 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=226  stale=2
-2026-03-26 19:00:43  INFO      DE      raw= 695 → clean= 695 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=53  stale=1
-2026-03-26 19:00:43  INFO      GE      raw=1001 → clean=1001 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=222  stale=0
-2026-03-26 19:00:43  INFO      GS      raw=1006 → clean=1006 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=208  stale=1
-2026-03-26 19:00:43  INFO      HAL     raw=1051 → clean=1051 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=231  stale=10
-2026-03-26 19:00:43  INFO      HD      raw= 900 → clean= 900 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=204  stale=1
-2026-03-26 19:00:43  INFO      JPM     raw=1163 → clean=1163 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=242  stale=1
-2026-03-26 19:00:43  INFO      LLY     raw=1006 → clean=1006 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=214  stale=1
-2026-03-26 19:00:43  INFO      LMT     raw= 986 → clean= 986 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=212  stale=1
-2026-03-26 19:00:43  INFO      LRCX    raw=1107 → clean=1107 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=227  stale=3
-2026-03-26 19:00:43  INFO      MCD     raw= 841 → clean= 841 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=173  stale=3
-2026-03-26 19:00:43  INFO      META    raw=1275 → clean=1275 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=203  stale=1
-2026-03-26 19:00:43  INFO      MRNA    raw=1110 → clean=1109 (100%)  ohlc=0  zero=0  vol=0  ret=1  range=0  gaps=0  spikes=212  stale=8
-2026-03-26 19:00:43  INFO      MS      raw= 833 → clean= 833 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=166  stale=2
-2026-03-26 19:00:43  INFO      MSFT    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=209  stale=0
-2026-03-26 19:00:43  INFO      MSTR    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=182  stale=1
-2026-03-26 19:00:43  INFO      MU      raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=158  stale=0
-2026-03-26 19:00:43  INFO      NET     raw= 863 → clean= 863 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=177  stale=1
-2026-03-26 19:00:43  INFO      NKE     raw=1223 → clean=1223 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=219  stale=1
-2026-03-26 19:00:43  INFO      NOW     raw=1267 → clean=1267 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=225  stale=1
-2026-03-26 19:00:43  INFO      NVDA    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=188  stale=0
-2026-03-26 19:00:43  INFO      OXY     raw=1270 → clean=1270 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=195  stale=1
-2026-03-26 19:00:43  INFO      PLTR    raw=1278 → clean=1278 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=205  stale=0
-2026-03-26 19:00:43  INFO      QCOM    raw=1046 → clean=1046 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=235  stale=1
-2026-03-26 19:00:43  INFO      REGN    raw= 599 → clean= 599 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=3  stale=1
-2026-03-26 19:00:43  INFO      RTX     raw= 970 → clean= 970 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=192  stale=1
-2026-03-26 19:00:43  INFO      SBUX    raw= 880 → clean= 880 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=184  stale=0
-2026-03-26 19:00:43  INFO      SLB     raw=1046 → clean=1046 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=233  stale=2
-2026-03-26 19:00:43  INFO      SMCI    raw=1277 → clean=1275 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=2  gaps=0  spikes=203  stale=2
-2026-03-26 19:00:43  INFO      SNOW    raw= 967 → clean= 967 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=213  stale=3
-2026-03-26 19:00:43  INFO      TSLA    raw=1280 → clean=1280 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=201  stale=0
-2026-03-26 19:00:43  INFO      VRTX    raw= 669 → clean= 668 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=1  gaps=0  spikes=25  stale=0
-2026-03-26 19:00:43  INFO      XOM     raw=1243 → clean=1243 (100%)  ohlc=0  zero=0  vol=0  ret=0  range=0  gaps=0  spikes=231  stale=1
-2026-03-26 19:00:43  INFO      Panel cleaning complete: 47281 → 47276 bars (100.0% retained)
-2026-03-26 19:00:43  INFO      [3/5] Building universe membership ...
-2026-03-26 19:00:44  INFO      Universe built: 20 dates | avg 0 stocks | min 0 | max 0
-2026-03-26 19:00:44  INFO      Universe mask: 47276 bars excluded (100.0% of total)
-2026-03-26 19:00:44  INFO      [4/5] Writing Parquet store ...
-2026-03-26 19:00:44  INFO      Wrote 1 partition files → data\clean_15min
-2026-03-26 19:00:44  INFO      [5/5] Generating quality report ...
-2026-03-26 19:00:45  INFO      Quality report saved to reports | 44 tickers | 100.0% bars retained | 8547 flagged (not removed) | 18 tickers below 80% coverage
-2026-03-26 19:00:45  INFO      ───────────────────────────────────────────────────────
-2026-03-26 19:00:45  INFO      Pipeline complete in 483.4s
-2026-03-26 19:00:45  INFO        Tickers    : 44
-2026-03-26 19:00:45  INFO        Clean bars : 47276  (100.0% retained)
-2026-03-26 19:00:45  INFO        Output     : data/clean_15min/
-2026-03-26 19:00:45  INFO        Report     : reports/
-2026-03-26 19:00:45  INFO      ───────────────────────────────────────────────────────
+2026-04-14 17:51:39  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:51:39  INFO        NSE Single-Day Max-Profit Backtester
+2026-04-14 17:51:39  INFO        Capital: ₹10L | Picks: 10 | Stop Loss: 1.5%
+2026-04-14 17:51:39  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:51:39  INFO      
+[DATA] Fetching market data ...
+2026-04-14 17:51:40  INFO      ────────────────────────────────────────────────────────────
+2026-04-14 17:51:40  INFO        NSE Intraday Data Pipeline
+2026-04-14 17:51:40  INFO        Exchange: NSE | Freq: 5m | Days: 59
+2026-04-14 17:51:40  INFO      ────────────────────────────────────────────────────────────
+2026-04-14 17:51:40  INFO      [1/4] Skipping screen, using seed pool: 100 stocks
+2026-04-14 17:51:40  INFO      [2/4] Fetching 5-min intraday data for 100 tickers ...
+2026-04-14 17:51:40  INFO      Fetching 100 tickers from yfinance (NSE) ...
+2026-04-14 17:51:40  INFO        [1/100] RELIANCE ...
+2026-04-14 17:51:40  INFO        ✓ RELIANCE: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:41  INFO        [2/100] TCS ...
+2026-04-14 17:51:41  INFO        ✓ TCS: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:42  INFO        [3/100] HDFCBANK ...
+2026-04-14 17:51:42  INFO        ✓ HDFCBANK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:42  INFO        [4/100] INFY ...
+2026-04-14 17:51:43  INFO        ✓ INFY: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:43  INFO        [5/100] ICICIBANK ...
+2026-04-14 17:51:44  INFO        ✓ ICICIBANK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:44  INFO        [6/100] KOTAKBANK ...
+2026-04-14 17:51:45  INFO        ✓ KOTAKBANK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:45  INFO        [7/100] BHARTIARTL ...
+2026-04-14 17:51:46  INFO        ✓ BHARTIARTL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:46  INFO        [8/100] ITC ...
+2026-04-14 17:51:47  INFO        ✓ ITC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:47  INFO        [9/100] WIPRO ...
+2026-04-14 17:51:47  INFO        ✓ WIPRO: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:48  INFO        [10/100] HCLTECH ...
+2026-04-14 17:51:48  INFO        ✓ HCLTECH: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:49  INFO        [11/100] AXISBANK ...
+2026-04-14 17:51:49  INFO        ✓ AXISBANK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:49  INFO        [12/100] LT ...
+2026-04-14 17:51:50  INFO        ✓ LT: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:50  INFO        [13/100] SUNPHARMA ...
+2026-04-14 17:51:50  INFO        ✓ SUNPHARMA: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:51  INFO        [14/100] BAJFINANCE ...
+2026-04-14 17:51:51  INFO        ✓ BAJFINANCE: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:52  INFO        [15/100] TITAN ...
+2026-04-14 17:51:52  INFO        ✓ TITAN: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:52  INFO        [16/100] ASIANPAINT ...
+2026-04-14 17:51:53  INFO        ✓ ASIANPAINT: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:53  INFO        [17/100] MARUTI ...
+2026-04-14 17:51:54  INFO        ✓ MARUTI: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:54  INFO        [18/100] ULTRACEMCO ...
+2026-04-14 17:51:54  INFO        ✓ ULTRACEMCO: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:55  INFO        [19/100] NESTLEIND ...
+2026-04-14 17:51:55  INFO        ✓ NESTLEIND: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:56  INFO        [20/100] HINDUNILVR ...
+2026-04-14 17:51:56  INFO        ✓ HINDUNILVR: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:57  INFO        [21/100] DRREDDY ...
+2026-04-14 17:51:57  INFO        ✓ DRREDDY: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:57  INFO        [22/100] CIPLA ...
+2026-04-14 17:51:58  INFO        ✓ CIPLA: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:58  INFO        [23/100] DIVISLAB ...
+2026-04-14 17:51:58  INFO        ✓ DIVISLAB: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:51:59  INFO        [24/100] BAJAJ-AUTO ...
+2026-04-14 17:51:59  INFO        ✓ BAJAJ-AUTO: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:00  INFO        [25/100] HEROMOTOCO ...
+2026-04-14 17:52:00  INFO        ✓ HEROMOTOCO: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:00  INFO        [26/100] TECHM ...
+2026-04-14 17:52:01  INFO        ✓ TECHM: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:01  INFO        [27/100] POWERGRID ...
+2026-04-14 17:52:01  INFO        ✓ POWERGRID: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:02  INFO        [28/100] NTPC ...
+2026-04-14 17:52:02  INFO        ✓ NTPC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:03  INFO        [29/100] COALINDIA ...
+2026-04-14 17:52:03  INFO        ✓ COALINDIA: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:04  INFO        [30/100] ONGC ...
+2026-04-14 17:52:04  INFO        ✓ ONGC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:04  INFO        [31/100] BPCL ...
+2026-04-14 17:52:05  INFO        ✓ BPCL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:05  INFO        [32/100] GRASIM ...
+2026-04-14 17:52:05  INFO        ✓ GRASIM: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:06  INFO        [33/100] BEL ...
+2026-04-14 17:52:06  INFO        ✓ BEL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:07  INFO        [34/100] EICHERMOT ...
+2026-04-14 17:52:07  INFO        ✓ EICHERMOT: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:08  INFO        [35/100] SBILIFE ...
+2026-04-14 17:52:08  INFO        ✓ SBILIFE: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:08  INFO        [36/100] BAJAJFINSV ...
+2026-04-14 17:52:09  INFO        ✓ BAJAJFINSV: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:09  INFO        [37/100] HDFCLIFE ...
+2026-04-14 17:52:09  INFO        ✓ HDFCLIFE: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:10  INFO        [38/100] APOLLOHOSP ...
+2026-04-14 17:52:10  INFO        ✓ APOLLOHOSP: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:11  INFO        [39/100] TATACONSUM ...
+2026-04-14 17:52:11  INFO        ✓ TATACONSUM: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:12  INFO        [40/100] M&M ...
+2026-04-14 17:52:12  INFO        ✓ M&M: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:12  INFO        [41/100] SHRIRAMFIN ...
+2026-04-14 17:52:13  INFO        ✓ SHRIRAMFIN: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:13  INFO        [42/100] TRENT ...
+2026-04-14 17:52:13  INFO        ✓ TRENT: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:14  INFO        [43/100] SBIN ...
+2026-04-14 17:52:14  INFO        ✓ SBIN: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:15  INFO        [44/100] TMCV ...
+2026-04-14 17:52:15  INFO        ✓ TMCV: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:16  INFO        [45/100] TATASTEEL ...
+2026-04-14 17:52:16  INFO        ✓ TATASTEEL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:16  INFO        [46/100] JSWSTEEL ...
+2026-04-14 17:52:17  INFO        ✓ JSWSTEEL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:17  INFO        [47/100] HINDALCO ...
+2026-04-14 17:52:18  INFO        ✓ HINDALCO: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:18  INFO        [48/100] ADANIENT ...
+2026-04-14 17:52:18  INFO        ✓ ADANIENT: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:19  INFO        [49/100] ADANIPORTS ...
+2026-04-14 17:52:19  INFO        ✓ ADANIPORTS: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:20  INFO        [50/100] INDUSINDBK ...
+2026-04-14 17:52:20  INFO        ✓ INDUSINDBK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:21  INFO        [51/100] PIDILITIND ...
+2026-04-14 17:52:21  INFO        ✓ PIDILITIND: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:21  INFO        [52/100] DABUR ...
+2026-04-14 17:52:22  INFO        ✓ DABUR: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:22  INFO        [53/100] GODREJCP ...
+2026-04-14 17:52:22  INFO        ✓ GODREJCP: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:23  INFO        [54/100] MARICO ...
+2026-04-14 17:52:23  INFO        ✓ MARICO: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:24  INFO        [55/100] COLPAL ...
+2026-04-14 17:52:24  INFO        ✓ COLPAL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:24  INFO        [56/100] BRITANNIA ...
+2026-04-14 17:52:25  INFO        ✓ BRITANNIA: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:25  INFO        [57/100] HAVELLS ...
+2026-04-14 17:52:26  INFO        ✓ HAVELLS: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:26  INFO        [58/100] VOLTAS ...
+2026-04-14 17:52:26  INFO        ✓ VOLTAS: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:27  INFO        [59/100] PAGEIND ...
+2026-04-14 17:52:27  INFO        ✓ PAGEIND: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:28  INFO        [60/100] MUTHOOTFIN ...
+2026-04-14 17:52:28  INFO        ✓ MUTHOOTFIN: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:28  INFO        [61/100] DALBHARAT ...
+2026-04-14 17:52:29  INFO        ✓ DALBHARAT: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:29  INFO        [62/100] IDFCFIRSTB ...
+2026-04-14 17:52:30  INFO        ✓ IDFCFIRSTB: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:30  INFO        [63/100] FEDERALBNK ...
+2026-04-14 17:52:30  INFO        ✓ FEDERALBNK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:31  INFO        [64/100] BANDHANBNK ...
+2026-04-14 17:52:31  INFO        ✓ BANDHANBNK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:32  INFO        [65/100] PNB ...
+2026-04-14 17:52:32  INFO        ✓ PNB: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:33  INFO        [66/100] CANBK ...
+2026-04-14 17:52:33  INFO        ✓ CANBK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:33  INFO        [67/100] BANKBARODA ...
+2026-04-14 17:52:34  INFO        ✓ BANKBARODA: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:34  INFO        [68/100] UNIONBANK ...
+2026-04-14 17:52:34  INFO        ✓ UNIONBANK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:35  INFO        [69/100] RBLBANK ...
+2026-04-14 17:52:35  INFO        ✓ RBLBANK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:36  INFO        [70/100] AUBANK ...
+2026-04-14 17:52:36  INFO        ✓ AUBANK: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:37  INFO        [71/100] PFC ...
+2026-04-14 17:52:37  INFO        ✓ PFC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:37  INFO        [72/100] RECLTD ...
+2026-04-14 17:52:38  INFO        ✓ RECLTD: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:38  INFO        [73/100] IRFC ...
+2026-04-14 17:52:39  INFO        ✓ IRFC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:39  INFO        [74/100] IRCTC ...
+2026-04-14 17:52:39  INFO        ✓ IRCTC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:40  INFO        [75/100] RVNL ...
+2026-04-14 17:52:40  INFO        ✓ RVNL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:41  INFO        [76/100] NHPC ...
+2026-04-14 17:52:41  INFO        ✓ NHPC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:41  INFO        [77/100] SJVN ...
+2026-04-14 17:52:42  INFO        ✓ SJVN: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:42  INFO        [78/100] TATAPOWER ...
+2026-04-14 17:52:42  INFO        ✓ TATAPOWER: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:43  INFO        [79/100] ADANIGREEN ...
+2026-04-14 17:52:43  INFO        ✓ ADANIGREEN: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:44  INFO        [80/100] ADANIPOWER ...
+2026-04-14 17:52:44  INFO        ✓ ADANIPOWER: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:45  INFO        [81/100] SUZLON ...
+2026-04-14 17:52:45  INFO        ✓ SUZLON: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:45  INFO        [82/100] SAIL ...
+2026-04-14 17:52:46  INFO        ✓ SAIL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:46  INFO        [83/100] BHEL ...
+2026-04-14 17:52:47  INFO        ✓ BHEL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:47  INFO        [84/100] NBCC ...
+2026-04-14 17:52:47  INFO        ✓ NBCC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:48  INFO        [85/100] NMDC ...
+2026-04-14 17:52:48  INFO        ✓ NMDC: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:49  INFO        [86/100] VEDL ...
+2026-04-14 17:52:49  INFO        ✓ VEDL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:49  INFO        [87/100] JINDALSTEL ...
+2026-04-14 17:52:50  INFO        ✓ JINDALSTEL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:51  INFO        [88/100] NATIONALUM ...
+2026-04-14 17:52:51  INFO        ✓ NATIONALUM: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:51  INFO        [89/100] POLYCAB ...
+2026-04-14 17:52:52  INFO        ✓ POLYCAB: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:52  INFO        [90/100] DIXON ...
+2026-04-14 17:52:52  INFO        ✓ DIXON: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:53  INFO        [91/100] KAYNES ...
+2026-04-14 17:52:53  INFO        ✓ KAYNES: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:54  INFO        [92/100] ETERNAL ...
+2026-04-14 17:52:54  INFO        ✓ ETERNAL: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:54  INFO        [93/100] NYKAA ...
+2026-04-14 17:52:55  INFO        ✓ NYKAA: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:55  INFO        [94/100] DELHIVERY ...
+2026-04-14 17:52:55  INFO        ✓ DELHIVERY: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:56  INFO        [95/100] POLICYBZR ...
+2026-04-14 17:52:56  INFO        ✓ POLICYBZR: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:57  INFO        [96/100] MPHASIS ...
+2026-04-14 17:52:57  INFO        ✓ MPHASIS: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:58  INFO        [97/100] COFORGE ...
+2026-04-14 17:52:58  INFO        ✓ COFORGE: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:58  INFO        [98/100] PERSISTENT ...
+2026-04-14 17:52:59  INFO        ✓ PERSISTENT: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:52:59  INFO        [99/100] LTTS ...
+2026-04-14 17:52:59  INFO        ✓ LTTS: 2775 bars | 2026-02-16 → 2026-04-13
+2026-04-14 17:53:00  INFO        [100/100] LTIM ...
+2026-04-14 17:53:00  INFO        ✓ LTIM: 675 bars | 2026-02-16 → 2026-02-26
+2026-04-14 17:53:00  INFO      Fetch complete: 100/100 tickers successful
+2026-04-14 17:53:00  INFO      Panels built: 2775 bars × 100 tickers | 2026-02-16 09:15 → 2026-04-13 15:25
+2026-04-14 17:53:00  INFO      [3/4] Cleaning data ...
+2026-04-14 17:53:00  INFO      Cleaning NSE data ...
+2026-04-14 17:53:00  INFO        Cleaning complete: 275400 → 275402 valid cells (-0.0% removed)
+2026-04-14 17:53:00  INFO      [4/4] Fetching NIFTY 50 index ...
+2026-04-14 17:53:00  INFO      Fetching NIFTY 50 index (^NSEI) ...
+2026-04-14 17:53:01  INFO      NIFTY 50: 2775 bars | range: 22186 → 25854
+2026-04-14 17:53:01  INFO      Panels saved to data/clean/ (5 fields, 100 tickers, 2775 bars)
+2026-04-14 17:53:01  INFO      ────────────────────────────────────────────────────────────
+2026-04-14 17:53:01  INFO        Pipeline complete in 81.7s
+2026-04-14 17:53:01  INFO        Clean data: data/clean/
+2026-04-14 17:53:01  INFO        Tickers: 50 volatile + 50 non-volatile = 100 total
+2026-04-14 17:53:01  INFO      ────────────────────────────────────────────────────────────
+2026-04-14 17:53:01  INFO        Data: 2775 bars × 100 tickers | 37 trading days
+2026-04-14 17:53:01  INFO        Backtesting 5 days: 2026-04-07 → 2026-04-13
+2026-04-14 17:53:01  INFO      ────────────────────────────────────────────────────────────
+2026-04-14 17:53:01  INFO      ============================================================
+2026-04-14 17:53:01  INFO        Stock Picker: 2026-04-07
+2026-04-14 17:53:01  INFO      ============================================================
+2026-04-14 17:53:01  INFO        Pre-open signals for 2026-04-07: 100 tickers, 6 features
+2026-04-14 17:53:01  INFO        Confirmation signals for 2026-04-07: 100 tickers
+2026-04-14 17:53:01  INFO        Pre-open signals for 2026-04-07: 100 tickers, 6 features
+2026-04-14 17:53:01  INFO        Confirmation signals for 2026-04-07: 100 tickers
+2026-04-14 17:53:01  INFO        Filtered out 3 stocks (price/volume/data)
+2026-04-14 17:53:01  INFO        Selected 10 stocks (capital: ₹100000 each):
+2026-04-14 17:53:01  INFO          RELIANCE      score=+3.90σ  entry=₹1298.3  shares=77
+2026-04-14 17:53:01  INFO          NYKAA         score=+2.47σ  entry=₹245.7  shares=406
+2026-04-14 17:53:01  INFO          DABUR         score=+2.10σ  entry=₹416.0  shares=240
+2026-04-14 17:53:01  INFO          JINDALSTEL    score=+2.02σ  entry=₹1136.4  shares=87
+2026-04-14 17:53:01  INFO          MARICO        score=+2.01σ  entry=₹751.5  shares=133
+2026-04-14 17:53:01  INFO          EICHERMOT     score=+1.95σ  entry=₹6493.5  shares=15
+2026-04-14 17:53:01  INFO          DIVISLAB      score=+1.82σ  entry=₹5798.0  shares=17
+2026-04-14 17:53:01  INFO          RBLBANK       score=+1.55σ  entry=₹312.0  shares=320
+2026-04-14 17:53:01  INFO          DELHIVERY     score=+1.51σ  entry=₹442.8  shares=225
+2026-04-14 17:53:01  INFO          BHEL          score=+1.36σ  entry=₹245.1  shares=408
+2026-04-14 17:53:01  INFO      
+2026-04-14 17:53:01  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:01  INFO        Date: 2026-04-07 (Tuesday)
+2026-04-14 17:53:01  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:01  INFO        Ticker        Side   Shares         Entry        Exit      P&L%       P&L ₹  Reason
+2026-04-14 17:53:01  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:01  INFO        RELIANCE      LONG   77          ₹1,298.3    ₹1,306.4    +0.62%       ₹+624  TIME_EXIT
+2026-04-14 17:53:01  INFO        NYKAA         LONG   406           ₹245.7      ₹247.6    +0.81%       ₹+803  TIME_EXIT
+2026-04-14 17:53:01  INFO        DABUR         LONG   240           ₹416.0      ₹414.2    -0.41%       ₹-408  TIME_EXIT
+2026-04-14 17:53:01  INFO        JINDALSTEL    LONG   87          ₹1,136.4    ₹1,169.1    +2.21%     ₹+2,187  TIME_EXIT
+2026-04-14 17:53:01  INFO        MARICO        LONG   133           ₹751.5      ₹754.2    +0.35%       ₹+346  TIME_EXIT
+2026-04-14 17:53:01  INFO        EICHERMOT     LONG   15          ₹6,493.5    ₹6,637.5    +1.93%     ₹+1,880  TIME_EXIT
+2026-04-14 17:53:01  INFO        DIVISLAB      LONG   17          ₹5,798.0    ₹5,838.0    +0.76%       ₹+752  TIME_EXIT
+2026-04-14 17:53:01  INFO        RBLBANK       LONG   320           ₹312.0      ₹312.3    +0.10%        ₹+96  TIME_EXIT
+2026-04-14 17:53:01  INFO        DELHIVERY     LONG   225           ₹442.8      ₹442.6    +0.22%       ₹+223  TIME_EXIT
+2026-04-14 17:53:01  INFO        BHEL          LONG   408           ₹245.1      ₹248.9    +1.56%     ₹+1,562  TRAILING_STOP
+2026-04-14 17:53:01  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:01  INFO        Day P&L: ₹+8,065  (+0.81% on ₹993,802 deployed)
+2026-04-14 17:53:01  INFO        Stopped: 0 | Profit-taken: 0 | Trailing: 1 | Time-exit: 9
+2026-04-14 17:53:01  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:01  INFO      ============================================================
+2026-04-14 17:53:01  INFO        Stock Picker: 2026-04-08
+2026-04-14 17:53:01  INFO      ============================================================
+2026-04-14 17:53:02  INFO        Pre-open signals for 2026-04-08: 100 tickers, 6 features
+2026-04-14 17:53:02  INFO        Confirmation signals for 2026-04-08: 100 tickers
+2026-04-14 17:53:02  INFO        Pre-open signals for 2026-04-08: 100 tickers, 6 features
+2026-04-14 17:53:02  INFO        Confirmation signals for 2026-04-08: 100 tickers
+2026-04-14 17:53:02  INFO        Filtered out 3 stocks (price/volume/data)
+2026-04-14 17:53:02  INFO        Selected 10 stocks (capital: ₹100000 each):
+2026-04-14 17:53:02  INFO          MPHASIS       score=+2.23σ  entry=₹2300.1  shares=43
+2026-04-14 17:53:02  INFO          NATIONALUM    score=+2.06σ  entry=₹406.2  shares=246
+2026-04-14 17:53:02  INFO          NYKAA         score=+2.03σ  entry=₹252.2  shares=396
+2026-04-14 17:53:02  INFO          DRREDDY       score=+1.99σ  entry=₹1208.5  shares=82
+2026-04-14 17:53:02  INFO          TECHM         score=+1.78σ  entry=₹1458.0  shares=68
+2026-04-14 17:53:02  INFO          VOLTAS        score=+1.62σ  entry=₹1249.6  shares=80
+2026-04-14 17:53:02  INFO          DIVISLAB      score=+1.52σ  entry=₹5925.5  shares=16
+2026-04-14 17:53:02  INFO          COFORGE       score=+1.41σ  entry=₹1228.0  shares=81
+2026-04-14 17:53:02  INFO          ASIANPAINT    score=+1.36σ  entry=₹2285.6  shares=43
+2026-04-14 17:53:02  INFO          CIPLA         score=+1.25σ  entry=₹1211.9  shares=82
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Date: 2026-04-08 (Wednesday)
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Ticker        Side   Shares         Entry        Exit      P&L%       P&L ₹  Reason
+2026-04-14 17:53:02  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:02  INFO        MPHASIS       LONG   43          ₹2,300.1    ₹2,338.3    +1.66%     ₹+1,645  TRAILING_STOP
+2026-04-14 17:53:02  INFO        NATIONALUM    LONG   246           ₹406.2      ₹400.2    -1.50%     ₹-1,499  STOP_LOSS
+2026-04-14 17:53:02  INFO        NYKAA         LONG   396           ₹252.2      ₹254.2    +0.85%       ₹+853  TIME_EXIT
+2026-04-14 17:53:02  INFO        DRREDDY       LONG   82          ₹1,208.5    ₹1,190.4    -1.50%     ₹-1,486  STOP_LOSS
+2026-04-14 17:53:02  INFO        TECHM         LONG   68          ₹1,458.0    ₹1,452.3    -0.39%       ₹-388  TIME_EXIT
+2026-04-14 17:53:02  INFO        VOLTAS        LONG   80          ₹1,249.6    ₹1,271.6    +1.76%     ₹+1,761  TRAILING_STOP
+2026-04-14 17:53:02  INFO        DIVISLAB      LONG   16          ₹5,925.5    ₹5,874.0    -0.87%       ₹-824  TIME_EXIT
+2026-04-14 17:53:02  INFO        COFORGE       LONG   81          ₹1,228.0    ₹1,250.5    +1.83%     ₹+1,824  TRAILING_STOP
+2026-04-14 17:53:02  INFO        ASIANPAINT    LONG   43          ₹2,285.6    ₹2,251.3    -1.50%     ₹-1,474  STOP_LOSS
+2026-04-14 17:53:02  INFO        CIPLA         LONG   82          ₹1,211.9    ₹1,215.8    +0.32%       ₹+320  TIME_EXIT
+2026-04-14 17:53:02  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:02  INFO        Day P&L: ₹+730  (+0.07% on ₹988,859 deployed)
+2026-04-14 17:53:02  INFO        Stopped: 3 | Profit-taken: 0 | Trailing: 3 | Time-exit: 4
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO      ============================================================
+2026-04-14 17:53:02  INFO        Stock Picker: 2026-04-09
+2026-04-14 17:53:02  INFO      ============================================================
+2026-04-14 17:53:02  INFO        Pre-open signals for 2026-04-09: 100 tickers, 6 features
+2026-04-14 17:53:02  INFO        Confirmation signals for 2026-04-09: 100 tickers
+2026-04-14 17:53:02  INFO        Pre-open signals for 2026-04-09: 100 tickers, 6 features
+2026-04-14 17:53:02  INFO        Confirmation signals for 2026-04-09: 100 tickers
+2026-04-14 17:53:02  INFO        Filtered out 3 stocks (price/volume/data)
+2026-04-14 17:53:02  INFO        Selected 10 stocks (capital: ₹100000 each):
+2026-04-14 17:53:02  INFO          ADANIPORTS    score=+3.30σ  entry=₹1436.0  shares=69
+2026-04-14 17:53:02  INFO          INFY          score=+2.57σ  entry=₹1327.5  shares=75
+2026-04-14 17:53:02  INFO          MARICO        score=+2.26σ  entry=₹749.6  shares=133
+2026-04-14 17:53:02  INFO          TATACONSUM    score=+1.98σ  entry=₹1072.0  shares=93
+2026-04-14 17:53:02  INFO          SUNPHARMA     score=+1.97σ  entry=₹1725.9  shares=57
+2026-04-14 17:53:02  INFO          NESTLEIND     score=+1.51σ  entry=₹1220.8  shares=81
+2026-04-14 17:53:02  INFO          TECHM         score=+1.36σ  entry=₹1453.9  shares=68
+2026-04-14 17:53:02  INFO          DRREDDY       score=+1.35σ  entry=₹1202.2  shares=83
+2026-04-14 17:53:02  INFO          ONGC          score=+1.35σ  entry=₹287.2  shares=348
+2026-04-14 17:53:02  INFO          ADANIPOWER    score=+1.20σ  entry=₹170.9  shares=585
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Date: 2026-04-09 (Thursday)
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Ticker        Side   Shares         Entry        Exit      P&L%       P&L ₹  Reason
+2026-04-14 17:53:02  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:02  INFO        ADANIPORTS    LONG   69          ₹1,436.0    ₹1,448.5    +0.90%       ₹+894  TIME_EXIT
+2026-04-14 17:53:02  INFO        INFY          LONG   75          ₹1,327.5    ₹1,331.5    +0.30%       ₹+300  TIME_EXIT
+2026-04-14 17:53:02  INFO        MARICO        LONG   133           ₹749.6      ₹747.4    -0.29%       ₹-293  TIME_EXIT
+2026-04-14 17:53:02  INFO        TATACONSUM    LONG   93          ₹1,072.0    ₹1,075.5    +0.49%       ₹+492  TIME_EXIT
+2026-04-14 17:53:02  INFO        SUNPHARMA     LONG   57          ₹1,725.9    ₹1,717.0    -0.52%       ₹-507  TIME_EXIT
+2026-04-14 17:53:02  INFO        NESTLEIND     LONG   81          ₹1,220.8    ₹1,228.7    +0.65%       ₹+640  TIME_EXIT
+2026-04-14 17:53:02  INFO        TECHM         LONG   68          ₹1,453.9    ₹1,462.5    +0.59%       ₹+585  TIME_EXIT
+2026-04-14 17:53:02  INFO        DRREDDY       LONG   83          ₹1,202.2    ₹1,212.8    +0.91%       ₹+908  TIME_EXIT
+2026-04-14 17:53:02  INFO        ONGC          LONG   348           ₹287.2      ₹288.9    +0.56%       ₹+557  TIME_EXIT
+2026-04-14 17:53:02  INFO        ADANIPOWER    LONG   585           ₹170.9      ₹168.3    -1.50%     ₹-1,499  STOP_LOSS
+2026-04-14 17:53:02  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:02  INFO        Day P&L: ₹+2,076  (+0.21% on ₹993,864 deployed)
+2026-04-14 17:53:02  INFO        Stopped: 1 | Profit-taken: 0 | Trailing: 0 | Time-exit: 9
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO      ============================================================
+2026-04-14 17:53:02  INFO        Stock Picker: 2026-04-10
+2026-04-14 17:53:02  INFO      ============================================================
+2026-04-14 17:53:02  INFO        Pre-open signals for 2026-04-10: 100 tickers, 6 features
+2026-04-14 17:53:02  INFO        Confirmation signals for 2026-04-10: 100 tickers
+2026-04-14 17:53:02  INFO        Pre-open signals for 2026-04-10: 100 tickers, 6 features
+2026-04-14 17:53:02  INFO        Confirmation signals for 2026-04-10: 100 tickers
+2026-04-14 17:53:02  INFO        Filtered out 3 stocks (price/volume/data)
+2026-04-14 17:53:02  INFO        Selected 10 stocks (capital: ₹100000 each):
+2026-04-14 17:53:02  INFO          BRITANNIA     score=+3.37σ  entry=₹5490.5  shares=18
+2026-04-14 17:53:02  INFO          SUNPHARMA     score=+2.79σ  entry=₹1666.2  shares=60
+2026-04-14 17:53:02  INFO          TCS           score=+2.60σ  entry=₹2540.7  shares=39
+2026-04-14 17:53:02  INFO          INFY          score=+2.33σ  entry=₹1300.5  shares=76
+2026-04-14 17:53:02  INFO          SBIN          score=+1.20σ  entry=₹1057.0  shares=94
+2026-04-14 17:53:02  INFO          DABUR         score=+1.17σ  entry=₹430.6  shares=232
+2026-04-14 17:53:02  INFO          KOTAKBANK     score=+1.15σ  entry=₹374.4  shares=267
+2026-04-14 17:53:02  INFO          BANKBARODA    score=+1.07σ  entry=₹276.2  shares=362
+2026-04-14 17:53:02  INFO          RELIANCE      score=+1.03σ  entry=₹1340.1  shares=74
+2026-04-14 17:53:02  INFO          NHPC          score=+1.03σ  entry=₹77.9  shares=1284
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Date: 2026-04-10 (Friday)
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Ticker        Side   Shares         Entry        Exit      P&L%       P&L ₹  Reason
+2026-04-14 17:53:02  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:02  INFO        BRITANNIA     LONG   18          ₹5,490.5    ₹5,567.5    +1.31%     ₹+1,298  TIME_EXIT
+2026-04-14 17:53:02  INFO        SUNPHARMA     LONG   60          ₹1,666.2    ₹1,641.2    -1.50%     ₹-1,500  STOP_LOSS
+2026-04-14 17:53:02  INFO        TCS           LONG   39          ₹2,540.7    ₹2,502.6    -1.50%     ₹-1,486  STOP_LOSS
+2026-04-14 17:53:02  INFO        INFY          LONG   76          ₹1,300.5    ₹1,291.6    -0.68%       ₹-676  TIME_EXIT
+2026-04-14 17:53:02  INFO        SBIN          LONG   94          ₹1,057.0    ₹1,067.0    +0.96%       ₹+953  TIME_EXIT
+2026-04-14 17:53:02  INFO        DABUR         LONG   232           ₹430.6      ₹437.3    +1.42%     ₹+1,416  TIME_EXIT
+2026-04-14 17:53:02  INFO        KOTAKBANK     LONG   267           ₹374.4      ₹374.5    +0.28%       ₹+277  TIME_EXIT
+2026-04-14 17:53:02  INFO        BANKBARODA    LONG   362           ₹276.2      ₹276.7    +0.18%       ₹+181  TIME_EXIT
+2026-04-14 17:53:02  INFO        RELIANCE      LONG   74          ₹1,340.1    ₹1,349.6    +0.71%       ₹+703  TIME_EXIT
+2026-04-14 17:53:02  INFO        NHPC          LONG   1284           ₹77.9       ₹76.7    -1.50%     ₹-1,500  STOP_LOSS
+2026-04-14 17:53:02  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:02  INFO        Day P&L: ₹-334  (-0.03% on ₹995,072 deployed)
+2026-04-14 17:53:02  INFO        Stopped: 3 | Profit-taken: 0 | Trailing: 0 | Time-exit: 7
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO      ============================================================
+2026-04-14 17:53:02  INFO        Stock Picker: 2026-04-13
+2026-04-14 17:53:02  INFO      ============================================================
+2026-04-14 17:53:02  INFO        Pre-open signals for 2026-04-13: 100 tickers, 6 features
+2026-04-14 17:53:02  INFO        Confirmation signals for 2026-04-13: 100 tickers
+2026-04-14 17:53:02  INFO        Pre-open signals for 2026-04-13: 100 tickers, 6 features
+2026-04-14 17:53:02  INFO        Confirmation signals for 2026-04-13: 100 tickers
+2026-04-14 17:53:02  INFO        Filtered out 3 stocks (price/volume/data)
+2026-04-14 17:53:02  INFO        Selected 10 stocks (capital: ₹100000 each):
+2026-04-14 17:53:02  INFO          COALINDIA     score=+4.57σ  entry=₹433.6  shares=230
+2026-04-14 17:53:02  INFO          ONGC          score=+2.91σ  entry=₹283.0  shares=353
+2026-04-14 17:53:02  INFO          SUNPHARMA     score=+2.91σ  entry=₹1649.2  shares=60
+2026-04-14 17:53:02  INFO          TCS           score=+2.44σ  entry=₹2483.7  shares=40
+2026-04-14 17:53:02  INFO          INFY          score=+2.33σ  entry=₹1270.2  shares=78
+2026-04-14 17:53:02  INFO          WIPRO         score=+1.76σ  entry=₹201.5  shares=496
+2026-04-14 17:53:02  INFO          ASIANPAINT    score=+1.68σ  entry=₹2300.6  shares=43
+2026-04-14 17:53:02  INFO          MPHASIS       score=+1.47σ  entry=₹2293.4  shares=43
+2026-04-14 17:53:02  INFO          COFORGE       score=+1.19σ  entry=₹1208.8  shares=82
+2026-04-14 17:53:02  INFO          GRASIM        score=+1.09σ  entry=₹2696.7  shares=37
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Date: 2026-04-13 (Monday)
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Ticker        Side   Shares         Entry        Exit      P&L%       P&L ₹  Reason
+2026-04-14 17:53:02  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:02  INFO        COALINDIA     LONG   230           ₹433.6      ₹434.8    +0.27%       ₹+264  TIME_EXIT
+2026-04-14 17:53:02  INFO        ONGC          LONG   353           ₹283.0      ₹287.4    +1.40%     ₹+1,402  TIME_EXIT
+2026-04-14 17:53:02  INFO        SUNPHARMA     LONG   60          ₹1,649.2    ₹1,653.4    +0.25%       ₹+252  TIME_EXIT
+2026-04-14 17:53:02  INFO        TCS           LONG   40          ₹2,483.7    ₹2,470.3    -0.54%       ₹-536  TIME_EXIT
+2026-04-14 17:53:02  INFO        INFY          LONG   78          ₹1,270.2    ₹1,276.5    +0.50%       ₹+491  TIME_EXIT
+2026-04-14 17:53:02  INFO        WIPRO         LONG   496           ₹201.5      ₹203.0    +0.77%       ₹+769  TIME_EXIT
+2026-04-14 17:53:02  INFO        ASIANPAINT    LONG   43          ₹2,300.6    ₹2,340.2    +1.72%     ₹+1,705  TRAILING_STOP
+2026-04-14 17:53:02  INFO        MPHASIS       LONG   43          ₹2,293.4    ₹2,315.9    +0.99%       ₹+972  TIME_EXIT
+2026-04-14 17:53:02  INFO        COFORGE       LONG   82          ₹1,208.8    ₹1,227.3    +1.53%     ₹+1,520  TRAILING_STOP
+2026-04-14 17:53:02  INFO        GRASIM        LONG   37          ₹2,696.7    ₹2,711.3    +0.65%       ₹+652  TIME_EXIT
+2026-04-14 17:53:02  INFO        -------------------------------------------------------------------------------------
+2026-04-14 17:53:02  INFO        Day P&L: ₹+7,490  (+0.75% on ₹993,380 deployed)
+2026-04-14 17:53:02  INFO        Stopped: 0 | Profit-taken: 0 | Trailing: 2 | Time-exit: 8
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        BACKTEST SUMMARY: 5 trading days
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO        Total P&L                       ₹+18,028
+2026-04-14 17:53:02  INFO        Total Return on Capital         1.80%
+2026-04-14 17:53:02  INFO        Average Daily P&L               ₹+3,606
+2026-04-14 17:53:02  INFO        Average Daily Return            +0.363%
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO        Win Rate                        4 / 5 (80.0%)
+2026-04-14 17:53:02  INFO        Losing Days                     1
+2026-04-14 17:53:02  INFO        Flat Days                       0
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO        Best Day                        ₹+8,065 (2026-04-07)
+2026-04-14 17:53:02  INFO        Worst Day                       ₹-334 (2026-04-10)
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO        Total Trades                    50
+2026-04-14 17:53:02  INFO        Stop-Losses Hit                 7 (14.0%)
+2026-04-14 17:53:02  INFO        Annualized Sharpe               16.379
+2026-04-14 17:53:02  INFO        Max Drawdown                    ₹-334
+2026-04-14 17:53:02  INFO      
+2026-04-14 17:53:02  INFO        Daily P&L Breakdown:
+2026-04-14 17:53:02  INFO          🟢  2026-04-07  ₹+8,065  (10 trades)
+2026-04-14 17:53:02  INFO          🟢  2026-04-08  ₹+730  (10 trades)
+2026-04-14 17:53:02  INFO          🟢  2026-04-09  ₹+2,076  (10 trades)
+2026-04-14 17:53:02  INFO          🔴  2026-04-10  ₹-334  (10 trades)
+2026-04-14 17:53:02  INFO          🟢  2026-04-13  ₹+7,490  (10 trades)
+2026-04-14 17:53:02  INFO      ════════════════════════════════════════════════════════════
+2026-04-14 17:53:02  INFO        Backtest complete in 82.9s

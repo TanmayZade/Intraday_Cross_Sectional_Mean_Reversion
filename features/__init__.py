@@ -1,29 +1,25 @@
 """
 features/
 =========
-Institutional feature engineering pipeline for intraday cross-sectional mean reversion.
+Feature engineering pipeline for NSE intraday cross-sectional mean reversion.
 
 Modules
 -------
 core.py        — cross-sectional math primitives (cs_zscore, cs_rank, ATR, etc.)
-resampler.py   — 1-min → 15-min aggregation with flagged-bar masking
-engine.py      — 15 alpha features across 5 categories
-diagnostics.py — IC analysis, decay curves, correlation, quality reports
+engine.py      — 7 alpha features (6 core + circuit proximity)
+resampler.py   — frequency resampling
+diagnostics.py — IC analysis, decay curves, correlation
 store.py       — Parquet feature store (save/load)
 
 Quick start
 -----------
-    from features.engine import load_and_compute
+    from features.engine import FeatureEngine
 
-    panels, features = load_and_compute(
-        clean_dir  = "data/clean/",
-        freq       = "15min",
-        start_date = "2024-12-01",
-    )
-    signal = features["E1_residual_return"]   # strongest signal
+    engine = FeatureEngine(panels)
+    features = engine.compute_all()
+    signal = features["A1_bar_reversal"]
 """
-from features.core        import cs_zscore, cs_rank, atr, atr_pct
-from features.resampler   import Resampler
-from features.engine      import FeatureEngine, load_and_compute
+from features.core import cs_zscore, cs_rank, atr, atr_pct
+from features.engine import FeatureEngine
 from features.diagnostics import FeatureDiagnostics
-from features.store       import FeatureStore
+from features.store import FeatureStore

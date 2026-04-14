@@ -1,0 +1,79 @@
+# ============================================================
+# NSE Intraday Cross-Sectional Mean Reversion — Master Config
+# ============================================================
+
+market:
+  exchange:        "NSE"
+  timezone:        "Asia/Kolkata"
+  session_start:   "09:15"
+  session_end:     "15:30"
+  bars_per_session: 75          # 5-min bars per session (375 min / 5)
+  bars_per_year:   18900        # 252 days × 75 bars
+  currency:        "INR"
+
+universe:
+  volatile_count:       50
+  non_volatile_count:   50
+  selection_method:     "trailing_atr"
+  volatility_lookback:  60       # days for ATR% ranking
+  atr_window:           20       # ATR period for ranking
+  min_adtv_inr:         5_000_000   # ₹50L minimum daily turnover
+  min_price:            50.0
+  max_price:            50_000.0
+  min_history_days:     60
+  rescreen_frequency:   "monthly"
+
+data:
+  source:               "yfinance"
+  frequency:            "5m"
+  ticker_suffix:        ".NS"
+  index_ticker:         "^NSEI"     # NIFTY 50 on yfinance
+  intraday_max_days:    59          # yfinance limit for intraday
+  rate_limit_sleep:     0.5         # seconds between requests
+  retry_attempts:       3
+  retry_backoff_s:      5
+
+cleaning:
+  max_daily_return:     0.20      # NSE has 20% circuit limits
+  max_intraday_range:   0.20
+  max_volume_spike_mult: 10.0
+  volume_spike_window:  20
+  max_overnight_gap:    0.20
+  min_volume:           0
+  enforce_ohlc_order:   true
+
+storage:
+  raw_dir:        "data/raw/"
+  clean_dir:      "data/clean/"
+  cache_dir:      "data/cache/"
+  features_dir:   "data/features/"
+  alpha_dir:      "data/alpha/"
+  report_dir:     "reports/"
+  compression:    "snappy"
+
+backtest:
+  capital:            1_000_000    # ₹10 Lakhs
+  txn_cost_bps:       1.0          # 1 bps research
+  train_days:         30           # Walk-forward train window
+  test_days:          5            # Walk-forward test window
+  gross_lev:          1.0          # Removed leverage (was 2.0x)
+  rebalance_freq:     15           # Every 15 bars (75 min) to stop extreme churn
+  target_vol:         0.20
+  max_weight:         0.15         # Max 15% per stock
+  halflife:           100          # EWM halflife in bars
+
+features:
+  atr_window:         30           # 2.5 hours (faster for max return)
+  vol_window:         120          # 10 hours
+  volume_window:      60           # 5 hours
+  zscore_window:      120          # 10 hours
+  beta_window:        750          # ~5 trading days
+
+alpha:
+  ic_window:          120          # 10 hours (faster adaptation)
+  min_ic_tstat:       0.5          # Lower threshold → more features active
+  decay_window:       120
+
+logging:
+  level:     "INFO"
+  file:      "reports/pipeline.log"
