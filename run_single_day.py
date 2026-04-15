@@ -1,13 +1,13 @@
 """
 run_single_day.py
 =================
-Single-Day Backtester for NSE Intraday Max-Profit Strategy
+Single-Day Backtester for NASDAQ Intraday Max-Profit Strategy
 
 Simulates the full day-trading workflow:
   1. Pre-open: Score all stocks using overnight & previous-day features
   2. Opening: Confirm picks using first 15 min of trading
-  3. Execute: Enter at 9:30, manage stops/targets intraday
-  4. Exit: Flatten all positions by 3:20 PM
+  3. Execute: Enter at 9:45 AM ET, manage stops/targets intraday
+  4. Exit: Flatten all positions by 3:50 PM ET
   5. Report: Print detailed P&L and trade log
 
 Usage
@@ -58,9 +58,9 @@ def run_single_day(
     panels: dict,
     nifty_close: pd.Series,
     target_date: pd.Timestamp,
-    capital: float = 1_000_000,
-    n_picks: int = 10,
-    stop_loss_pct: float = 0.015,
+    capital: float = 100_000,
+    n_picks: int = 80,
+    stop_loss_pct: float = 0.02,
 ) -> dict:
     """
     Run the strategy for a single day.
@@ -88,12 +88,12 @@ def run_single_day(
     # 2. Execute intraday
     executor = IntradayExecutor(
         stop_loss_pct=stop_loss_pct,
-        trailing_stop_trigger=0.02,
-        trailing_stop_pct=0.005,
-        profit_take_1=0.01,
-        profit_take_2=0.02,
-        profit_take_3=0.03,
-        exit_bar=73,
+        trailing_stop_trigger=0.025,
+        trailing_stop_pct=0.0075,
+        profit_take_1=0.015,
+        profit_take_2=0.03,
+        profit_take_3=0.045,
+        exit_bar=76,
     )
     
     dates_idx = panels["close"].index.normalize()
@@ -124,9 +124,9 @@ def run_backtest(
     last_n: int = None,
     from_date: str = None,
     to_date: str = None,
-    capital: float = 1_000_000,
-    n_picks: int = 10,
-    stop_loss_pct: float = 0.015,
+    capital: float = 100_000,
+    n_picks: int = 80,
+    stop_loss_pct: float = 0.02,
     skip_universe: bool = True,
 ) -> list[dict]:
     """
@@ -135,9 +135,9 @@ def run_backtest(
     t0 = time.perf_counter()
     
     log.info(SEP)
-    log.info("  NSE Single-Day Max-Profit Backtester")
-    log.info("  Capital: ₹%.0fL | Picks: %d | Stop Loss: %.1f%%",
-             capital / 100_000, n_picks, stop_loss_pct * 100)
+    log.info("  NASDAQ Single-Day Max-Profit Backtester")
+    log.info("  Capital: $%sK | Picks: %d | Stop Loss: %.1f%%",
+             f"{capital / 1_000:.0f}", n_picks, stop_loss_pct * 100)
     log.info(SEP)
     
     # ── Fetch Data ────────────────────────────────────────────────────
@@ -234,14 +234,14 @@ def _print_day_report(result: dict, capital: float) -> None:
     
     # Trade log header
     log.info("  %-12s  %-5s  %-8s  %10s  %10s  %8s  %10s  %s",
-             "Ticker", "Side", "Shares", "Entry", "Exit", "P&L%", "P&L ₹", "Reason")
+             "Ticker", "Side", "Shares", "Entry", "Exit", "P&L%", "P&L $", "Reason")
     log.info("  " + "-" * 85)
     
     for t in trades:
-        pnl_str = f"₹{t.pnl:+,.0f}"
+        pnl_str = f"${t.pnl:+,.0f}"
         pnl_pct = f"{t.pnl_pct*100:+.2f}%"
-        entry_str = f"₹{t.entry_price:,.1f}"
-        exit_str = f"₹{t.exit_price:,.1f}"
+        entry_str = f"${t.entry_price:,.2f}"
+        exit_str = f"${t.exit_price:,.2f}"
         
         log.info("  %-12s  %-5s  %-8d  %10s  %10s  %8s  %10s  %s",
                 t.ticker, "LONG", t.shares,
@@ -255,7 +255,7 @@ def _print_day_report(result: dict, capital: float) -> None:
     deployed = result.get("capital_deployed", capital)
     
     log.info("  Day P&L: %s  (%s on %s deployed)",
-             f"₹{day_pnl:+,.0f}", f"{day_pnl_pct*100:+.2f}%", f"₹{deployed:,.0f}")
+             f"${day_pnl:+,.0f}", f"{day_pnl_pct*100:+.2f}%", f"${deployed:,.0f}")
     log.info("  Stopped: %d | Profit-taken: %d | Trailing: %d | Time-exit: %d",
              result.get("n_stopped", 0),
              result.get("n_profit_taken", 0),
@@ -297,10 +297,10 @@ def _print_summary(results: list[dict], capital: float) -> None:
     log.info("  BACKTEST SUMMARY: %d trading days", len(valid))
     log.info(SEP)
     log.info("")
-    log.info("  %-30s  %s", "Total P&L", f"₹{total_pnl:+,.0f}")
+    log.info("  %-30s  %s", "Total P&L", f"${total_pnl:+,.0f}")
     log.info("  %-30s  %.2f%%", "Total Return on Capital",
              total_pnl / capital * 100)
-    log.info("  %-30s  %s", "Average Daily P&L", f"₹{avg_pnl:+,.0f}")
+    log.info("  %-30s  %s", "Average Daily P&L", f"${avg_pnl:+,.0f}")
     log.info("  %-30s  %+.3f%%", "Average Daily Return",
              np.mean(pnl_pcts) * 100)
     log.info("")
@@ -310,9 +310,9 @@ def _print_summary(results: list[dict], capital: float) -> None:
     log.info("  %-30s  %d", "Flat Days", flat_days)
     log.info("")
     log.info("  %-30s  %s (%s)", "Best Day",
-             f"₹{pnls[best_idx]:+,.0f}", valid[best_idx]["date"].strftime("%Y-%m-%d"))
+             f"${pnls[best_idx]:+,.0f}", valid[best_idx]["date"].strftime("%Y-%m-%d"))
     log.info("  %-30s  %s (%s)", "Worst Day",
-             f"₹{pnls[worst_idx]:+,.0f}", valid[worst_idx]["date"].strftime("%Y-%m-%d"))
+             f"${pnls[worst_idx]:+,.0f}", valid[worst_idx]["date"].strftime("%Y-%m-%d"))
     log.info("")
     log.info("  %-30s  %d", "Total Trades", total_trades)
     log.info("  %-30s  %d (%.1f%%)", "Stop-Losses Hit",
@@ -328,7 +328,7 @@ def _print_summary(results: list[dict], capital: float) -> None:
     peak = np.maximum.accumulate(cum_pnl)
     drawdown = cum_pnl - peak
     max_dd = drawdown.min()
-    log.info("  %-30s  %s", "Max Drawdown", f"₹{max_dd:,.0f}")
+    log.info("  %-30s  %s", "Max Drawdown", f"${max_dd:,.0f}")
     
     log.info("")
     log.info("  Daily P&L Breakdown:")
@@ -337,7 +337,7 @@ def _print_summary(results: list[dict], capital: float) -> None:
         n_trades = len(r.get("trades", []))
         marker = "🟢" if pnl > 0 else ("🔴" if pnl < 0 else "⚪")
         log.info("    %s  %s  %s  (%d trades)",
-                marker, r["date"].strftime("%Y-%m-%d"), f"₹{pnl:+,.0f}", n_trades)
+                marker, r["date"].strftime("%Y-%m-%d"), f"${pnl:+,.0f}", n_trades)
     
     log.info(SEP)
 
@@ -346,7 +346,7 @@ def _print_summary(results: list[dict], capital: float) -> None:
 
 def _parse() -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="NSE Single-Day Max-Profit Backtester",
+        description="NASDAQ Single-Day Max-Profit Backtester",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     p.add_argument("--config", default="config/config.yaml")
@@ -358,10 +358,10 @@ def _parse() -> argparse.Namespace:
                    help="Backtest last N trading days")
     p.add_argument("--from", dest="from_date", default=None)
     p.add_argument("--to", dest="to_date", default=None)
-    p.add_argument("--capital", type=float, default=1_000_000)
-    p.add_argument("--picks", type=int, default=10,
+    p.add_argument("--capital", type=float, default=100_000)
+    p.add_argument("--picks", type=int, default=80,
                    help="Number of stocks to pick per day")
-    p.add_argument("--stop-loss", type=float, default=0.015,
+    p.add_argument("--stop-loss", type=float, default=0.02,
                    help="Hard stop-loss percentage")
     p.add_argument("--skip-universe", action="store_true", default=True)
     p.add_argument("--log-file", default=None,

@@ -1,13 +1,13 @@
 """
 nse_pipeline/orchestrator.py
 ============================
-End-to-end pipeline orchestration for NSE data.
+End-to-end pipeline orchestration for NASDAQ data.
 
 Pipeline steps:
-  1. Screen universe (50 volatile + 50 non-volatile)
+  1. Screen universe (180 volatile + 120 non-volatile)
   2. Fetch intraday 5-min data for selected stocks
-  3. Fetch NIFTY 50 index for beta hedging
-  4. Clean data (circuit breakers, spikes, OHLC ordering)
+  3. Fetch NASDAQ index (QQQ) for beta hedging
+  4. Clean data (spikes, OHLC ordering)
   5. Save to Parquet
 
 Usage
@@ -42,7 +42,7 @@ SEP = "─" * 60
 
 class NSEPipeline:
     """
-    End-to-end pipeline for NSE intraday data.
+    End-to-end pipeline for NASDAQ intraday data.
     
     Parameters
     ----------
@@ -58,28 +58,28 @@ class NSEPipeline:
         clean_cfg = self.config.get("cleaning", {})
         
         self.fetcher = NSEFetcher(
-            ticker_suffix=data_cfg.get("ticker_suffix", ".NS"),
-            rate_limit_sleep=data_cfg.get("rate_limit_sleep", 0.5),
+            ticker_suffix=data_cfg.get("ticker_suffix", ""),
+            rate_limit_sleep=data_cfg.get("rate_limit_sleep", 0.3),
             retry_attempts=data_cfg.get("retry_attempts", 3),
             retry_backoff=data_cfg.get("retry_backoff_s", 5.0),
         )
         
         self.universe_builder = UniverseBuilder(
             seed_pool=SEED_POOL,
-            volatile_count=uni_cfg.get("volatile_count", 50),
-            nonvolatile_count=uni_cfg.get("non_volatile_count", 50),
+            volatile_count=uni_cfg.get("volatile_count", 180),
+            nonvolatile_count=uni_cfg.get("non_volatile_count", 120),
             atr_window=uni_cfg.get("atr_window", 20),
-            min_adtv_inr=uni_cfg.get("min_adtv_inr", 5_000_000),
-            min_price=uni_cfg.get("min_price", 50.0),
+            min_adtv_usd=uni_cfg.get("min_adtv_usd", 1_000_000),
+            min_price=uni_cfg.get("min_price", 5.0),
             min_history_days=uni_cfg.get("min_history_days", 60),
         )
         
         self.cleaner = NSECleaner(
-            max_daily_return=clean_cfg.get("max_daily_return", 0.20),
-            max_intraday_range=clean_cfg.get("max_intraday_range", 0.20),
+            max_daily_return=clean_cfg.get("max_daily_return", 0.50),
+            max_intraday_range=clean_cfg.get("max_intraday_range", 0.50),
             max_volume_spike_mult=clean_cfg.get("max_volume_spike_mult", 10.0),
             volume_spike_window=clean_cfg.get("volume_spike_window", 20),
-            max_overnight_gap=clean_cfg.get("max_overnight_gap", 0.20),
+            max_overnight_gap=clean_cfg.get("max_overnight_gap", 0.50),
             enforce_ohlc_order=clean_cfg.get("enforce_ohlc_order", True),
         )
         
@@ -109,14 +109,14 @@ class NSEPipeline:
             panels: dict of clean OHLCV panels
             volatile: list of volatile tickers
             nonvolatile: list of non-volatile tickers
-            nifty_prices: NIFTY 50 prices
-            nifty_returns: NIFTY 50 returns
+            nifty_prices: NASDAQ index prices
+            nifty_returns: NASDAQ index returns
         """
         t0 = time.perf_counter()
         
         log.info(SEP)
-        log.info("  NSE Intraday Data Pipeline")
-        log.info("  Exchange: NSE | Freq: 5m | Days: %d", days)
+        log.info("  NASDAQ Intraday Data Pipeline")
+        log.info("  Exchange: NASDAQ | Freq: 5m | Days: %d", days)
         log.info(SEP)
         
         # ── Step 1: Universe selection ────────────────────────────────────
@@ -126,10 +126,10 @@ class NSEPipeline:
             all_tickers = tickers
             log.info("[1/4] Using provided tickers: %d stocks", len(all_tickers))
         elif skip_universe_screen:
-            # Use first 100 from seed pool
-            all_tickers = SEED_POOL[:100]
-            volatile = all_tickers[:50]
-            nonvolatile = all_tickers[50:]
+            # Use first 300 from seed pool
+            all_tickers = SEED_POOL[:300]
+            volatile = all_tickers[:180]
+            nonvolatile = all_tickers[180:]
             log.info("[1/4] Skipping screen, using seed pool: %d stocks", len(all_tickers))
         else:
             log.info("[1/4] Screening universe (fetching daily data) ...")
@@ -159,10 +159,11 @@ class NSEPipeline:
         log.info("[3/4] Cleaning data ...")
         panels = self.cleaner.clean(panels)
         
-        # ── Step 4: Fetch NIFTY 50 for hedging ───────────────────────────
-        log.info("[4/4] Fetching NIFTY 50 index ...")
+        # ── Step 4: Fetch NASDAQ index for hedging ───────────────────────
+        log.info("[4/4] Fetching NASDAQ index (QQQ) ...")
+        index_ticker = self.config.get("data", {}).get("index_ticker", "QQQ")
         nifty_prices, nifty_returns = self.fetcher.fetch_index(
-            ticker="^NSEI", days=days, interval="5m"
+            ticker=index_ticker, days=days, interval="5m"
         )
         
         # ── Save to disk ─────────────────────────────────────────────────

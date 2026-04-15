@@ -1,10 +1,10 @@
 """
 nse_pipeline/fetcher.py
 =======================
-Fetch intraday OHLCV data for NSE stocks using yfinance.
+Fetch intraday OHLCV data for NASDAQ stocks using yfinance.
 
-Uses `.NS` ticker suffix for NSE stocks on Yahoo Finance.
-Filters to official NSE trading hours: 9:15 AM - 3:30 PM IST only.
+NASDAQ tickers require no suffix on Yahoo Finance.
+Filters to official US market trading hours: 9:30 AM - 4:00 PM ET only.
 
 Limitations:
   - yfinance provides max ~59 days of intraday data
@@ -15,9 +15,9 @@ Usage
 -----
     from nse_pipeline.fetcher import NSEFetcher
     
-    fetcher = NSEFetcher()
-    df = fetcher.fetch_ticker("RELIANCE", days=30, interval="5m")
-    panels = fetcher.fetch_universe(["RELIANCE", "TCS", "INFY"], days=30)
+    fetcher = NSEFetcher(ticker_suffix="")
+    df = fetcher.fetch_ticker("AAPL", days=30, interval="5m")
+    panels = fetcher.fetch_universe(["AAPL", "MSFT", "GOOGL"], days=30)
 """
 
 from __future__ import annotations
@@ -33,23 +33,23 @@ import pytz
 
 log = logging.getLogger(__name__)
 
-IST = pytz.timezone("Asia/Kolkata")
+ET = pytz.timezone("US/Eastern")
 
-# Official NSE trading hours
-NSE_OPEN  = pd.Timestamp("09:15:00").time()
-NSE_CLOSE = pd.Timestamp("15:30:00").time()
+# Official US market trading hours
+MARKET_OPEN  = pd.Timestamp("09:30:00").time()
+MARKET_CLOSE = pd.Timestamp("16:00:00").time()
 
 
 class NSEFetcher:
     """
-    Fetch intraday OHLCV data for NSE stocks via yfinance.
+    Fetch intraday OHLCV data for NASDAQ stocks via yfinance.
     
     Parameters
     ----------
     ticker_suffix : str
-        Suffix for NSE tickers on Yahoo (default ".NS")
+        Suffix for tickers on Yahoo (default "" for NASDAQ)
     rate_limit_sleep : float
-        Seconds to sleep between requests (default 0.5)
+        Seconds to sleep between requests (default 0.3)
     retry_attempts : int
         Max retries per ticker (default 3)
     retry_backoff : float
@@ -58,8 +58,8 @@ class NSEFetcher:
     
     def __init__(
         self,
-        ticker_suffix: str = ".NS",
-        rate_limit_sleep: float = 0.5,
+        ticker_suffix: str = "",
+        rate_limit_sleep: float = 0.3,
         retry_attempts: int = 3,
         retry_backoff: float = 5.0,
     ):
@@ -84,12 +84,12 @@ class NSEFetcher:
         interval: str = "5m",
     ) -> Optional[pd.DataFrame]:
         """
-        Fetch intraday OHLCV for a single NSE ticker.
+        Fetch intraday OHLCV for a single NASDAQ ticker.
         
         Parameters
         ----------
         ticker : str
-            NSE ticker symbol (e.g. "RELIANCE", not "RELIANCE.NS")
+            NASDAQ ticker symbol (e.g. "AAPL", "MSFT")
         days : int
             Number of days of history (max 59 for intraday)
         interval : str
@@ -98,13 +98,13 @@ class NSEFetcher:
         Returns
         -------
         DataFrame with columns [open, high, low, close, volume]
-        Index: tz-aware DatetimeIndex in IST
+        Index: tz-aware DatetimeIndex in US/Eastern
         Returns None if fetch fails.
         """
         yf_ticker = f"{ticker}{self.suffix}"
         days = min(days, 59)  # yfinance hard limit
         
-        end_dt = datetime.now(IST)
+        end_dt = datetime.now(ET)
         start_dt = end_dt - timedelta(days=days)
         
         for attempt in range(1, self.retries + 1):
@@ -139,13 +139,13 @@ class NSEFetcher:
                     return None
                 data = data[keep_cols]
                 
-                # Ensure timezone-aware in IST
+                # Ensure timezone-aware in US/Eastern
                 if data.index.tz is None:
-                    data.index = data.index.tz_localize("UTC").tz_convert(IST)
-                elif str(data.index.tz) != "Asia/Kolkata":
-                    data.index = data.index.tz_convert(IST)
+                    data.index = data.index.tz_localize("UTC").tz_convert(ET)
+                elif str(data.index.tz) != "US/Eastern":
+                    data.index = data.index.tz_convert(ET)
                 
-                # ── Filter to official NSE trading hours ONLY ──
+                # ── Filter to official US trading hours ONLY ──
                 data = self._filter_trading_hours(data)
                 
                 if data.empty:
@@ -174,14 +174,14 @@ class NSEFetcher:
         return None
     
     def _filter_trading_hours(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Filter to official NSE trading hours: 9:15 AM - 3:30 PM IST."""
+        """Filter to official US market trading hours: 9:30 AM - 4:00 PM ET."""
         times = df.index.time
-        mask = (times >= NSE_OPEN) & (times < NSE_CLOSE)
+        mask = (times >= MARKET_OPEN) & (times < MARKET_CLOSE)
         filtered = df[mask]
         
         n_removed = len(df) - len(filtered)
         if n_removed > 0:
-            log.debug("  Removed %d bars outside NSE hours", n_removed)
+            log.debug("  Removed %d bars outside US market hours", n_removed)
         
         return filtered
     
@@ -192,12 +192,12 @@ class NSEFetcher:
         interval: str = "5m",
     ) -> dict[str, pd.DataFrame]:
         """
-        Fetch intraday data for multiple NSE tickers.
+        Fetch intraday data for multiple NASDAQ tickers.
         
         Returns dict of {field: DataFrame[timestamp × ticker]} panels:
             {"open": df, "high": df, "low": df, "close": df, "volume": df}
         """
-        log.info("Fetching %d tickers from yfinance (NSE) ...", len(tickers))
+        log.info("Fetching %d tickers from yfinance (NASDAQ) ...", len(tickers))
         
         all_data = {}
         failed = []
@@ -267,21 +267,21 @@ class NSEFetcher:
     
     def fetch_index(
         self,
-        ticker: str = "^NSEI",
+        ticker: str = "QQQ",
         days: int = 59,
         interval: str = "5m",
     ) -> tuple[pd.Series, pd.Series]:
         """
-        Fetch NIFTY 50 index data for beta hedging.
+        Fetch NASDAQ index (QQQ) data for beta hedging.
         
         Returns
         -------
-        prices : pd.Series — NIFTY 50 close prices
-        returns : pd.Series — NIFTY 50 bar returns
+        prices : pd.Series — QQQ close prices
+        returns : pd.Series — QQQ bar returns
         """
-        log.info("Fetching NIFTY 50 index (%s) ...", ticker)
+        log.info("Fetching NASDAQ index (%s) ...", ticker)
         
-        end_dt = datetime.now(IST)
+        end_dt = datetime.now(ET)
         start_dt = end_dt - timedelta(days=min(days, 59))
         
         data = self._yf.download(
@@ -294,7 +294,7 @@ class NSEFetcher:
         )
         
         if data is None or data.empty:
-            log.error("Failed to fetch NIFTY 50 index data")
+            log.error("Failed to fetch NASDAQ index data")
             return pd.Series(dtype=float), pd.Series(dtype=float)
         
         # Handle MultiIndex columns
@@ -305,9 +305,9 @@ class NSEFetcher:
         
         # Timezone handling
         if data.index.tz is None:
-            data.index = data.index.tz_localize("UTC").tz_convert(IST)
-        elif str(data.index.tz) != "Asia/Kolkata":
-            data.index = data.index.tz_convert(IST)
+            data.index = data.index.tz_localize("UTC").tz_convert(ET)
+        elif str(data.index.tz) != "US/Eastern":
+            data.index = data.index.tz_convert(ET)
         
         # Filter to trading hours
         data = self._filter_trading_hours(data)
@@ -316,7 +316,7 @@ class NSEFetcher:
         returns = prices.pct_change(1)
         
         log.info(
-            "NIFTY 50: %d bars | range: %.0f → %.0f",
+            "NASDAQ index (QQQ): %d bars | range: $%.2f → $%.2f",
             len(prices), prices.min(), prices.max()
         )
         
@@ -332,7 +332,7 @@ class NSEFetcher:
         
         Parameters
         ----------
-        tickers : list of NSE ticker symbols
+        tickers : list of NASDAQ ticker symbols
         period : str — yfinance period (e.g. "1y", "2y", "6mo")
         
         Returns dict panels: {"open": df, "high": df, ...}

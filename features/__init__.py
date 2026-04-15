@@ -1,12 +1,12 @@
 """
 features/
 =========
-Feature engineering pipeline for NSE intraday cross-sectional mean reversion.
+Feature engineering pipeline for NASDAQ intraday cross-sectional mean reversion.
 
 Modules
 -------
 core.py        — cross-sectional math primitives (cs_zscore, cs_rank, ATR, etc.)
-engine.py      — 7 alpha features (6 core + circuit proximity)
+engine.py      — 7 alpha features (6 core + momentum exhaustion)
 resampler.py   — frequency resampling
 diagnostics.py — IC analysis, decay curves, correlation
 store.py       — Parquet feature store (save/load)

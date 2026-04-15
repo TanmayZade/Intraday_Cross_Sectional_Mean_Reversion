@@ -1,20 +1,20 @@
 """
 alpha/execution.py
 ==================
-Intraday Execution Engine for Single-Day Max Profit (NSE)
+Intraday Execution Engine for Single-Day Max Profit (NASDAQ)
 
 Simulates realistic intraday position management with:
-  - Entry at 9:30 AM (bar 4, after confirmation window)
-  - Hard stop-loss at -1.5% per position
-  - Trailing stop after +2% profit
-  - Profit taking at +1%, +2%, +3% levels
-  - Mandatory time exit at 3:20 PM (bar 73)
+  - Entry at 9:45 AM ET (bar 4, after confirmation window)
+  - Hard stop-loss at -2.0% per position (wider for US volatility)
+  - Trailing stop after +2.5% profit
+  - Profit taking at +1.5%, +3%, +4.5% levels
+  - Mandatory time exit at 3:50 PM ET (bar 76, 10 min before close)
 
 Usage
 -----
     from alpha.execution import IntradayExecutor
     
-    executor = IntradayExecutor(stop_loss_pct=0.015)
+    executor = IntradayExecutor(stop_loss_pct=0.02)
     result = executor.simulate_day(picks, intraday_bars)
 """
 
@@ -79,33 +79,39 @@ class IntradayExecutor:
     """
     Simulates intraday execution with risk controls.
     
+    US Market Stop-Loss Adjustments vs NSE:
+      - Wider hard stop (2.0% vs 1.5%) — US stocks have wider intraday ranges
+      - Wider trailing trigger (2.5% vs 2.0%) — prevents premature activation
+      - Wider trailing distance (0.75% vs 0.5%) — accounts for US tick noise
+      - Wider profit targets (1.5/3/4.5% vs 1/2/3%) — US moves are larger
+    
     Parameters
     ----------
     stop_loss_pct : float
-        Hard stop-loss percentage (default 1.5% = 0.015)
+        Hard stop-loss percentage (default 2.0% = 0.02)
     trailing_stop_trigger : float
-        Profit level to activate trailing stop (default 2% = 0.02)
+        Profit level to activate trailing stop (default 2.5% = 0.025)
     trailing_stop_pct : float
-        Trailing stop distance (default 0.5% = 0.005)
+        Trailing stop distance (default 0.75% = 0.0075)
     profit_take_1 : float
-        First profit-taking level (default 1% = 0.01). Take 25% off.
+        First profit-taking level (default 1.5% = 0.015). Take 25% off.
     profit_take_2 : float
-        Second profit-taking level (default 2% = 0.02). Take 25% off.
+        Second profit-taking level (default 3% = 0.03). Take 25% off.
     profit_take_3 : float
-        Third profit-taking level (default 3% = 0.03). Take 25% off.
+        Third profit-taking level (default 4.5% = 0.045). Take 25% off.
     exit_bar : int
-        Bar number to force exit (default 73 = 3:20 PM, 10 min before close)
+        Bar number to force exit (default 76 = 3:50 PM ET, 10 min before close)
     """
     
     def __init__(
         self,
-        stop_loss_pct: float = 0.015,
-        trailing_stop_trigger: float = 0.02,
-        trailing_stop_pct: float = 0.005,
-        profit_take_1: float = 0.01,
-        profit_take_2: float = 0.02,
-        profit_take_3: float = 0.03,
-        exit_bar: int = 73,
+        stop_loss_pct: float = 0.02,
+        trailing_stop_trigger: float = 0.025,
+        trailing_stop_pct: float = 0.0075,
+        profit_take_1: float = 0.015,
+        profit_take_2: float = 0.03,
+        profit_take_3: float = 0.045,
+        exit_bar: int = 76,
     ):
         self.stop_loss = stop_loss_pct
         self.trail_trigger = trailing_stop_trigger
@@ -138,7 +144,7 @@ class IntradayExecutor:
         -------
         dict with:
             trades: list[Trade]
-            day_pnl: float (total P&L in INR)
+            day_pnl: float (total P&L in USD)
             day_pnl_pct: float (P&L as % of deployed capital)
             capital_deployed: float
             n_stopped: int

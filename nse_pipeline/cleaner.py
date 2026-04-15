@@ -1,13 +1,13 @@
 """
 nse_pipeline/cleaner.py
 =======================
-OHLCV data cleaning for NSE intraday bars.
+OHLCV data cleaning for NASDAQ intraday bars.
 
-NSE-specific cleaning rules:
-  1. Circuit breaker detection (5%, 10%, 20% price limits)
-  2. Opening auction bar handling (9:15 bar may be distorted)
-  3. Standard spike removal, gap handling, OHLC ordering
-  4. Volume spike filtering
+US market cleaning rules:
+  1. Extreme return detection (no per-stock circuit breakers in US)
+  2. Standard spike removal, gap handling, OHLC ordering
+  3. Volume spike filtering
+  4. Opening/closing auction bar handling
 
 Usage
 -----
@@ -30,12 +30,12 @@ log = logging.getLogger(__name__)
 
 class NSECleaner:
     """
-    Clean raw OHLCV panel data for NSE stocks.
+    Clean raw OHLCV panel data for NASDAQ stocks.
     
     Parameters
     ----------
     max_daily_return : float
-        Max absolute daily return before flagging (0.20 = 20%, NSE circuit limit)
+        Max absolute daily return before flagging (0.50 = 50%, US has no per-stock circuits)
     max_intraday_range : float
         Max (high-low)/close ratio per bar
     max_volume_spike_mult : float
@@ -50,11 +50,11 @@ class NSECleaner:
     
     def __init__(
         self,
-        max_daily_return: float = 0.20,
-        max_intraday_range: float = 0.20,
+        max_daily_return: float = 0.50,
+        max_intraday_range: float = 0.50,
         max_volume_spike_mult: float = 10.0,
         volume_spike_window: int = 20,
-        max_overnight_gap: float = 0.20,
+        max_overnight_gap: float = 0.50,
         enforce_ohlc_order: bool = True,
     ):
         self.max_daily_return = max_daily_return
@@ -82,7 +82,7 @@ class NSECleaner:
         -------
         dict of cleaned panels (same structure)
         """
-        log.info("Cleaning NSE data ...")
+        log.info("Cleaning NASDAQ data ...")
         
         O = panels["open"].copy()
         H = panels["high"].copy()
@@ -96,15 +96,15 @@ class NSECleaner:
         if self.enforce_ohlc:
             O, H, L, C = self._enforce_ohlc(O, H, L, C)
         
-        # ── Rule 2: Flag extreme intraday returns (circuit breaker) ───────
+        # ── Rule 2: Flag extreme intraday returns ─────────────────────────
         bar_ret = C.pct_change(1).abs()
-        circuit_mask = bar_ret > self.max_daily_return
-        n_circuit = circuit_mask.sum().sum()
-        if n_circuit > 0:
-            log.info("  Circuit/extreme bars flagged: %d", n_circuit)
-            # NaN out circuit-hit bars (they distort signals)
+        extreme_mask = bar_ret > self.max_daily_return
+        n_extreme = extreme_mask.sum().sum()
+        if n_extreme > 0:
+            log.info("  Extreme return bars flagged: %d", n_extreme)
+            # NaN out extreme bars (they distort signals)
             for panel in [O, H, L, C, V]:
-                panel[circuit_mask] = np.nan
+                panel[extreme_mask] = np.nan
         
         # ── Rule 3: Flag extreme intraday range ──────────────────────────
         intraday_range = (H - L) / C.replace(0.0, np.nan)
@@ -172,29 +172,3 @@ class NSECleaner:
             log.debug("  OHLC ordering fixed: %d cells", n_fixed)
         
         return O, H_fixed, L_fixed, C
-    
-    def detect_circuit_hits(
-        self,
-        close: pd.DataFrame,
-        threshold: float = 0.045,
-    ) -> pd.DataFrame:
-        """
-        Detect bars where a stock likely hit its circuit limit.
-        
-        NSE circuit limits: 5%, 10%, 20% (varies by stock).
-        Returns boolean mask [timestamp × ticker].
-        """
-        daily_ret = close.pct_change(1)
-        
-        # Near ±5%, ±10%, or ±20% — within 0.5% of a circuit level
-        circuit_5  = daily_ret.abs().between(0.045, 0.055)
-        circuit_10 = daily_ret.abs().between(0.095, 0.105)
-        circuit_20 = daily_ret.abs().between(0.195, 0.205)
-        
-        circuit_mask = circuit_5 | circuit_10 | circuit_20
-        
-        n_hits = circuit_mask.sum().sum()
-        if n_hits > 0:
-            log.info("  Circuit hits detected: %d bars", n_hits)
-        
-        return circuit_mask

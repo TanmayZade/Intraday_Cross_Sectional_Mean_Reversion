@@ -1,9 +1,9 @@
 """
 features/engine.py
 ==================
-7-Feature Engine for NSE Intraday Cross-Sectional Mean Reversion
+7-Feature Engine for NASDAQ Intraday Cross-Sectional Mean Reversion
 
-Computes 7 features from OHLCV panel data (6 core + 1 NSE-specific):
+Computes 7 features from OHLCV panel data (6 core + 1 momentum exhaustion):
 
   A1_bar_reversal          — Single-bar price reversal (ATR-normalized)
   A2_short_rev             — 3-bar (15-min) momentum fade
@@ -11,12 +11,12 @@ Computes 7 features from OHLCV panel data (6 core + 1 NSE-specific):
   C1_vol_shock             — Volume spike vs time-of-day baseline
   D1_vol_burst             — Directed volatility burst
   E1_residual              — Market-beta-adjusted residual return
-  F1_circuit_proximity     — NSE circuit limit proximity (India-specific)
+  F1_momentum_exhaustion   — Intraday momentum exhaustion signal
 
 Tuned for maximum return:
   - Shorter ATR window (30 bars = 2.5 hours) for faster reaction
   - Time-of-day signal weighting (opening/closing stronger)
-  - NSE session: 9:15 AM - 3:30 PM IST (75 bars/day at 5-min)
+  - US session: 9:30 AM - 4:00 PM ET (78 bars/day at 5-min)
 
 Usage
 -----
@@ -27,7 +27,7 @@ Usage
     print(features.keys())
     # dict_keys(['A1_bar_reversal', 'A2_short_rev', 'B1_vwap',
     #            'C1_vol_shock', 'D1_vol_burst', 'E1_residual',
-    #            'F1_circuit_proximity'])
+    #            'F1_momentum_exhaustion'])
 """
 
 from __future__ import annotations
@@ -46,16 +46,16 @@ from features.core import (
 
 log = logging.getLogger(__name__)
 
-# NSE session constants
-NSE_BARS_PER_SESSION = 75  # 5-min bars in 9:15-15:30 (375 min)
+# US session constants
+US_BARS_PER_SESSION = 78  # 5-min bars in 9:30-16:00 (390 min)
 
 
 class FeatureEngine:
     """
-    7-feature engine for NSE cross-sectional mean reversion (intraday 5m bars).
+    7-feature engine for NASDAQ cross-sectional mean reversion (intraday 5m bars).
     
     Input:  panels = {"open": DataFrame, "high": DataFrame, ...}
-            Each DataFrame: [timestamp × ticker], 5-min bars (NSE hours only)
+            Each DataFrame: [timestamp × ticker], 5-min bars (US market hours only)
     Output: dict of 7 features, each [timestamp × ticker]
     
     Parameters
@@ -65,9 +65,9 @@ class FeatureEngine:
     atr_window : int
         ATR lookback (bars). Default 30 = 2.5 hours (faster for max return)
     vol_window : int
-        Volatility trend window. Default 120 = 10 hours (~1.6 days)
+        Volatility trend window. Default 120 = 10 hours (~1.3 days)
     volume_window : int
-        Volume baseline window. Default 60 = 5 hours (~0.8 days)
+        Volume baseline window. Default 60 = 5 hours (~0.6 days)
     zscore_window : int
         Rolling z-score window. Default 120 = 10 hours
     beta_window : int
@@ -99,11 +99,11 @@ class FeatureEngine:
         self._dates = self._idx.normalize()
         self._bps = session_bar_index(self._idx)
         
-        bps_max = int(self._bps.max()) + 1 if len(self._bps) > 0 else NSE_BARS_PER_SESSION
+        bps_max = int(self._bps.max()) + 1 if len(self._bps) > 0 else US_BARS_PER_SESSION
         self._sfrac = session_fraction(self._idx, bars_per_session=bps_max)
         
         log.info(
-            "FeatureEngine: %d bars × %d tickers (7 features, NSE) | %s → %s",
+            "FeatureEngine: %d bars × %d tickers (7 features, NASDAQ) | %s → %s",
             len(self.C), len(self.C.columns),
             self._idx.min() if len(self._idx) > 0 else "N/A",
             self._idx.max() if len(self._idx) > 0 else "N/A",
@@ -117,7 +117,7 @@ class FeatureEngine:
         -------
         dict: {feature_name: DataFrame[timestamp × ticker]}
         """
-        log.info("Computing 7 features (NSE mean reversion) ...")
+        log.info("Computing 7 features (NASDAQ mean reversion) ...")
         
         features = {}
         
@@ -137,8 +137,8 @@ class FeatureEngine:
         log.info("  [E] Residual return ...")
         features["E1_residual"] = self.residual_return()
         
-        log.info("  [F] Circuit proximity (NSE-specific) ...")
-        features["F1_circuit_proximity"] = self.circuit_proximity()
+        log.info("  [F] Momentum exhaustion ...")
+        features["F1_momentum_exhaustion"] = self.momentum_exhaustion()
         
         valid_pct = np.mean([f.notna().values.mean() * 100 for f in features.values()])
         log.info(
@@ -195,8 +195,8 @@ class FeatureEngine:
         """
         C1: Volume spike vs time-of-day baseline.
         
-        Accounts for NSE's distinct intraday volume pattern
-        (heavy at open 9:15, lighter midday, heavy at close 3:00-3:30).
+        Accounts for the distinct US intraday volume pattern
+        (heavy at open 9:30, lighter midday, heavy at close 3:30-4:00).
         """
         log_v = np.log1p(self.V)
         result = pd.DataFrame(np.nan, index=self.V.index, columns=self.V.columns)
@@ -247,21 +247,21 @@ class FeatureEngine:
         residual = ret_k.sub(betas.mul(mkt, axis=0), axis=0)
         return -cs_zscore(residual)
     
-    # ── F: Circuit Proximity (NSE-Specific) ────────────────────────────────
+    # ── F: Momentum Exhaustion ─────────────────────────────────────────────
     
-    def circuit_proximity(self) -> pd.DataFrame:
+    def momentum_exhaustion(self) -> pd.DataFrame:
         """
-        F1: Distance to NSE circuit limits.
+        F1: Intraday momentum exhaustion signal.
         
-        NSE stocks have daily circuit limits at ±5%, ±10%, or ±20%.
-        Stocks near their circuit limit tend to reverse:
-          - Near upper circuit → trapped buyers, likely pullback
-          - Near lower circuit → trapped sellers, likely bounce
+        Measures how far a stock has moved from its session open relative
+        to its typical intraday range. When a stock has moved >1.5x its
+        average intraday range in one direction, momentum tends to exhaust
+        and revert.
         
-        Signal: z-score( -(daily_return / estimated_circuit_limit) )
+        Signal: z-score( -(session_return / avg_intraday_range) )
         
-        This feature is unique to NSE and adds alpha that
-        US-market strategies cannot capture.
+        This replaces the NSE-specific circuit proximity feature with a
+        universal momentum exhaustion measure that works on any market.
         """
         # Compute session return (from day's open to current bar)
         session_open = pd.DataFrame(np.nan, index=self.C.index, columns=self.C.columns)
@@ -271,21 +271,25 @@ class FeatureEngine:
         
         session_ret = (self.C - session_open) / session_open.replace(0.0, np.nan)
         
-        # Estimate circuit limit per stock (use trailing max daily range)
+        # Average intraday range (trailing 20-day)
         daily_range = self.C.groupby(self._dates).apply(
-            lambda x: (x.iloc[-1] - x.iloc[0]) / x.iloc[0].replace(0, np.nan)
+            lambda x: (x.max() - x.min()) / x.iloc[0].replace(0, np.nan)
             if len(x) > 0 else pd.Series(0, index=x.columns)
         )
+        avg_range = daily_range.rolling(20, min_periods=5).mean()
         
-        # Use a simple proxy: assume 10% circuit for most stocks
-        # Stocks with session_ret near ±5%, ±10% are near circuit
-        circuit_est = 0.10  # Conservative estimate
-        proximity = session_ret.abs() / circuit_est
+        # Map back to bar-level index
+        avg_range_bars = pd.DataFrame(np.nan, index=self.C.index, columns=self.C.columns)
+        for date, grp_idx in self.C.groupby(self._dates).groups.items():
+            if date in avg_range.index:
+                avg_range_bars.loc[grp_idx] = avg_range.loc[date].values
         
-        # Signal: stocks near circuit limits → expect reversal
-        # Negative because near-circuit stocks should reverse
+        # Momentum exhaustion: how far relative to typical range
+        exhaustion = session_ret / avg_range_bars.replace(0.0, np.nan)
+        
+        # Signal: stocks that have moved a lot → expect reversal
         direction = -np.sign(session_ret)
-        signal = proximity * direction
+        signal = exhaustion.abs() * direction
         
         return cs_zscore(signal)
     
@@ -298,11 +302,11 @@ class FeatureEngine:
         """
         Apply time-of-day weights to all features for maximum return.
         
-        NSE intraday patterns:
-          - First 30 min (9:15-9:45): 1.5× weight (strongest reversals)
-          - Last 30 min (3:00-3:30):  1.2× weight (closing auction effects)
-          - Midday (12:00-1:30):      0.5× weight (lunch lull, weak signals)
-          - Rest:                     1.0× weight
+        US intraday patterns:
+          - First 30 min (9:30-10:00): 1.5× weight (strongest reversals)
+          - Last 30 min (3:30-4:00):   1.2× weight (closing auction effects)
+          - Midday (12:00-1:30):       0.5× weight (lunch lull, weak signals)
+          - Rest:                      1.0× weight
         """
         tod_weight = pd.Series(1.0, index=self._idx)
         
@@ -310,12 +314,12 @@ class FeatureEngine:
             import datetime as dt
             times = self._idx.time
             
-            # Opening boost: 9:15 - 9:45
-            opening = (times >= dt.time(9, 15)) & (times < dt.time(9, 45))
+            # Opening boost: 9:30 - 10:00
+            opening = (times >= dt.time(9, 30)) & (times < dt.time(10, 0))
             tod_weight[opening] = 1.5
             
-            # Closing boost: 15:00 - 15:30
-            closing = (times >= dt.time(15, 0)) & (times < dt.time(15, 30))
+            # Closing boost: 15:30 - 16:00
+            closing = (times >= dt.time(15, 30)) & (times < dt.time(16, 0))
             tod_weight[closing] = 1.2
             
             # Midday dampening: 12:00 - 13:30

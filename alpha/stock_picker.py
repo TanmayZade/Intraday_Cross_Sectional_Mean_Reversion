@@ -1,11 +1,11 @@
 """
 alpha/stock_picker.py
 =====================
-Concentrated Stock Picker for Single-Day Max Profit (NSE)
+Concentrated Stock Picker for Single-Day Max Profit (NASDAQ)
 
-Instead of spreading alpha across 100 stocks, this module picks the
-TOP 8-10 stocks with the highest conviction signal for a long-only
-intraday trade.
+From the 300-stock universe (180 volatile + 120 non-volatile),
+this module picks the TOP 80 stocks with the highest conviction
+signal for a long-only intraday trade.
 
 Architecture
 ------------
@@ -18,11 +18,11 @@ Usage
 -----
     from alpha.stock_picker import StockPicker
     
-    picker = StockPicker(panels, nifty_close, capital=1_000_000)
+    picker = StockPicker(panels, qqq_close, capital=100_000)
     picks = picker.pick(target_date)
     # picks = [
-    #   {"ticker": "RELIANCE", "score": 2.8, "allocation": 100000, "shares": 76},
-    #   {"ticker": "TATAPOWER", "score": 2.3, "allocation": 100000, "shares": 258},
+    #   {"ticker": "AAPL", "score": 2.8, "allocation": 1250, "shares": 7},
+    #   {"ticker": "TSLA", "score": 2.3, "allocation": 1250, "shares": 5},
     #   ...
     # ]
 """
@@ -49,15 +49,15 @@ class StockPicker:
     panels : dict
         OHLCV panels
     nifty_close : Series
-        NIFTY 50 close prices
+        NASDAQ index (QQQ) close prices
     capital : float
-        Total trading capital (default ₹10L)
+        Total trading capital (default $100K)
     n_picks : int
-        Number of stocks to pick (default 10)
+        Number of stocks to pick (default 80)
     min_score : float
         Minimum z-score to qualify (default 0.5)
     min_price : float
-        Minimum stock price to trade (default ₹50)
+        Minimum stock price to trade (default $5)
     min_avg_volume : float
         Minimum 20-day avg daily volume (default 500,000 shares)
     preopen_weight : float
@@ -70,10 +70,10 @@ class StockPicker:
         self,
         panels: dict,
         nifty_close: pd.Series = None,
-        capital: float = 1_000_000,
-        n_picks: int = 10,
+        capital: float = 100_000,
+        n_picks: int = 80,
         min_score: float = 0.5,
-        min_price: float = 50.0,
+        min_price: float = 5.0,
         min_avg_volume: float = 500_000,
         preopen_weight: float = 0.6,
         confirm_weight: float = 0.4,
@@ -106,8 +106,8 @@ class StockPicker:
         list of dicts, each with:
             ticker: str
             score: float (composite z-score)
-            allocation: float (capital allocated in INR)
-            entry_price: float (opening price at 9:30)
+            allocation: float (capital allocated in USD)
+            entry_price: float (opening price at 9:45)
             shares: int (number of shares to buy)
             preopen_signals: dict (individual pre-open feature scores)
             confirm_signals: dict (individual confirmation scores)
@@ -154,7 +154,7 @@ class StockPicker:
         n_stocks = len(top_n)
         per_stock_capital = self.capital / n_stocks
         
-        # 6. Get entry prices (bar 4 open = 9:30 AM, after confirmation window)
+        # 6. Get entry prices (bar 4 open = 9:45 AM, after confirmation window)
         day_mask = self._dates == target_date
         day_open = self.panels["open"][day_mask]
         
@@ -162,7 +162,7 @@ class StockPicker:
             entry_prices = day_open.iloc[0]  # Fallback to first bar
             entry_bar = 0
         else:
-            entry_prices = day_open.iloc[3]  # 9:30 AM bar open
+            entry_prices = day_open.iloc[3]  # 9:45 AM bar open
             entry_bar = 3
         
         # 7. Build picks list
@@ -195,10 +195,10 @@ class StockPicker:
             picks.append(pick)
         
         # Log picks
-        log.info("  Selected %d stocks (capital: ₹%.0f each):", len(picks),
+        log.info("  Selected %d stocks (capital: $%.0f each):", len(picks),
                 per_stock_capital)
         for p in picks:
-            log.info("    %-12s  score=%+.2fσ  entry=₹%.1f  shares=%d",
+            log.info("    %-12s  score=%+.2fσ  entry=$%.2f  shares=%d",
                     p["ticker"], p["score"], p["entry_price"], p["shares"])
         
         return picks

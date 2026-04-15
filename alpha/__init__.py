@@ -8,9 +8,9 @@ Modules
 signal.py                — IC-weighted composite alpha from features
 portfolio.py             — Dollar-neutral, vol-scaled position weights
 rank_alpha.py            — Rank-based alpha construction
-positions_beta_neutral.py — Beta-neutral positioning with NIFTY 50
+positions_beta_neutral.py — Beta-neutral positioning with NASDAQ index (QQQ)
 regularized_zscore.py    — Regularized z-score for signals
-risk_management.py       — NSE circuit breaker + drawdown risk controls
+risk_management.py       — Extreme move + drawdown risk controls
 
 Quick start
 -----------
@@ -20,7 +20,7 @@ Quick start
     model   = AlphaModel(features, close, ic_window=120, min_ic_tstat=0.5)
     alpha   = model.composite_alpha()
     
-    builder = PortfolioBuilder(alpha, close, volume, bars_per_year=18900)
+    builder = PortfolioBuilder(alpha, close, volume, bars_per_year=19656)
     weights = builder.build()
 """
 from alpha.signal    import AlphaModel, compute_ic_series, compute_ic_decay

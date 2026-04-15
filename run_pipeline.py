@@ -8,7 +8,7 @@ Usage
     python run_pipeline.py                          # full run
     python run_pipeline.py --days 30                # shorter history
     python run_pipeline.py --skip-universe          # skip screening, use seed pool
-    python run_pipeline.py --tickers RELIANCE TCS   # specific tickers only
+    python run_pipeline.py --tickers AAPL MSFT      # specific tickers only
 """
 
 from __future__ import annotations
@@ -37,8 +37,8 @@ from alpha.risk_management import RiskManager
 SEP = "─" * 60
 log = logging.getLogger(__name__)
 
-# NSE constants
-NSE_BARS_PER_YEAR = 18_900  # 252 days × 75 bars/day
+# NASDAQ constants
+NASDAQ_BARS_PER_YEAR = 19_656  # 252 days × 78 bars/day
 
 
 def load_config(path: str) -> dict:
@@ -82,12 +82,12 @@ def run(
     # Portfolio params
     halflife: int = 100,
     gross_lev: float = 1.0,
-    max_weight: float = 0.10,
-    txn_cost_bps: float = 1.0,
-    rebalance_freq: int = 75,
+    max_weight: float = 0.05,
+    txn_cost_bps: float = 0.5,
+    rebalance_freq: int = 78,
     weight_smooth_halflife: int = 30,
     # Capital
-    capital: float = 1_000_000,
+    capital: float = 100_000,
 ) -> dict:
     """
     Execute the full pipeline.
@@ -97,9 +97,9 @@ def run(
     t0 = time.perf_counter()
 
     log.info(SEP)
-    log.info("  NSE Intraday Cross-Sectional Mean Reversion")
-    log.info("  Capital: ₹%.0fL | Gross Lev: %.1f× | Txn Cost: %.1f bps",
-             capital / 100_000, gross_lev, txn_cost_bps)
+    log.info("  NASDAQ Intraday Cross-Sectional Mean Reversion")
+    log.info("  Capital: $%sK | Gross Lev: %.1f× | Txn Cost: %.1f bps",
+             f"{capital / 1_000:.0f}", gross_lev, txn_cost_bps)
     log.info("  Rebalance: every %d bars (%d min) | Weight EWM smooth: %d bars",
              rebalance_freq, rebalance_freq * 5, weight_smooth_halflife)
     log.info(SEP)
@@ -205,8 +205,8 @@ def run(
         halflife=halflife,
         max_weight=max_weight,
         gross_lev=gross_lev,
-        bars_per_year=NSE_BARS_PER_YEAR,
-        min_adtv_usd=500_000,  # ₹5L in INR context (lower for NSE)
+        bars_per_year=NASDAQ_BARS_PER_YEAR,
+        min_adtv_usd=500_000,
     )
     weights_rebal = builder.build()
 
@@ -240,7 +240,7 @@ def run(
 
     # Transaction costs — measure turnover on the SMOOTHED weights (the real ones)
     turnover_per_bar = _compute_turnover(weights)
-    ann_turnover = turnover_per_bar.mean() * NSE_BARS_PER_YEAR
+    ann_turnover = turnover_per_bar.mean() * NASDAQ_BARS_PER_YEAR
     stats["rebalance_turnover"] = ann_turnover
     stats["txn_cost_bps"] = txn_cost_bps
     stats["annual_cost"] = ann_turnover * txn_cost_bps / 10000
@@ -334,7 +334,7 @@ def _parse() -> argparse.Namespace:
 
     # Second pass: real parser with config.yaml values as defaults
     p = argparse.ArgumentParser(
-        description="NSE Intraday Mean Reversion — Full Pipeline",
+        description="NASDAQ Intraday Mean Reversion — Full Pipeline",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     p.add_argument("--config", default="config/config.yaml")
@@ -353,13 +353,13 @@ def _parse() -> argparse.Namespace:
     # Portfolio params — defaults from config
     p.add_argument("--halflife", type=int, default=bt.get("halflife", 100))
     p.add_argument("--gross-lev", type=float, default=bt.get("gross_lev", 1.0))
-    p.add_argument("--max-weight", type=float, default=bt.get("max_weight", 0.10))
-    p.add_argument("--txn-cost-bps", type=float, default=bt.get("txn_cost_bps", 1.0))
+    p.add_argument("--max-weight", type=float, default=bt.get("max_weight", 0.05))
+    p.add_argument("--txn-cost-bps", type=float, default=bt.get("txn_cost_bps", 0.5))
     p.add_argument("--rebalance-freq", type=int,
-                   default=bt.get("rebalance_freq", 75))
+                   default=bt.get("rebalance_freq", 78))
     p.add_argument("--weight-smooth", type=int, default=30,
                    help="EWM halflife for weight smoothing (0 = disabled)")
-    p.add_argument("--capital", type=float, default=bt.get("capital", 1_000_000))
+    p.add_argument("--capital", type=float, default=bt.get("capital", 100_000))
     # Logging
     p.add_argument("--log-level", default="INFO",
                    choices=["DEBUG", "INFO", "WARNING", "ERROR"])

@@ -1,11 +1,11 @@
 """
 alpha/risk_management.py
 ========================
-NSE-specific risk management for intraday mean reversion.
+Risk management for NASDAQ intraday mean reversion.
 
 Handles:
-  1. NSE circuit breaker detection (5%, 10%, 20% limits)
-  2. Market-wide circuit breaker (NIFTY ±10/15/20%)
+  1. Extreme move detection (stock-level intraday limits)
+  2. Market-wide stress detection (QQQ/NASDAQ ±3% rolling)
   3. Position-level risk limits
   4. Drawdown-based position scaling
   5. Time-of-day position adjustments
@@ -14,8 +14,8 @@ Usage
 -----
     from alpha.risk_management import RiskManager
     
-    rm = RiskManager(capital=1_000_000)
-    weights = rm.apply(weights, close, nifty_returns)
+    rm = RiskManager(capital=100_000)
+    weights = rm.apply(weights, close, qqq_returns)
 """
 
 from __future__ import annotations
@@ -29,31 +29,31 @@ log = logging.getLogger(__name__)
 
 class RiskManager:
     """
-    NSE-specific risk controls for intraday mean reversion.
+    Risk controls for NASDAQ intraday mean reversion.
     
     Parameters
     ----------
     capital : float
-        Total capital in INR (default ₹10L)
+        Total capital in USD (default $100K)
     max_single_stock_pct : float
-        Max allocation to single stock (default 15%)
+        Max allocation to single stock (default 5%)
     max_drawdown_pct : float
         Max portfolio drawdown before reducing positions (default 5%)
-    circuit_buffer_pct : float
-        Reduce position when stock is within this % of circuit (default 2%)
+    extreme_move_buffer : float
+        Reduce position when stock has an extreme intraday move (default 8%)
     """
     
     def __init__(
         self,
-        capital: float = 1_000_000,
-        max_single_stock_pct: float = 0.15,
+        capital: float = 100_000,
+        max_single_stock_pct: float = 0.05,
         max_drawdown_pct: float = 0.05,
-        circuit_buffer_pct: float = 0.02,
+        extreme_move_buffer: float = 0.08,
     ):
         self.capital = capital
         self.max_stock_pct = max_single_stock_pct
         self.max_dd = max_drawdown_pct
-        self.circuit_buffer = circuit_buffer_pct
+        self.extreme_buffer = extreme_move_buffer
     
     def apply(
         self,
@@ -68,7 +68,7 @@ class RiskManager:
         ----------
         weights : DataFrame [timestamp × ticker] — raw weights
         close : DataFrame [timestamp × ticker] — prices
-        nifty_returns : Series — NIFTY 50 bar returns
+        nifty_returns : Series — NASDAQ index (QQQ) bar returns
         
         Returns
         -------
@@ -76,12 +76,12 @@ class RiskManager:
         """
         w = weights.copy()
         
-        # 1. Circuit breaker proximity
-        w = self._circuit_proximity_scale(w, close)
+        # 1. Extreme intraday move detection
+        w = self._extreme_move_scale(w, close)
         
-        # 2. Market-wide circuit breaker
+        # 2. Market-wide stress detection
         if nifty_returns is not None:
-            w = self._market_circuit_check(w, nifty_returns)
+            w = self._market_stress_check(w, nifty_returns)
         
         # 3. Position concentration limits
         w = self._concentration_limit(w)
@@ -91,60 +91,54 @@ class RiskManager:
         
         return w
     
-    def _circuit_proximity_scale(
+    def _extreme_move_scale(
         self,
         weights: pd.DataFrame,
         close: pd.DataFrame,
     ) -> pd.DataFrame:
         """
-        Reduce positions for stocks near their circuit limits.
+        Reduce positions for stocks with extreme intraday moves.
         
-        NSE circuit limits: ±5%, ±10%, ±20%
-        If a stock's session return is within circuit_buffer of a limit,
-        reduce its weight by 50%.
+        US markets have no per-stock circuit breakers like NSE,
+        but stocks with extreme session moves (>8%) tend to be
+        unpredictable. Reduce exposure by 50%.
         """
         # Session return from day's open
         dates = close.index.normalize()
         session_open = close.groupby(dates).transform("first")
         session_ret = (close - session_open) / session_open.replace(0, np.nan)
         
-        # Check proximity to circuit limits
-        circuit_levels = [0.05, 0.10, 0.20]
-        near_circuit = pd.DataFrame(False, index=close.index, columns=close.columns)
-        
-        for level in circuit_levels:
-            upper_near = (session_ret > level - self.circuit_buffer) & (session_ret < level + 0.005)
-            lower_near = (session_ret < -level + self.circuit_buffer) & (session_ret > -level - 0.005)
-            near_circuit = near_circuit | upper_near | lower_near
+        # Check if move exceeds extreme threshold
+        extreme_mask = session_ret.abs() > self.extreme_buffer
         
         # Align to weights index
-        near_aligned = near_circuit.reindex(weights.index).fillna(False)
+        extreme_aligned = extreme_mask.reindex(weights.index).fillna(False)
         
-        # Scale down positions near circuit
+        # Scale down positions with extreme moves
         scale = pd.DataFrame(1.0, index=weights.index, columns=weights.columns)
-        scale[near_aligned] = 0.5
+        scale[extreme_aligned] = 0.5
         
-        n_scaled = near_aligned.sum().sum()
+        n_scaled = extreme_aligned.sum().sum()
         if n_scaled > 0:
-            log.info("  Circuit proximity: reduced %d positions by 50%%", n_scaled)
+            log.info("  Extreme move: reduced %d positions by 50%%", n_scaled)
         
         return weights * scale
     
-    def _market_circuit_check(
+    def _market_stress_check(
         self,
         weights: pd.DataFrame,
-        nifty_returns: pd.Series,
+        qqq_returns: pd.Series,
     ) -> pd.DataFrame:
         """
         Reduce all positions during market-wide stress.
         
-        If NIFTY 50 moves > ±3% in a rolling 30-bar window,
+        If QQQ/NASDAQ index moves > ±3% in a rolling 30-bar window,
         reduce all positions by 50%.
         """
-        nifty_aligned = nifty_returns.reindex(weights.index)
-        rolling_nifty = nifty_aligned.rolling(30, min_periods=5).sum().abs()
+        qqq_aligned = qqq_returns.reindex(weights.index)
+        rolling_qqq = qqq_aligned.rolling(30, min_periods=5).sum().abs()
         
-        stress_mask = rolling_nifty > 0.03
+        stress_mask = rolling_qqq > 0.03
         
         scale = pd.Series(1.0, index=weights.index)
         scale[stress_mask] = 0.5

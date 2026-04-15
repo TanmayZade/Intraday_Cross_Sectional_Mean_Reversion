@@ -1,14 +1,14 @@
 """
 nse_pipeline/
 =============
-NSE India data pipeline for intraday cross-sectional mean reversion.
+NASDAQ data pipeline for intraday cross-sectional mean reversion.
 
 Modules
 -------
-fetcher.py     — yfinance-based data fetcher for NSE stocks
-cleaner.py     — OHLCV cleaning with NSE circuit breaker handling
+fetcher.py     — yfinance-based data fetcher for NASDAQ stocks
+cleaner.py     — OHLCV cleaning for US market data
 storage.py     — Parquet read/write for panel data
-universe.py    — Dynamic 50+50 universe selection (volatile/non-volatile)
+universe.py    — Dynamic 180+120 universe selection (volatile/non-volatile)
 orchestrator.py — End-to-end pipeline orchestration
 
 Quick start

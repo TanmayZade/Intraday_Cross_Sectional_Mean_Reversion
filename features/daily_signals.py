@@ -1,17 +1,17 @@
 """
 features/daily_signals.py
 =========================
-9 High-Conviction Features for Single-Day Max Profit (NSE)
+9 High-Conviction Features for Single-Day Max Profit (NASDAQ)
 
-PRE-OPEN features (computed from previous day's data, available before 9:15 AM):
+PRE-OPEN features (computed from previous day's data, available before 9:30 AM ET):
   P1_overnight_gap        — Overnight gap reversal signal
   P2_prev_day_momentum    — Previous day's ATR-normalized return (reversal)
   P3_volume_surge         — Yesterday's volume vs 20-day avg
-  P4_relative_strength    — Stock vs NIFTY over last 3 days (reversal)
+  P4_relative_strength    — Stock vs NASDAQ index over last 3 days (reversal)
   P5_range_expansion      — Yesterday's range vs 20-day avg (volatility predictor)
   P6_close_location       — Where the stock closed within its daily range
 
-CONFIRMATION features (computed from first 15 min of trading, 9:15-9:30):
+CONFIRMATION features (computed from first 15 min of trading, 9:30-9:45 AM ET):
   C1_opening_bar_reversal — First bar return reversal
   C2_opening_volume       — Opening volume intensity vs history
   C3_gap_fill_speed       — How fast the overnight gap is filling
@@ -20,7 +20,7 @@ Usage
 -----
     from features.daily_signals import DailySignalEngine
     
-    engine = DailySignalEngine(panels, nifty_close)
+    engine = DailySignalEngine(panels, qqq_close)
     pre_open = engine.compute_preopen_signals(target_date)  # {ticker: score}
     confirmed = engine.compute_confirmation(target_date)     # {ticker: score}
 """
@@ -44,9 +44,9 @@ class DailySignalEngine:
     ----------
     panels : dict
         OHLCV panels: {"open": DataFrame, "high": DataFrame, ...}
-        Each DataFrame: [timestamp × ticker], 5-min bars, NSE hours only
+        Each DataFrame: [timestamp × ticker], 5-min bars, US market hours only
     nifty_close : Series
-        NIFTY 50 close prices (5-min bars, same index as panels)
+        NASDAQ index (QQQ) close prices (5-min bars, same index as panels)
     lookback_days : int
         Days of history for rolling calculations (default 20)
     """
@@ -89,7 +89,7 @@ class DailySignalEngine:
         return daily
     
     # ══════════════════════════════════════════════════════════════════════════
-    # PRE-OPEN SIGNALS (available before 9:15 AM)
+    # PRE-OPEN SIGNALS (available before 9:30 AM ET)
     # ══════════════════════════════════════════════════════════════════════════
     
     def compute_preopen_signals(self, target_date: pd.Timestamp) -> pd.DataFrame:
@@ -200,9 +200,9 @@ class DailySignalEngine:
     
     def _relative_strength(self, target_date) -> pd.Series:
         """
-        P4: Stock return vs NIFTY return over last 3 days.
+        P4: Stock return vs NASDAQ index return over last 3 days.
         
-        Stocks that massively outperformed NIFTY over 3 days tend to
+        Stocks that massively outperformed the NASDAQ index over 3 days tend to
         underperform next day (cross-sectional mean reversion).
         """
         dates = self._unique_dates
@@ -268,7 +268,7 @@ class DailySignalEngine:
     
     def compute_confirmation(self, target_date: pd.Timestamp) -> pd.DataFrame:
         """
-        Compute 3 confirmation features from the first 3 bars (9:15-9:30).
+        Compute 3 confirmation features from the first 3 bars (9:30-9:45 AM ET).
         
         Returns
         -------
