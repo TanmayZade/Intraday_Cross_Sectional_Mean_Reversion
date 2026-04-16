@@ -23,6 +23,7 @@ import argparse
 import logging
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -58,9 +59,11 @@ def run_single_day(
     panels: dict,
     nifty_close: pd.Series,
     target_date: pd.Timestamp,
-    capital: float = 100_000,
+    capital: float = 1_000_000,
     n_picks: int = 80,
     stop_loss_pct: float = 0.02,
+    profit_take: float = 0.015,
+    trail_trigger: float = 0.025,
 ) -> dict:
     """
     Run the strategy for a single day.
@@ -88,9 +91,9 @@ def run_single_day(
     # 2. Execute intraday
     executor = IntradayExecutor(
         stop_loss_pct=stop_loss_pct,
-        trailing_stop_trigger=0.025,
+        trailing_stop_trigger=trail_trigger,
         trailing_stop_pct=0.0075,
-        profit_take_1=0.015,
+        profit_take_1=profit_take,
         profit_take_2=0.03,
         profit_take_3=0.045,
         exit_bar=76,
@@ -124,9 +127,11 @@ def run_backtest(
     last_n: int = None,
     from_date: str = None,
     to_date: str = None,
-    capital: float = 100_000,
+    capital: float = 1_000_000,
     n_picks: int = 80,
     stop_loss_pct: float = 0.02,
+    profit_take: float = 0.015,
+    trail_trigger: float = 0.025,
     skip_universe: bool = True,
 ) -> list[dict]:
     """
@@ -136,8 +141,6 @@ def run_backtest(
     
     log.info(SEP)
     log.info("  NASDAQ Single-Day Max-Profit Backtester")
-    log.info("  Capital: $%sK | Picks: %d | Stop Loss: %.1f%%",
-             f"{capital / 1_000:.0f}", n_picks, stop_loss_pct * 100)
     log.info(SEP)
     
     # ── Fetch Data ────────────────────────────────────────────────────
@@ -159,6 +162,26 @@ def run_backtest(
     log.info("  Data: %d bars × %d tickers | %d trading days",
              len(close), len(close.columns), len(unique_dates))
     
+    # ── Attach backtest-only file logger (after data fetch) ────────────
+    reports_dir = Path("reports")
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    bt_log_name = f"backtest_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+    bt_log_path = reports_dir / bt_log_name
+    bt_handler = logging.FileHandler(bt_log_path, mode="w", encoding="utf-8")
+    bt_handler.setFormatter(logging.Formatter(
+        "%(asctime)s  %(levelname)-8s  %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+    ))
+    logging.getLogger().addHandler(bt_handler)
+    log.info("  Backtest log: %s", bt_log_path)
+    log.info(SEP)
+    log.info("  BACKTEST CONFIGURATION:")
+    log.info("  Capital       : $%sK", f"{capital / 1_000:.0f}")
+    log.info("  Stock Picks   : %d", n_picks)
+    log.info("  Stop-Loss     : %.2f%%", stop_loss_pct * 100)
+    log.info("  Profit Target : %.2f%%", profit_take * 100)
+    log.info("  Trail Trigger : %.2f%%", trail_trigger * 100)
+    log.info(SEP)
+    
     # ── Determine which dates to backtest ──────────────────────────
     # Need at least 20 days of history for features
     min_lookback = 20
@@ -166,6 +189,8 @@ def run_backtest(
     
     if target_date:
         td = pd.Timestamp(target_date).normalize()
+        if hasattr(tradeable_dates[0], "tz") and tradeable_dates[0].tz:
+            td = td.tz_localize(tradeable_dates[0].tz)
         if td in tradeable_dates:
             test_dates = [td]
         else:
@@ -177,6 +202,9 @@ def run_backtest(
     elif from_date and to_date:
         fd = pd.Timestamp(from_date).normalize()
         td = pd.Timestamp(to_date).normalize()
+        if hasattr(tradeable_dates[0], "tz") and tradeable_dates[0].tz:
+            fd = fd.tz_localize(tradeable_dates[0].tz)
+            td = td.tz_localize(tradeable_dates[0].tz)
         test_dates = [d for d in tradeable_dates if fd <= d <= td]
     else:
         test_dates = tradeable_dates
@@ -196,6 +224,8 @@ def run_backtest(
             capital=capital,
             n_picks=n_picks,
             stop_loss_pct=stop_loss_pct,
+            profit_take=profit_take,
+            trail_trigger=trail_trigger,
         )
         all_results.append(day_result)
     
@@ -358,14 +388,16 @@ def _parse() -> argparse.Namespace:
                    help="Backtest last N trading days")
     p.add_argument("--from", dest="from_date", default=None)
     p.add_argument("--to", dest="to_date", default=None)
-    p.add_argument("--capital", type=float, default=100_000)
+    p.add_argument("--capital", type=float, default=1_000_000)
     p.add_argument("--picks", type=int, default=80,
                    help="Number of stocks to pick per day")
     p.add_argument("--stop-loss", type=float, default=0.02,
                    help="Hard stop-loss percentage")
+    p.add_argument("--profit-take", type=float, default=0.015,
+                   help="First profit target percentage")
+    p.add_argument("--trail-trigger", type=float, default=0.025,
+                   help="Trailing stop trigger percentage")
     p.add_argument("--skip-universe", action="store_true", default=True)
-    p.add_argument("--log-file", default=None,
-                   help="Path to save the detailed log output")
     p.add_argument("--log-level", default="INFO",
                    choices=["DEBUG", "INFO", "WARNING", "ERROR"])
     return p.parse_args()
@@ -373,7 +405,7 @@ def _parse() -> argparse.Namespace:
 
 if __name__ == "__main__":
     args = _parse()
-    setup_logging(args.log_level, args.log_file)
+    setup_logging(args.log_level)
     
     run_backtest(
         config_path=args.config,
@@ -385,5 +417,7 @@ if __name__ == "__main__":
         capital=args.capital,
         n_picks=args.picks,
         stop_loss_pct=args.stop_loss,
+        profit_take=args.profit_take,
+        trail_trigger=args.trail_trigger,
         skip_universe=args.skip_universe,
     )

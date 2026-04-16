@@ -103,6 +103,8 @@ class DailySignalEngine:
         DataFrame: [ticker × feature], one row per ticker, 6 columns
         """
         target_date = pd.Timestamp(target_date).normalize()
+        if hasattr(self._unique_dates[0], "tz") and self._unique_dates[0].tz and not target_date.tz:
+            target_date = target_date.tz_localize(self._unique_dates[0].tz)
         
         # Get index of target_date in our date list
         dates = self._unique_dates

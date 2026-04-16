@@ -41,6 +41,8 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 import numpy as np
 import pandas as pd
 import pytz
@@ -49,7 +51,7 @@ import pytz
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from polygon import RESTClient
+import requests
 from nse_pipeline.universe import SEED_POOL
 from nse_pipeline.storage import save_panels
 
@@ -74,59 +76,59 @@ def setup_logging(level: str = "INFO"):
 
 
 def fetch_ticker_bars(
-    client: RESTClient,
+    api_key: str,
     ticker: str,
     from_date: str,
     to_date: str,
     multiplier: int = 5,
     timespan: str = "minute",
+    sleep_between: float = 12.5,
 ) -> pd.DataFrame | None:
     """
-    Fetch 5-minute OHLCV bars for a single ticker from Polygon.
-
-    Parameters
-    ----------
-    client : Polygon RESTClient
-    ticker : stock symbol (e.g. "AAPL")
-    from_date : start date "YYYY-MM-DD"
-    to_date : end date "YYYY-MM-DD"
-    multiplier : bar size multiplier (5 for 5-min bars)
-    timespan : "minute", "hour", "day"
-
-    Returns
-    -------
-    DataFrame with columns [open, high, low, close, volume]
-    Index: tz-aware DatetimeIndex in US/Eastern
-    Returns None if fetch fails.
+    Fetch 5-minute OHLCV bars for a single ticker from Polygon via REST with pagination.
     """
+    url = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/{multiplier}/{timespan}/{from_date}/{to_date}?limit=50000"
+    headers = {"Authorization": f"Bearer {api_key}"}
+    rows = []
+    
+    while url:
+        try:
+            resp = requests.get(url, headers=headers)
+            if resp.status_code == 429:
+                log.warning("  Rate limit hit! Sleeping for 60 seconds...")
+                time.sleep(60)
+                continue
+                
+            resp.raise_for_status()
+            data = resp.json()
+            
+            if "results" in data and data["results"]:
+                for bar in data["results"]:
+                    rows.append({
+                        "timestamp": bar["t"],
+                        "open": bar["o"],
+                        "high": bar["h"],
+                        "low": bar["l"],
+                        "close": bar["c"],
+                        "volume": bar["v"],
+                    })
+                    
+            next_url = data.get("next_url")
+            if next_url:
+                url = next_url
+                time.sleep(sleep_between)  # mandatory sleep between pagination
+            else:
+                url = None
+                
+        except Exception as e:
+            log.warning("  %s: error — %s", ticker, str(e)[:200])
+            return None
+
+    if not rows:
+        return None
+
     try:
-        aggs = client.get_aggs(
-            ticker=ticker,
-            multiplier=multiplier,
-            timespan=timespan,
-            from_=from_date,
-            to=to_date,
-            limit=50000,
-        )
-
-        if not aggs:
-            return None
-
-        rows = []
-        for bar in aggs:
-            rows.append({
-                "timestamp": bar.timestamp,  # ms since epoch
-                "open": bar.open,
-                "high": bar.high,
-                "low": bar.low,
-                "close": bar.close,
-                "volume": bar.volume,
-            })
-
         df = pd.DataFrame(rows)
-        if df.empty:
-            return None
-
         # Convert ms timestamps → tz-aware US/Eastern
         df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms", utc=True)
         df["timestamp"] = df["timestamp"].dt.tz_convert(ET)
@@ -143,22 +145,21 @@ def fetch_ticker_bars(
         df.loc[df["volume"] < 0, "volume"] = 0
 
         return df if not df.empty else None
-
     except Exception as e:
-        log.warning("  %s: error — %s", ticker, str(e)[:200])
+        log.warning("  %s: processing error — %s", ticker, str(e)[:200])
         return None
 
 
 def fetch_all_tickers(
-    client: RESTClient,
+    api_key: str,
     tickers: list[str],
     from_date: str,
     to_date: str,
-    sleep_between: float = 0.15,
+    sleep_between: float = 12.5,
 ) -> dict[str, pd.DataFrame]:
     """
     Fetch data for all tickers with progress tracking and rate limiting.
-
+    
     Returns dict of {ticker: DataFrame}.
     """
     total = len(tickers)
@@ -176,7 +177,10 @@ def fetch_all_tickers(
         pct = (i + 1) / total * 100
         log.info("[%d/%d] (%.0f%%) Fetching %s ...", i + 1, total, pct, ticker)
 
-        df = fetch_ticker_bars(client, ticker, from_date, to_date)
+        df = fetch_ticker_bars(
+            api_key, ticker, from_date, to_date, 
+            sleep_between=sleep_between
+        )
 
         if df is not None and not df.empty:
             results[ticker] = df
@@ -191,7 +195,6 @@ def fetch_all_tickers(
             failed.append(ticker)
             log.warning("  ✗ %s: no data", ticker)
 
-        # Rate limiting (Polygon allows 5 req/min on free, much more on paid)
         if i < total - 1:
             time.sleep(sleep_between)
 
@@ -284,6 +287,9 @@ def main():
     Path("reports").mkdir(parents=True, exist_ok=True)
     setup_logging(args.log_level)
 
+    # ── Load .env file ─────────────────────────────────────────────────
+    load_dotenv()
+
     # ── API Key ────────────────────────────────────────────────────────
     api_key = args.api_key or os.environ.get("POLYGON_API_KEY")
     if not api_key:
@@ -293,8 +299,6 @@ def main():
             "  Or pass as argument:       --api-key your_key_here"
         )
         sys.exit(1)
-
-    client = RESTClient(api_key=api_key)
 
     # ── Date Range ─────────────────────────────────────────────────────
     today = datetime.now(ET).strftime("%Y-%m-%d")
@@ -308,7 +312,7 @@ def main():
 
     # ── Fetch ──────────────────────────────────────────────────────────
     ticker_data = fetch_all_tickers(
-        client=client,
+        api_key=api_key,
         tickers=tickers,
         from_date=from_date,
         to_date=to_date,

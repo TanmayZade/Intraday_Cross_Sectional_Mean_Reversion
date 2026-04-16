@@ -108,7 +108,7 @@ class IntradayExecutor:
         stop_loss_pct: float = 0.02,
         trailing_stop_trigger: float = 0.025,
         trailing_stop_pct: float = 0.0075,
-        profit_take_1: float = 0.015,
+        profit_take_1: float = 0.01,
         profit_take_2: float = 0.03,
         profit_take_3: float = 0.045,
         exit_bar: int = 76,
@@ -293,7 +293,7 @@ class IntradayExecutor:
                 trade.exit_price = bar_close
                 trade.exit_time = bar_time
                 trade.exit_bar = bar_idx
-                trade.exit_reason = "TIME_EXIT"
+                trade.exit_reason = "PROFIT_TIME_EXIT" if partial_exits > 0 else "TIME_EXIT"
                 return
         
         # If we reach end of data without exiting (shouldn't happen)
@@ -304,7 +304,7 @@ class IntradayExecutor:
         trade.exit_price = last_close
         trade.exit_time = bar_times[-1]
         trade.exit_bar = len(close) - 1
-        trade.exit_reason = "END_OF_DATA"
+        trade.exit_reason = "PROFIT_END_OF_DATA" if partial_exits > 0 else "END_OF_DATA"
     
     def _empty_result(self) -> dict:
         return {
